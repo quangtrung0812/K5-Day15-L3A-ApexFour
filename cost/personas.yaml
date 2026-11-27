@@ -41,6 +41,10 @@ personas:           # ≥3 kiểu người dùng; share cộng lại = 1
       - "Ngày 2026-11-29, 2 người lớn và 1 bé 7 tuổi, còn 14:00–18:00, ngân sách cả chuyến 3 triệu. Ưu tiên chơi trong nhà, chỉ đề xuất điểm ngoài trời nếu hết mưa và còn mở cửa."
 
 prices:             # USD / 1 triệu token văn bản, gói trả phí Standard
+  - model: gpt-4o-mini
+    input: 0.15
+    output: 0.60
+    source: "OpenAI · https://developers.openai.com/api/docs/models/gpt-4o-mini · 27/11/2026"
   - model: gemini-3.1-flash-lite
     input: 0.25
     output: 1.50

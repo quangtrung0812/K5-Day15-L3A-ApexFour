@@ -19,3 +19,7 @@ README của nhóm có mục "Dùng AI vào việc gì" (2–3 dòng, bắt bu�
 | Slide, văn bản | Codex | Soạn kịch bản demo và cấu hình mô phỏng chi phí của Hưng | Lấy kết quả trình bày từ lượt chạy có model thật và benchmark đã chấm | Nguyễn Quốc Hưng |
 
 **Không dùng AI để:** tạo người được phỏng vấn, trích dẫn, câu trả lời khảo sát; sửa kết quả các lượt đã chạy (`eval/run-*.csv`, `cost/simulate-*.csv`, `traces/`).
+
+## CP4
+
+Codex hỗ trợ thay đổi bước chuẩn bị bản nháp lịch, chạy lượt 2, đối chiếu từng output với tiêu chí, mô phỏng chi phí và dựng slide/video. Các điểm lượt 2 là đề xuất chấm, chờ người phụ trách duyệt.

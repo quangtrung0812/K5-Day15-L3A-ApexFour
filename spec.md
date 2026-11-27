@@ -132,11 +132,12 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 - **Chuẩn "đạt"** (chốt trước 19:30 Thứ Sáu 27/11, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu qua, đồng thời 100% câu `tu_choi` qua và 0 vi phạm ràng buộc cứng kiểm bằng code (`kiem_lich_trinh`) ở mọi câu xuất lịch trình."**
 - Kết quả: lượt 1 **9/25 (36.0%)** (`thuong` 0/8 · `kho` 5/13 · `tu_choi` 4/4 · 0 vi phạm ràng buộc cứng ở các lịch đã xuất · 0 lỗi kỹ thuật) · lượt 2 __/__ (__%) — run ID: `run-1@20261127-232511` (`gpt-4o-mini`) / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
-## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
-- Chi phí / task thành công: __ (model __) · __ (model __)
-- Chi phí / tháng ở quy mô thật: thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2): đáng làm không, vì sao:
+## §8. Chi phí khi dùng thật
+
+- 50 phiên, seed 42, ba kiểu gia đình trong `cost/personas.yaml`. Số token được đo bằng gpt-4o-mini trong `cost/simulate-1.csv`.
+- Chi phí mỗi tác vụ thành công dùng điểm nháp lượt 2 (40%). GPT-4o mini $0.0068, cùng lượng token theo giá Gemini 4 Hydrogen $0.0725.
+- Chi phí model mỗi tháng theo GPT-4o mini. 50 gia đình: $0.1491 · 200 gia đình: $0.5965 · 500 gia đình: $1.49. Quy mô là giả định.
+- Chi phí cơ sở $0.0030 mỗi gia đình mỗi tháng. Phụ huynh hiện mất khoảng 45 phút cho việc lập và sửa lịch. Cần đo mức tiết kiệm thực khi dùng sản phẩm. Xem [bảng chi phí](cost/cost-estimate.md).
 
 ## §9. Rủi ro & an toàn
 - **Dữ liệu:** Không thu thập hay lưu dữ liệu thật của người thật (mã đặt chỗ, số điện thoại, thông tin trẻ em, số thẻ thanh toán). Review công khai trong `evidence/` đã bỏ tên tác giả, trích ≤2 câu, ghi nguồn và ngày xem. Dữ liệu chạy thử `data/park_data.json` hoàn toàn là dữ liệu giả lập có seed (`synthetic`, tên dựng "SunWonder Mẫu") nên an toàn khi đưa qua API model.
@@ -161,6 +162,8 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 | 27/11/2026 | Ghép nhánh CP2, đồng bộ mã điểm, ngày và kết quả kiểm lịch giữa agent và công cụ. | Agent dùng hợp đồng mẫu cũ khi đọc dữ liệu SunWonder Mẫu. |
 | 27/11/2026 tối (CP2 → CP3) | Mở rộng `eval/benchmark.csv` từ 15 lên 25 câu (`B16`–`B25`, không sửa `B01`–`B15` và giữ nguyên chuẩn "đạt" §7), thêm `eval/grade_helper.py` kiểm tự động 2 metric `code`. | Đạt yêu cầu 20–30 câu của CP3 và phủ thêm ca mưa/đóng điểm đột xuất, 2 bé lệch tuổi, điểm không tồn tại, ngoài phạm vi (`B25`). |
 | 27/11/2026 tối (CP2 → CP3) | Nối API gọi model thật đa nhà cung cấp trong `codebase/ai.py` (`gemini`, `openai`, `groq`, `openrouter`, `deepseek`, `anthropic`, `ollama`), siết huỷ show/mưa/điểm báo đóng & regex khung giờ trong `tools.py` + `agent.py`, đồng bộ 3 persona §2 với `cost/personas.yaml` và cập nhật `evidence/summary.md`. | Chuẩn bị chạy đánh giá Lượt 1 bằng AI thật trước CP3 và khắc phục lỗi bắt khung giờ/ngoài phạm vi phát hiện qua `B17`, `B21`, `B25`, `H01`. |
+| Chuẩn bị CP4 | Cấp tuyến gợi ý và tiền còn sau vé cổng cho model. Chạy lại 25 câu, mô phỏng 50 phiên và dựng bản demo. Sau lượt 2, bổ sung xử lý lỗi khi bộ kiểm không trả giá vé (ví dụ nhóm có 0 người lớn). | 11 câu lượt 1 thiếu lịch khả thi. Xem `eval/report.md` và `cost/cost-estimate.md`. |
+| 28/11/2026 00:07–00:10 | Demo HTML và hai lượt cải tiến bổ sung. Model chọn mã điểm, Python xếp giờ, kiểm tiền và lý do bỏ điểm. | Lượt 2 còn nhiều trường hợp khả thi nhưng không có lịch. Lượt 3 còn lỗi ở lời giải thích và bữa tối. Xem `eval/report.md`. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
