@@ -87,7 +87,8 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 ## Dùng AI vào việc gì
 
-Nhóm sử dụng coding agent (Antigravity / Gemini) hỗ trợ dựng khung workflow Python (`codebase/agent.py`, `tools.py`), cấu trúc tài liệu `spec.md`, `canvas.md` và kiểm tra quy chuẩn rubric. Toàn bộ bằng chứng review/phỏng vấn thật, thiết kế kiến trúc, kiểm chứng ràng buộc bằng code và chấm đánh giá đều do thành viên phụ trách trực tiếp rà soát và chịu trách nhiệm. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
+Nhóm sử dụng coding agent (Antigravity / Gemini) hỗ trợ dựng khung workflow Python (`codebase/agent.py`, `tools.py`), cấu trúc tài liệu `spec.md`, `canvas.md` và kiểm tra quy chuẩn rubric. Toàn bộ bằng chứng review/phỏng vấn thật, thiết kế kiến trúc, kiểm chứng ràng buộc bằng code và chấm đánh giá đều do thành viên phụ trách trực tiếp rà soát và chịu trách nhiệm.
+Nguyễn Quốc Hưng dùng Codex để viết và ghép công cụ kiểm tra lịch, soạn ca thử và chuẩn bị demo. Xem [khai báo dùng AI](docs/ai-usage.md) và [quy ước của nhóm](AGENTS.md).
 
 ## File mẫu — điền ở bước nào
 

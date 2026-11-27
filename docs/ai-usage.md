@@ -14,5 +14,8 @@ README của nhóm có mục "Dùng AI vào việc gì" (2–3 dòng, bắt bu�
 | Sinh data `synthetic` (nếu có) | Coding agent / Script Python | Hỗ trợ sinh `data/park_data.json` có seed cố định (`seed=42`) | Kiểm tay toàn bộ điểm chơi, giờ mở cửa, lịch show, giá vé và bẫy bảo trì/mưa/tuổi | Dương Thanh Bình |
 | Chấm cột `pass` bằng LLM (nếu có) | *(Cập nhật ở CP3/CP4 nếu dùng)* | — | Ưu tiên chấm bằng code (`kiem_lich_trinh`) + người chấm kiểm chéo ≥4/5 | Dương Thanh Bình, Lê Văn Hoàng |
 | Slide, văn bản | Coding agent | Hỗ trợ cấu trúc `spec.md`, `canvas.md`, `README.md`, `docs/cp2-plan.md` | Toàn bộ thành viên đọc duyệt từng mục, khớp với số liệu thật | Nguyễn Quang Trung và cả nhóm |
+| Code bản chạy thử | Codex | Viết 5 công cụ đọc dữ liệu SunWonder Mẫu và bộ kiểm thử ràng buộc | Kết quả `python -m unittest discover -s tests -v` kiểm tuổi, giờ, mưa, đi bộ, show, bảo trì và giá | Nguyễn Quốc Hưng |
+| Viết câu thử (benchmark) | Codex | Soạn các ca tự viết H01–H08 trong `spec.md` §5 | Đối chiếu mã, giờ và giá với `data/park_data.json` khi ghép ca vào benchmark | Nguyễn Quốc Hưng |
+| Slide, văn bản | Codex | Soạn kịch bản demo và cấu hình mô phỏng chi phí của Hưng | Lấy kết quả trình bày từ lượt chạy có model thật và benchmark đã chấm | Nguyễn Quốc Hưng |
 
 **Không dùng AI để:** tạo người được phỏng vấn, trích dẫn, câu trả lời khảo sát; sửa kết quả các lượt đã chạy (`eval/run-*.csv`, `cost/simulate-*.csv`, `traces/`).
