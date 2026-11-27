@@ -1,0 +1,484 @@
+{
+  "park_name": "Khu vui chơi SunWonder Mẫu",
+  "dataset_label": "synthetic",
+  "seed": 42,
+  "generated_date": "2026-11-27",
+  "park_hours": {
+    "open": "08:30",
+    "close": "20:30"
+  },
+  "ticket_prices": {
+    "gate_adult_vnd": 880000,
+    "gate_child_vnd": 660000,
+    "gate_toddler_vnd": 0
+  },
+  "zones": [
+    {
+      "id": "Z1",
+      "name": "Quảng trường Cổ Tích",
+      "theme": "gia_dinh"
+    },
+    {
+      "id": "Z2",
+      "name": "Cung điện Hải Vương",
+      "theme": "trong_nha_thuy_cung"
+    },
+    {
+      "id": "Z3",
+      "name": "Đồi Thử Thách",
+      "theme": "cam_giac_manh"
+    },
+    {
+      "id": "Z4",
+      "name": "Vịnh Nhiệt Đới",
+      "theme": "cong_vien_nuoc_vuon_thu"
+    }
+  ],
+  "walk_minutes": {
+    "Z1": {
+      "Z1": 5,
+      "Z2": 10,
+      "Z3": 18,
+      "Z4": 15
+    },
+    "Z2": {
+      "Z1": 10,
+      "Z2": 5,
+      "Z3": 20,
+      "Z4": 12
+    },
+    "Z3": {
+      "Z1": 18,
+      "Z2": 20,
+      "Z3": 5,
+      "Z4": 16
+    },
+    "Z4": {
+      "Z1": 15,
+      "Z2": 12,
+      "Z3": 16,
+      "Z4": 5
+    }
+  },
+  "attractions": [
+    {
+      "id": "A01",
+      "name": "Lâu đài Kẹo Ngọt",
+      "zone": "Z1",
+      "category": "tro_choi_gia_dinh",
+      "open_time": "09:00",
+      "close_time": "19:00",
+      "duration_min": 40,
+      "min_age": 3,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "tre_em",
+        "trong_nha",
+        "nhe_nhang"
+      ],
+      "note": "Khu vui chơi trong nhà có điều hoà, hợp tránh nắng/trú mưa.",
+      "est_wait_min": 10
+    },
+    {
+      "id": "A02",
+      "name": "Vòng quay Ngựa Gỗ Cổ Tích",
+      "zone": "Z1",
+      "category": "tro_choi_gia_dinh",
+      "open_time": "09:00",
+      "close_time": "18:30",
+      "duration_min": 30,
+      "min_age": 3,
+      "indoor": false,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "tre_em",
+        "ngoai_troi",
+        "nhe_nhang"
+      ],
+      "note": "Tạm dừng nếu trời mưa lớn.",
+      "est_wait_min": 10
+    },
+    {
+      "id": "A03",
+      "name": "Rạp phim 4D Phép Thuật",
+      "zone": "Z1",
+      "category": "giai_tri_trong_nha",
+      "open_time": "09:30",
+      "close_time": "19:30",
+      "duration_min": 35,
+      "min_age": 4,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "tre_em",
+        "trong_nha",
+        "nghi_ngoi"
+      ],
+      "note": "Chiếu liên tục mỗi 30 phút, trong nhà có máy lạnh.",
+      "est_wait_min": 15
+    },
+    {
+      "id": "A04",
+      "name": "Nhà hàng Làng Cổ Tích (Combo gia đình)",
+      "zone": "Z1",
+      "category": "an_uong",
+      "open_time": "10:30",
+      "close_time": "20:00",
+      "duration_min": 50,
+      "min_age": 0,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 220000,
+      "extra_fee_child_vnd": 140000,
+      "tags": [
+        "an_trua",
+        "an_toi",
+        "trong_nha"
+      ],
+      "note": "Set cơm gia đình, có ghế trẻ em.",
+      "est_wait_min": 5
+    },
+    {
+      "id": "A05",
+      "name": "Thủy cung Cung điện Hải Vương",
+      "zone": "Z2",
+      "category": "tham_quan",
+      "open_time": "09:00",
+      "close_time": "18:00",
+      "duration_min": 60,
+      "min_age": 0,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "tre_em",
+        "trong_nha",
+        "kham_pha"
+      ],
+      "note": "Đường hầm kính ngắm cá mập, rùa biển; điểm trú mưa/tránh nắng lý tưởng.",
+      "est_wait_min": 10
+    },
+    {
+      "id": "A06",
+      "name": "Khu Game Thùng & Thực Tế Ảo",
+      "zone": "Z2",
+      "category": "giai_tri_trong_nha",
+      "open_time": "09:30",
+      "close_time": "20:00",
+      "duration_min": 45,
+      "min_age": 5,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 80000,
+      "extra_fee_child_vnd": 80000,
+      "tags": [
+        "tre_em",
+        "trong_nha",
+        "game"
+      ],
+      "note": "Phụ thu gói xu game VR riêng ngoài vé cổng.",
+      "est_wait_min": 10
+    },
+    {
+      "id": "A07",
+      "name": "Quầy Ăn Nhanh Hải Đăng",
+      "zone": "Z2",
+      "category": "an_uong",
+      "open_time": "10:00",
+      "close_time": "19:30",
+      "duration_min": 40,
+      "min_age": 0,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 130000,
+      "extra_fee_child_vnd": 90000,
+      "tags": [
+        "an_trua",
+        "tiet_kiem",
+        "trong_nha"
+      ],
+      "note": "Gà rán, mì Ý, combo tiết kiệm trong khu máy lạnh.",
+      "est_wait_min": 5
+    },
+    {
+      "id": "A08",
+      "name": "Tàu lượn Siêu Tốc Rồng Lửa",
+      "zone": "Z3",
+      "category": "cam_giac_manh",
+      "open_time": "09:30",
+      "close_time": "17:30",
+      "duration_min": 45,
+      "min_age": 10,
+      "indoor": false,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "cam_giac_manh",
+        "ngoai_troi"
+      ],
+      "note": "Yêu cầu từ 10 tuổi trở lên (cao >= 130cm); không dành cho trẻ nhỏ.",
+      "est_wait_min": 30
+    },
+    {
+      "id": "A09",
+      "name": "Đường trượt Núi Alpine Mẫu",
+      "zone": "Z3",
+      "category": "cam_giac_manh",
+      "open_time": "09:00",
+      "close_time": "17:00",
+      "duration_min": 45,
+      "min_age": 6,
+      "indoor": false,
+      "maintenance": true,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "cam_giac_manh",
+        "ngoai_troi"
+      ],
+      "note": "ĐANG TẠM ĐÓNG BẢO TRÌ trong ngày hôm nay.",
+      "est_wait_min": 30
+    },
+    {
+      "id": "A10",
+      "name": "Tháp Rơi Tự Do 35m",
+      "zone": "Z3",
+      "category": "cam_giac_manh",
+      "open_time": "10:00",
+      "close_time": "17:30",
+      "duration_min": 35,
+      "min_age": 12,
+      "indoor": false,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "cam_giac_manh",
+        "ngoai_troi"
+      ],
+      "note": "Chỉ dành cho khách từ 12 tuổi trở lên.",
+      "est_wait_min": 30
+    },
+    {
+      "id": "A11",
+      "name": "Bánh Xe Bầu Trời (Vòng quay ngắm cảnh)",
+      "zone": "Z3",
+      "category": "tham_quan",
+      "open_time": "10:00",
+      "close_time": "19:30",
+      "duration_min": 35,
+      "min_age": 3,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "tre_em",
+        "ngam_canh",
+        "trong_nha"
+      ],
+      "note": "Cabin kín có điều hoà, ngắm toàn cảnh vịnh (dừng nếu giông sét).",
+      "est_wait_min": 10
+    },
+    {
+      "id": "A12",
+      "name": "Vườn Thú Bán Hoang Dã Nhỏ",
+      "zone": "Z4",
+      "category": "tham_quan",
+      "open_time": "09:00",
+      "close_time": "16:30",
+      "duration_min": 55,
+      "min_age": 0,
+      "indoor": false,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "tre_em",
+        "ngoai_troi",
+        "dong_vat"
+      ],
+      "note": "Đóng cửa sớm lúc 16:30; nên đi buổi sáng hoặc đầu giờ chiều trời tạnh.",
+      "est_wait_min": 15
+    },
+    {
+      "id": "A13",
+      "name": "Hồ Bơi Trẻ Em & Vịnh Phao Nổi",
+      "zone": "Z4",
+      "category": "cong_vien_nuoc",
+      "open_time": "09:30",
+      "close_time": "17:00",
+      "duration_min": 60,
+      "min_age": 4,
+      "indoor": false,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "tre_em",
+        "ngoai_troi",
+        "nuoc"
+      ],
+      "note": "Đóng cửa lúc 17:00 và tạm dừng ngay khi trời mưa.",
+      "est_wait_min": 10
+    },
+    {
+      "id": "A14",
+      "name": "Dịch vụ Xe Điện Nội Khu (Vé ngày)",
+      "zone": "Z1",
+      "category": "dich_vu",
+      "open_time": "08:30",
+      "close_time": "20:30",
+      "duration_min": 15,
+      "min_age": 0,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 100000,
+      "extra_fee_child_vnd": 70000,
+      "tags": [
+        "di_chuyen",
+        "gia_dinh"
+      ],
+      "note": "Tùy chọn phụ thu cho gia đình có trẻ nhỏ không muốn đi bộ nhiều.",
+      "est_wait_min": 5
+    },
+    {
+      "id": "A15",
+      "name": "Buffet Trưa Đại Dương",
+      "zone": "Z4",
+      "category": "an_uong",
+      "open_time": "11:00",
+      "close_time": "14:00",
+      "duration_min": 60,
+      "min_age": 0,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 350000,
+      "extra_fee_child_vnd": 200000,
+      "tags": [
+        "an_trua",
+        "cao_cap",
+        "trong_nha"
+      ],
+      "note": "Chỉ phục vụ 11:00–14:00, phụ thu cao.",
+      "est_wait_min": 5
+    },
+    {
+      "id": "A16",
+      "name": "Nhà Banh & Góc Nghỉ Trưa Gia Đình",
+      "zone": "Z2",
+      "category": "giai_tri_trong_nha",
+      "open_time": "09:00",
+      "close_time": "19:00",
+      "duration_min": 45,
+      "min_age": 2,
+      "indoor": true,
+      "maintenance": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "tags": [
+        "tre_em",
+        "trong_nha",
+        "nghi_ngoi"
+      ],
+      "note": "Miễn phí trong vé cổng, có ghế nghỉ cho phụ huynh.",
+      "est_wait_min": 10
+    }
+  ],
+  "shows": [
+    {
+      "id": "S01",
+      "name": "Biểu diễn Chim Thông Minh",
+      "zone": "Z4",
+      "start_time": "10:30",
+      "end_time": "11:00",
+      "indoor": false,
+      "min_age": 0,
+      "cancelled_on_rain": true,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "note": "Sân khấu ngoài trời tại Vườn thú, huỷ nếu trời mưa."
+    },
+    {
+      "id": "S02",
+      "name": "Biểu diễn Nàng Tiên Cá",
+      "zone": "Z2",
+      "start_time": "11:00",
+      "end_time": "11:20",
+      "indoor": true,
+      "min_age": 0,
+      "cancelled_on_rain": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "note": "Trong nhà tại Thủy cung; trùng giờ với phần cuối S01 nên không thể xem cả hai cùng lúc."
+    },
+    {
+      "id": "S03",
+      "name": "Cho Cá Mập Ăn",
+      "zone": "Z2",
+      "start_time": "15:00",
+      "end_time": "15:20",
+      "indoor": true,
+      "min_age": 0,
+      "cancelled_on_rain": false,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "note": "Trong nhà tại Thủy cung, vẫn diễn bình thường khi trời mưa."
+    },
+    {
+      "id": "S04",
+      "name": "Diễu hành Carnival Đường Phố",
+      "zone": "Z1",
+      "start_time": "16:15",
+      "end_time": "16:45",
+      "indoor": false,
+      "min_age": 0,
+      "cancelled_on_rain": true,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "note": "Diễu hành ngoài trời, huỷ nếu trời mưa."
+    },
+    {
+      "id": "S05",
+      "name": "Show Thực Cảnh Ánh Sáng Đêm",
+      "zone": "Z1",
+      "start_time": "19:30",
+      "end_time": "20:15",
+      "indoor": false,
+      "min_age": 0,
+      "cancelled_on_rain": true,
+      "extra_fee_adult_vnd": 0,
+      "extra_fee_child_vnd": 0,
+      "note": "Show chính buổi tối tại Quảng trường Cổ Tích (huỷ nếu mưa lớn)."
+    }
+  ],
+  "weather_by_date": {
+    "2026-11-28": {
+      "summary": "Nắng nhẹ cả ngày, không mưa",
+      "rain_from": null,
+      "rain_to": null,
+      "outdoor_ok": true
+    },
+    "2026-11-29": {
+      "summary": "Sáng nắng, mưa rào từ 14:00 đến 17:30",
+      "rain_from": "14:00",
+      "rain_to": "17:30",
+      "outdoor_ok": false
+    },
+    "2026-11-30": {
+      "summary": "Mưa lớn cả ngày từ 09:00 đến 20:30",
+      "rain_from": "09:00",
+      "rain_to": "20:30",
+      "outdoor_ok": false
+    }
+  }
+}
