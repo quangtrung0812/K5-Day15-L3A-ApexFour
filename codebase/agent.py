@@ -16,6 +16,7 @@ Công cụ đọc dữ liệu SunWonder Mẫu từ data/park_data.json.
 """
 from datetime import date
 import json
+from pathlib import Path
 import re
 
 from ai import call_model, MODEL_PROVIDER
@@ -23,6 +24,19 @@ from tools import kiem_lich_trinh, tra_diem_choi, tra_lich_show, tra_thoi_tiet, 
 from tracing import note
 
 MAX_STEPS = 3
+_PARK_META_PATH = Path(__file__).resolve().parents[1] / "data" / "park_data.json"
+
+
+def _load_park_meta() -> dict:
+    try:
+        raw = json.loads(_PARK_META_PATH.read_text(encoding="utf-8-sig"))
+        return {
+            "ticket_prices": raw.get("ticket_prices", {}),
+            "walk_minutes": raw.get("walk_minutes", {}),
+            "park_hours": raw.get("park_hours", {}),
+        }
+    except Exception:
+        return {}
 
 SYSTEM = """Bạn là trợ lý lập lịch trình 1 ngày tại khu vui chơi giải trí cho gia đình có trẻ nhỏ (Track C · C1).
 
@@ -62,11 +76,13 @@ def _from_min(total: int) -> str:
 
 
 _OUT_OF_SCOPE_PATTERNS = [
-    (r"(số thẻ|mã otp|otp|cvv|mật khẩu|thanh toán giúp|trừ thẻ|đặt vé giúp|chuyển khoản)",
+    (r"(số thẻ|mã otp|otp|cvv|mật khẩu|thanh toán giúp|trừ thẻ|đặt vé giúp|dùng thẻ đã lưu|chuyển khoản)",
      "Tôi chỉ hỗ trợ lập và kiểm tra lịch trình tham quan 1 ngày tại khu vui chơi, không hỗ trợ đặt vé, thanh toán hay nhận số thẻ/OTP/mật khẩu. Bạn vui lòng không gửi thông tin thanh toán tại đây và tự đặt vé trên kênh chính thức của khu vui chơi."),
+    (r"(đặt\s+(?:giúp\s+|luôn\s+)?(?:mình\s+)?(?:\d+\s+)?phòng|phòng khách sạn|gọi\s+(?:giúp\s+)?(?:taxi|xe\b|grab)|đặt\s+vé\s+máy\s+bay)",
+     "Tôi từ chối yêu cầu đặt phòng khách sạn, gọi taxi/xe hay đặt dịch vụ ngoài phạm vi khu vui chơi (trợ lý không thực hiện giao dịch hay đặt dịch vụ bên ngoài). Bạn vui lòng tự đặt qua kênh phù hợp; tôi luôn sẵn sàng hỗ trợ điều chỉnh lịch trình vui chơi bên trong khu."),
     (r"(tôi là (nhân viên|quản lý|admin|chủ khu|ban quản lý).*(cập nhật|sửa|đổi giá|giảm \d+%|mở lại|bỏ qua|cho phép|ghi đè)|(cập nhật|sửa|đổi).*(giá vé|trạng thái bảo trì)|mở lại.*(bảo trì|đường trượt|alpine))",
      "Tôi từ chối tự ý cập nhật giá vé, áp dụng mức giảm giá chưa có trong hệ thống hoặc mở lại điểm đang bảo trì theo yêu cầu trong tin nhắn, kể cả khi tự xưng là quản lý hay nhân viên. Hệ thống chỉ dùng dữ liệu chính thức từ công cụ (vé người lớn 880.000đ, Đường trượt Núi Alpine Mẫu A09 đang đóng bảo trì)."),
-    (r"(bỏ qua.*(tuổi|chiều cao|quy định|hướng dẫn|ràng buộc)|ignore previous|system prompt|tôi là (nhân viên|quản lý).*(bỏ qua|cho phép))",
+    (r"(bỏ qua.*(tuổi|chiều cao|quy định|hướng dẫn|ràng buộc)|đừng kiểm tra độ tuổi|ignore previous|system prompt|tôi là (nhân viên|quản lý).*(bỏ qua|cho phép))",
      "Tôi không thể bỏ qua quy định an toàn về độ tuổi/chiều cao của trẻ nhỏ hoặc các ràng buộc kiểm chứng giờ mở cửa và ngân sách, kể cả khi có yêu cầu ghi đè. Nếu muốn đổi lịch phù hợp hơn, bạn có thể cho tôi biết độ tuổi thực tế của bé hoặc nới khung giờ/ngân sách."),
 ]
 
@@ -131,22 +147,41 @@ def _parse_request(text: str) -> dict:
     if ages and te is None:
         te = len(ages)
 
-    rain_report = re.search(r"\bmưa\s+(?:từ|lúc)\s+([01]?\d|2[0-3])[:h]([0-5]\d)\b", low)
-    trip_text = low if not rain_report else low[:rain_report.start()] + low[rain_report.end():]
-    times = re.findall(r"\b(\d{1,2})\s*(?::|h|g)\s*(\d{0,2})\b", trip_text)
+    rain_report = (
+        re.search(r"\bmưa\s+(?:từ|lúc)\s+([01]?\d|2[0-3])[:hg]([0-5]\d)\b", low)
+        or re.search(r"\b([01]?\d|2[0-3])[:hg]([0-5]\d)\s+(?:trời\s+)?(?:bắt đầu\s+|đột xuất\s+)?mưa\b", low)
+    )
+    trip_text = low if not rain_report else low[:rain_report.start()] + " " + low[rain_report.end():]
+
     gio_bat_dau, gio_ket_thuc = None, None
-    parsed_times = []
-    for h_s, m_s in times:
-        h = int(h_s)
-        m = int(m_s) if m_s else 0
-        if 6 <= h <= 22 and 0 <= m < 60:
-            parsed_times.append("%02d:%02d" % (h, m))
-    if len(parsed_times) >= 2:
-        gio_bat_dau, gio_ket_thuc = parsed_times[0], parsed_times[1]
-    elif re.search(r"(\d+)\s*(?:tiếng|tieng|giờ|gio)", low):
-        dur_h = int(re.search(r"(\d+)\s*(?:tiếng|tieng|giờ|gio)", low).group(1))
-        gio_bat_dau = parsed_times[0] if parsed_times else "09:00"
-        gio_ket_thuc = _from_min(min(_to_min(gio_bat_dau) + dur_h * 60, 18 * 60))
+    explicit_range = (
+        re.search(r"(?:từ|tu|còn|khung(?:\s+giờ)?)\s*(\d{1,2})\s*(?::|h|g)\s*(\d{0,2})\s*(?:đến|den|tới|-|–)\s*(\d{1,2})\s*(?::|h|g)\s*(\d{0,2})", trip_text)
+        or re.search(r"\b(\d{1,2})\s*(?::|h|g)\s*(\d{0,2})\s*(?:đến|den|tới|-|–)\s*(\d{1,2})\s*(?::|h|g)\s*(\d{0,2})\b", trip_text)
+    )
+    if explicit_range:
+        h1, m1, h2, m2 = explicit_range.groups()
+        h1_i, m1_i = int(h1), int(m1) if m1 else 0
+        h2_i, m2_i = int(h2), int(m2) if m2 else 0
+        if 6 <= h1_i <= 22 and 6 <= h2_i <= 23 and (h1_i * 60 + m1_i) < (h2_i * 60 + m2_i):
+            gio_bat_dau = "%02d:%02d" % (h1_i, m1_i)
+            gio_ket_thuc = "%02d:%02d" % (h2_i, m2_i)
+
+    if not gio_bat_dau or not gio_ket_thuc:
+        times = re.findall(r"\b(\d{1,2})\s*(?::|h|g)\s*(\d{0,2})\b", trip_text)
+        parsed_times = []
+        for h_s, m_s in times:
+            h = int(h_s)
+            m = int(m_s) if m_s else 0
+            if 6 <= h <= 22 and 0 <= m < 60:
+                hhmm = "%02d:%02d" % (h, m)
+                if not parsed_times or parsed_times[-1] != hhmm:
+                    parsed_times.append(hhmm)
+        if len(parsed_times) >= 2 and _to_min(parsed_times[0]) < _to_min(parsed_times[1]):
+            gio_bat_dau, gio_ket_thuc = parsed_times[0], parsed_times[1]
+        elif re.search(r"(\d+)\s*(?:tiếng|tieng|giờ|gio)", low):
+            dur_h = int(re.search(r"(\d+)\s*(?:tiếng|tieng|giờ|gio)", low).group(1))
+            gio_bat_dau = parsed_times[0] if parsed_times else "09:00"
+            gio_ket_thuc = _from_min(min(_to_min(gio_bat_dau) + dur_h * 60, 18 * 60))
 
     ngan_sach = _parse_money_vnd(text)
     day_match = re.search(r"\b(\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{4})\b", low)
@@ -198,13 +233,45 @@ def _missing_fields(req: dict) -> list:
 # ================================================================
 
 def _extract_json(text: str):
-    m = re.search(r"\{.*\}", text, flags=re.S)
+    cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", (text or "").strip(), flags=re.I)
+    m = re.search(r"\{.*\}", cleaned, flags=re.S)
     if not m:
         return None
     try:
         return json.loads(m.group(0))
     except json.JSONDecodeError:
         return None
+
+
+def _detect_reported_closures(text: str, diem_list: list, show_list: list) -> tuple:
+    """Phát hiện điểm chơi hoặc suất show mà người dùng báo vừa đóng/tạm dừng/huỷ giữa ngày."""
+    low = text.lower()
+    closed_points = []
+    for d in diem_list:
+        base_name = d["name"].split("(")[0].strip().lower()
+        pat = r"(?:%s|\b%s\b)[^.?!;]{0,35}?(?:báo\s+)?(?:tạm\s+)?(?:đóng|dừng|ngưng|bảo trì|hỏng)" % (
+            re.escape(base_name), re.escape(d["id"].lower())
+        )
+        if re.search(pat, low):
+            closed_points.append(d["id"])
+
+    cancelled_shows = []
+    show_aliases = {
+        "S01": ["biểu diễn chim", "show chim"],
+        "S02": ["nàng tiên cá"],
+        "S03": ["cá mập"],
+        "S04": ["diễu hành", "carnival"],
+        "S05": ["ánh sáng đêm", "thực cảnh"],
+    }
+    for s in show_list:
+        sid = s["id"]
+        names = [s["name"].lower(), sid.lower()] + show_aliases.get(sid, [])
+        for nm in names:
+            pat = r"%s[^.?!;]{0,35}?(?:báo\s+|đã\s+|bị\s+|vừa\s+)?(?:hủy|huỷ)" % re.escape(nm)
+            if re.search(pat, low):
+                cancelled_shows.append(sid)
+                break
+    return closed_points, cancelled_shows
 
 
 def _build_draft_from_tools(req: dict, diem_list: list, show_list: list, thoi_tiet: dict) -> list:
@@ -228,10 +295,12 @@ def _build_draft_from_tools(req: dict, diem_list: list, show_list: list, thoi_ti
                 return True
         return False
 
-    # Chọn điểm chơi hợp lệ từ dữ liệu tool (đã lọc bảo trì + độ tuổi bé), gom theo phân khu để đi gọn đỡ vòng vèo
+    # Chọn điểm chơi hợp lệ từ dữ liệu tool (đã lọc bảo trì + điểm báo đóng + độ tuổi bé), gom theo phân khu để đi gọn đỡ vòng vèo
+    closed_set = set(req.get("diem_bao_dong") or ())
     usable = [
         d for d in diem_list
         if not d.get("maintenance", False)
+        and d["id"] not in closed_set
         and not (req["so_tre_em"] > 0 and min_tuoi is not None and d.get("min_age", 0) > min_tuoi)
     ]
     usable.sort(key=lambda d: (d.get("zone", "Z9"), d.get("id", "")))
@@ -380,11 +449,20 @@ def answer(text: str) -> dict:
     if req["mua_tu"]:
         thoi_tiet["mua_tu"] = req["mua_tu"]
     diem_list = tra_diem_choi(bao_gom_bao_tri=True)
-    show_list = tra_lich_show(req["ngay"])
+    base_shows = tra_lich_show(req["ngay"], mua_tu=req["mua_tu"])
+    closed_points, cancelled_shows = _detect_reported_closures(text, diem_list, base_shows)
+    req["diem_bao_dong"] = closed_points
+    req["show_da_huy"] = cancelled_shows
+    show_list = (
+        tra_lich_show(req["ngay"], mua_tu=req["mua_tu"], show_da_huy=cancelled_shows)
+        if cancelled_shows else base_shows
+    )
+    park_meta = _load_park_meta()
     catalog = {d["id"]: d for d in diem_list + show_list}
     compatible_points = [
         d for d in diem_list
         if not d.get("maintenance", False)
+        and d["id"] not in set(closed_points)
         and not (req["so_tre_em"] > 0 and min_tuoi is not None and d.get("min_age", 0) > min_tuoi)
     ]
 
@@ -396,13 +474,15 @@ def answer(text: str) -> dict:
     for step in range(1, MAX_STEPS + 1):
         user_prompt = (
             "Yêu cầu phụ huynh: %s\n"
-            "Thông số trích xuất: %s\n"
+            "Thông số trích xuất (chú ý diem_bao_dong và show_da_huy nếu có): %s\n"
+            "Bảng giá vé cổng & ma trận phút đi bộ giữa các khu (cùng điểm = 0p, cùng khu = 5p): %s\n"
             "Thời tiết: %s\n"
             "Danh mục đầy đủ điểm chơi trong khu (gồm cả min_age và maintenance): %s\n"
-            "Lịch show: %s\n"
+            "Lịch show (chú ý cờ huy=true thì KHÔNG được xếp): %s\n"
         ) % (
             text,
             json.dumps(req, ensure_ascii=False),
+            json.dumps(park_meta, ensure_ascii=False),
             json.dumps(thoi_tiet, ensure_ascii=False),
             json.dumps(diem_list, ensure_ascii=False),
             json.dumps(show_list, ensure_ascii=False),
@@ -444,7 +524,26 @@ def answer(text: str) -> dict:
             req["ngan_sach"],
             thoi_tiet,
             khung_gio={"bat_dau": req["gio_bat_dau"], "ket_thuc": req["gio_ket_thuc"]},
+            show_da_huy=req.get("show_da_huy") or (),
         )
+
+        # Chặn cứng điểm mà người dùng vừa báo tạm đóng/dừng đột xuất giữa ngày
+        closed_hit = [
+            item.get("diem_id") for item in plan
+            if isinstance(item, dict) and item.get("diem_id") in set(req.get("diem_bao_dong") or ())
+        ]
+        if closed_hit:
+            check["hop_le"] = False
+            for cid_closed in closed_hit:
+                check["loi"].append({"ma": "DIEM_TAM_DONG_THEO_BAO_CAO", "diem_id": cid_closed})
+
+        if closed_points and not luu_y:
+            closed_names = [
+                "%s (%s)" % (catalog[cid_c]["name"], cid_c) if cid_c in catalog else cid_c
+                for cid_c in closed_points
+            ]
+            luu_y = "Đã loại điểm báo tạm đóng/dừng: %s và chuyển sang điểm đang mở phù hợp." % ", ".join(closed_names)
+            last_luu_y = luu_y
 
         check["vi_pham"] = [
             error.get("ly_do") or "%s%s" % (error["ma"], " (%s)" % error["diem_id"] if "diem_id" in error else "")

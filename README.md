@@ -81,7 +81,7 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Giả ở CP2** (`MODEL_PROVIDER=fake`) · **Thật từ CP3** | Đang chờ nối model thật trong `codebase/ai.py` trước CP3 |
+| Lời gọi AI ở quyết định trung tâm | **Thật từ CP3** (qua `.env`: `gemini` / `openai` / `groq` / `anthropic` / `ollama`; mặc định `fake` nếu chưa cấu hình `.env`) | Nối tại `codebase/ai.py`, đo token thật từ trường `usage` của API |
 | 5 công cụ tra dữ liệu & kiểm ràng buộc (`codebase/tools.py`) | **Code kiểm chứng thật** trên dữ liệu `synthetic` | Dữ liệu khu vui chơi dựng `"SunWonder Mẫu"` (`data/park_data.json`, có seed, ghi rõ ở `data/DATA_CARD.md`) |
 | Đặt vé / thanh toán / dữ liệu thời gian thực | **Không làm** | Hệ thống chỉ xuất bản nháp lịch trình cho phụ huynh tự duyệt |
 

@@ -19,7 +19,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): Không dù
 - Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI): Sắp xếp lịch trình tham quan, xem biểu diễn và ăn nghỉ khả thi cho cả gia đình có trẻ nhỏ trong một ngày tại khu vui chơi rộng lớn mà không vượt ngân sách hay trễ giờ mở cửa/giờ show.
 - Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ: Đang tự đối chiếu bản đồ ảnh, bảng lịch show trên web/fanpage và ghi chú tay (hoặc hỏi kinh nghiệm trên hội nhóm review); cách này hỏng ở chỗ tốn nhiều thời gian tra chéo, dễ tính sót phí phụ thu/ăn uống, không kịp xoay xở khi mưa hoặc trễ 1 mắt xích làm vỡ cả dây chuyền buổi chiều — nhưng họ chưa bỏ vì chưa có công cụ nào kiểm sẵn ràng buộc giờ mở cửa, độ tuổi bé và ngân sách trên đúng dữ liệu khu vui chơi.
 - Pain (KHÔNG chữ AI): Phụ huynh đưa gia đình có trẻ nhỏ đi khu vui chơi một ngày — đang tự tra bản đồ, lịch biểu diễn, giới hạn độ tuổi và giá dịch vụ ở nhiều nơi rời rạc để ghép lịch — vướng ở chỗ hàng chục điểm có giờ đóng/mở, giờ show cố định và thời gian di chuyển chồng chéo (hoặc mưa đột xuất) — hậu quả là mất hàng giờ chuẩn bị mà vẫn dễ lỡ show chính, đưa con tới trò không đủ điều kiện chơi, đi bộ vòng vèo mệt mỏi hoặc lố ngân sách.
-- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): Đào **39 review tiếng Việt** (mọi mức sao, bài gốc ≥10 từ) trên Google Play ứng dụng VinWonders (`evidence/data-mining.md`): **11/39 (28.2%)** phản ánh trực tiếp vấn đề thuộc bài toán xếp lịch trình (bản đồ/di chuyển/tối ưu lộ trình `9/39 = 23.1%`, giờ show/thông báo giờ `2/39 = 5.1%`, chi phí/voucher `2/39 = 5.1%`, giới hạn độ tuổi/chiều cao trẻ em `1/39 = 2.6%`) — bước đầu vượt ngưỡng giả thuyết `≥15–20%`; đang phỏng vấn kiểm chéo 3 người dùng thật ngoài nhóm (`P1`–`P3`) trước CP3 để đo thời gian tự xếp lịch và tình huống mưa.
+- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): Đào **39 review tiếng Việt** (mọi mức sao, bài gốc ≥10 từ) trên Google Play ứng dụng VinWonders (`evidence/data-mining.md`): **11/39 (28.2%)** phản ánh trực tiếp vấn đề thuộc bài toán xếp lịch trình (bản đồ/di chuyển/tối ưu lộ trình `9/39 = 23.1%`, giờ show/thông báo giờ `2/39 = 5.1%`, chi phí/voucher `2/39 = 5.1%`, giới hạn độ tuổi/chiều cao trẻ em `1/39 = 2.6%`), đối chiếu khớp với mẫu bổ sung trên Tripadvisor Sun World Hạ Long (`evidence/hung-ha-long.md`: **3/10 = 30.0%** gặp khu/trò đóng bảo trì bất ngờ; gộp 2 nguồn đạt **14/49 = 28.6%**) — vượt ngưỡng giả thuyết `≥15–20%`; đang hoàn tất ghi chép phỏng vấn kiểm chéo 3 người dùng thật ngoài nhóm (`P1`–`P3`) trước CP3.
 
 ## §2. Impact & quyết định chọn *(guide 1.3)*
 
@@ -35,10 +35,10 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): Không dù
 - **Hướng ĐÃ LOẠI + vì sao (giữ lại):**
   - **C2 (Lễ tân đổi phòng):** Người dùng trực tiếp là lễ tân khách sạn chứ không phải khách lưu trú; trong 2 ngày nhóm không hẹn đủ ≥3 lễ tân thật (tránh bẫy Track C: chỉ lấy review khách mà người dùng là lễ tân).
   - **C3 (Chuyến bay bị huỷ):** Khó tìm đủ người dùng thật vừa bị huỷ chuyến bay trong 1 tháng gần đây ngay tại lớp để kiểm chứng sâu, đồng thời luồng giữ chỗ – đổi vé – hoàn vé có hành động không đảo được vượt quá phạm vi tối ưu nhất trong 10 giờ.
-- **Số lần / tháng của từng kiểu người dùng (dùng cho persona ở `cost/personas.yaml` và §8):**
-  - `xep_mot_lan` (khách đi chơi thông thường, lập lịch 1 lần trước chuyến đi): **1 phiên / tháng** *(tự ước tính)*.
-  - `sua_nhieu_lan` (phụ huynh kỹ tính, đổi ngân sách/khung giờ/điểm chơi nhiều lần trước ngày đi): **3 phiên / tháng** *(tự ước tính)*.
-  - `ngay_mua_xep_lai` (gia đình gặp mưa hoặc đóng trò đột xuất giữa ngày, cần xếp lại phần còn lại của ngày): **2 phiên / tháng** *(tự ước tính)*.
+- **Số lần / tháng của từng kiểu người dùng (đồng bộ 100% với `cost/personas.yaml` cho §8):**
+  - `lap_lich_truoc_chuyen_di` (tỷ trọng 65% — gia đình lập một lịch cho một chuyến đi trong tháng): **1 phiên / tháng**, 1 lượt/phiên *(tự ước tính)*.
+  - `sua_lich_truoc_khi_di` (tỷ trọng 25% — lập lịch rồi thay đổi giờ đến, ngân sách hoặc hoạt động trước khi đi): **1 phiên / tháng**, 3 lượt/phiên *(tự ước tính)*.
+  - `xep_lai_trong_ngay_mua` (tỷ trọng 10% — lập lịch buổi sáng rồi đổi lịch 3 lượt khi gặp mưa hoặc show ngoài trời bị huỷ): **1 phiên / tháng**, 4 lượt/phiên *(tự ước tính)*.
 
 ## §3. Giải pháp tương tự *(guide 2.1)*
 - **App / Website chính thức của khu vui chơi (VinWonders, Sun World):** *Đáng học:* dữ liệu giờ mở cửa, bảng giá và bản đồ phân khu chính xác theo ngày. *Đáng né:* thông tin nằm tĩnh, rải rác theo từng mục, khách phải tự ghép lịch và tự tính tổng chi phí gia đình. *Mình khác gì:* tự động ghép lịch trình theo ràng buộc cụ thể của từng gia đình (tuổi bé, khung giờ, ngân sách) và xếp lại ngay khi có mưa/huỷ show.
@@ -128,7 +128,7 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 - **Trường hợp đặc thù lĩnh vực (lớp 4):** Ràng buộc bất khả thi (ngân sách thấp hơn tổng vé cổng, hoặc chỉ có 3 tiếng mà đòi đi 8 trò + 2 show) → sau tối đa 3 vòng tự kiểm–sửa không tìm ra phương án sạch, hệ thống báo rõ **không xếp được** kèm con số chênh lệch cụ thể (vd thiếu bao nhiêu tiền / thiếu bao nhiêu phút) và gợi ý 2 cách nới ràng buộc để phụ huynh chọn.
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
-- Bộ câu thử CP2 có **15 câu** (6 `thuong`, 6 `kho`, 3 `tu_choi`) và **4 metric**. [Data card](data/DATA_CARD.md) · [Bộ câu thử](eval/benchmark.csv) · [Định nghĩa metric](eval/metric_spec.yaml)
+- Bộ câu thử CP3 có **25 câu** (8 `thuong`, 13 `kho`, 4 `tu_choi`; giữ nguyên `B01`–`B15` từ CP2 và mở rộng thêm `B16`–`B25`, nguồn dữ liệu thật `10/25 = 40%`) và **4 metric**. [Data card](data/DATA_CARD.md) · [Bộ câu thử](eval/benchmark.csv) · [Định nghĩa metric](eval/metric_spec.yaml)
 - **Chuẩn "đạt"** (chốt trước 19:30 Thứ Sáu 27/11, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu qua, đồng thời 100% câu `tu_choi` qua và 0 vi phạm ràng buộc cứng kiểm bằng code (`kiem_lich_trinh`) ở mọi câu xuất lịch trình."**
 - Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
@@ -159,6 +159,8 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
 | 27/11/2026 | Ghép nhánh CP2, đồng bộ mã điểm, ngày và kết quả kiểm lịch giữa agent và công cụ. | Agent dùng hợp đồng mẫu cũ khi đọc dữ liệu SunWonder Mẫu. |
+| 27/11/2026 tối (CP2 → CP3) | Mở rộng `eval/benchmark.csv` từ 15 lên 25 câu (`B16`–`B25`, không sửa `B01`–`B15` và giữ nguyên chuẩn "đạt" §7), thêm `eval/grade_helper.py` kiểm tự động 2 metric `code`. | Đạt yêu cầu 20–30 câu của CP3 và phủ thêm ca mưa/đóng điểm đột xuất, 2 bé lệch tuổi, điểm không tồn tại, ngoài phạm vi (`B25`). |
+| 27/11/2026 tối (CP2 → CP3) | Nối API gọi model thật đa nhà cung cấp trong `codebase/ai.py` (`gemini`, `openai`, `groq`, `openrouter`, `deepseek`, `anthropic`, `ollama`), siết huỷ show/mưa/điểm báo đóng & regex khung giờ trong `tools.py` + `agent.py`, đồng bộ 3 persona §2 với `cost/personas.yaml` và cập nhật `evidence/summary.md`. | Chuẩn bị chạy đánh giá Lượt 1 bằng AI thật trước CP3 và khắc phục lỗi bắt khung giờ/ngoài phạm vi phát hiện qua `B17`, `B21`, `B25`, `H01`. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

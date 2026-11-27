@@ -70,3 +70,57 @@ class AgentToolsTest(unittest.TestCase):
         self.assertIn("SUAT_SHOW_KHONG_CO_HOAC_DA_HUY (S04)", model.call_args.args[1])
         self.assertIn("15:00–15:20", reply)
         self.assertNotIn("16:15–16:45", reply)
+
+    def test_b17_b21_time_parser_and_b25_out_of_scope_guardrail(self):
+        with (ROOT / "eval" / "benchmark.csv").open(encoding="utf-8-sig", newline="") as file:
+            by_id = {row["id"]: row["input"] for row in csv.DictReader(file)}
+
+        with patch.object(agent, "MODEL_PROVIDER", "fake"), patch.object(
+            agent, "call_model", return_value={"model": "fake", "text": ""}
+        ):
+            r_b17 = agent.answer(by_id["B17"])["output"]
+            r_b21 = agent.answer(by_id["B21"])["output"]
+        self.assertIn("LỊCH TRÌNH ĐỀ XUẤT", r_b17)
+        self.assertNotIn("[A13]", r_b17)
+        self.assertIn("LỊCH TRÌNH ĐỀ XUẤT", r_b21)
+        self.assertNotIn("[A02]", r_b21)
+
+        with patch.object(agent, "call_model") as model:
+            r_b25 = agent.answer(by_id["B25"])["output"]
+        model.assert_not_called()
+        self.assertIn("từ chối", r_b25.lower())
+
+    def test_ai_py_gemini_and_openai_usage_parsing(self):
+        import ai
+
+        gemini_payload = {
+            "candidates": [{"content": {"parts": [{"text": "{\"lich_trinh\": []}"}]}}],
+            "usageMetadata": {"promptTokenCount": 310, "candidatesTokenCount": 85, "thoughtsTokenCount": 15},
+        }
+        with patch.object(ai, "MODEL_PROVIDER", "gemini"), patch.object(
+            ai, "MODEL_NAME", "gemini-2.5-flash"
+        ), patch.object(ai, "API_KEY", "dummy-key"), patch.object(
+            ai, "post_json", return_value=gemini_payload
+        ):
+            res_g = ai.call_model("sys", "usr")
+        self.assertEqual(res_g["model"], "gemini-2.5-flash")
+        self.assertEqual(res_g["tokens_in"], 310)
+        self.assertEqual(res_g["tokens_out"], 100)
+
+        openai_payload = {
+            "choices": [{"message": {"content": "{\"lich_trinh\": []}"}}],
+            "usage": {"prompt_tokens": 200, "completion_tokens": 60},
+        }
+        with patch.object(ai, "MODEL_PROVIDER", "openai"), patch.object(
+            ai, "MODEL_NAME", "gpt-4o-mini"
+        ), patch.object(ai, "API_KEY", "dummy-key"), patch.object(
+            ai, "post_json", return_value=openai_payload
+        ):
+            res_o = ai.call_model("sys", "usr")
+        self.assertEqual(res_o["model"], "gpt-4o-mini")
+        self.assertEqual(res_o["tokens_in"], 200)
+        self.assertEqual(res_o["tokens_out"], 60)
+
+
+if __name__ == "__main__":
+    unittest.main()
