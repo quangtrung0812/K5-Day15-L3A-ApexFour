@@ -88,7 +88,7 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 2–3 dòng (bắt buộc): nhóm dùng công cụ AI nào để làm gì, người kiểm lại phần nào. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
 
-____
+Nguyễn Quốc Hưng dùng Codex để viết công cụ kiểm tra lịch, soạn ca thử và chuẩn bị kịch bản demo. Phần công cụ được kiểm thử trên dữ liệu mô phỏng SunWonder Mẫu bằng `python -m unittest discover -s tests -v`.
 
 ## File mẫu — điền ở bước nào
 
