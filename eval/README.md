@@ -51,7 +51,10 @@
 
 ## 4. Lệnh
 
-`python run.py eval` → `eval/run-N.csv` + `traces/run-N.jsonl` · điền cột `pass` · `python run.py score eval/run-N.csv`
+- Chạy cả bộ & chấm điểm chính thức:
+  `python run.py eval` → `eval/run-N.csv` + `traces/run-N.jsonl` · điền cột `pass` · `python run.py score eval/run-N.csv`
+- Kiểm tự động 2 metric `grader: code` (`khong_vi_pham_rang_buoc`, `khop_du_lieu_cong_cu` — chỉ đọc, không sửa file lượt chạy):
+  `python eval/grade_helper.py eval/run-1.csv`
 
 ## 5. Đã chạy gì
 
