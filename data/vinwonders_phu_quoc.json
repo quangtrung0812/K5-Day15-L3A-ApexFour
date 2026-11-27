@@ -1,0 +1,1141 @@
+{
+  "metadata": {
+    "dataset_id": "vinwonders_phu_quoc_2026_unified_v1",
+    "park_name": "VinWonders Phú Quốc",
+    "location": "Bãi Dài, Phú Quốc, Việt Nam",
+    "fetched_date": "2026-11-27",
+    "seed": 42,
+    "official_sources": [
+      "https://vinwonders.com/vi/vinwonders-phu-quoc/",
+      "https://vinwonders.com/vi/wonderpedia/news/thong-bao-chieu-cao-ap-dung-vinwonders-phu-quoc/",
+      "https://vinwonders.com/vi/wonderpedia/news/gia-ve-vinwonders-phu-quoc-combo-voucher-hot/",
+      "https://vinwonders.com/vi/wonderpedia/news/kinh-nghiem-di-vinwonders-va-vinpearl-safari-phu-quoc-chi-tiet/",
+      "https://vinwonders.com/vi/wonderpedia/news/vinwonders-phu-quoc-co-cong-vien-nuoc-khong/",
+      "https://www.openstreetmap.org (ODbL)"
+    ],
+    "real_vs_synthetic_disclosure": {
+      "real_official": "Tên 6 phân khu, giờ mở cửa công viên (09:00–19:30) & công viên nước (10:00–18:00), bảng giá vé cổng & combo 2026, khung giờ 6 show diễn cố định, tên & giờ mở cửa 8 nhà hàng, quy định chiều cao từng trò chơi (>80cm đến >145cm & <140cm), quy định mưa/cân nặng/đồ ăn ngoài, toạ độ GPS chính từ OpenStreetMap.",
+      "synthetic_with_seed_42": "Thời lượng chơi trung bình mỗi trò (duration_min: 20–60 phút), thời gian đi bộ giữa các phân khu tính từ khoảng cách GPS (6–11 phút cho gia đình có trẻ nhỏ), mức giá ước tính trung bình/suất tại các nhà hàng gọi món lẻ (85.000–250.000đ), và 01 trò gắn cờ status='maintenance' (POI_OBELISK_TOWER) để kiểm thử ràng buộc bảo trì."
+    }
+  },
+  "park_rules": {
+    "open_time": "09:00",
+    "close_time": "19:30",
+    "last_entry_time": "19:00",
+    "water_park_open_time": "10:00",
+    "water_park_close_time": "18:00",
+    "height_ticket_rules_cm": {
+      "infant_free_max_cm": 99,
+      "child_ticket_min_cm": 100,
+      "child_ticket_max_cm": 139,
+      "adult_ticket_min_cm": 140,
+      "senior_min_age": 60
+    },
+    "safety_and_weather": {
+      "heavy_rain_stops_outdoor_rides_and_shows": true,
+      "light_rain_water_park_remains_open": true,
+      "thrill_ride_max_weight_kg": 100,
+      "child_requires_adult_under_age": 14,
+      "outside_food_and_pets_prohibited": true,
+      "tickets_non_refundable": true
+    },
+    "free_vinbus_schedule": {
+      "operating_hours": "08:00-20:00",
+      "safari_to_vinwonders": "14:30 -> 14:40",
+      "vinwonders_to_duong_dong_last_bus": "19:40"
+    }
+  },
+  "zones": [
+    {
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "name": "Đại lộ Châu Âu",
+      "open_time": "09:00",
+      "close_time": "19:30",
+      "lat": 10.3352,
+      "lon": 103.8562,
+      "coordinate_source": "anchored_from_park_entrance_osm",
+      "theme": "Kiến trúc Châu Âu Trung cổ, mua sắm, ẩm thực và Quảng trường Phượng Hoàng Lửa (Once Show, Carnival)."
+    },
+    {
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "name": "Thế giới Diệu kỳ",
+      "open_time": "09:00",
+      "close_time": "19:00",
+      "lat": 10.336,
+      "lon": 103.8552,
+      "coordinate_source": "osm:Vòng xoay thời gian",
+      "theme": "5 thế giới cổ tích (Vương quốc kỳ thú, Ốc đảo bí ẩn, Thung lũng cổ đại, Khu rừng huyền bí, Miền Tây hoang dã) — phù hợp trẻ nhỏ & gia đình."
+    },
+    {
+      "zone_id": "Z3_KHU_LANG_BI_MAT",
+      "name": "Khu làng Bí mật",
+      "open_time": "09:00",
+      "close_time": "18:30",
+      "lat": 10.3368,
+      "lon": 103.8538,
+      "coordinate_source": "anchored_between_aquarium_and_adventure_osm",
+      "theme": "Ngôi làng chiến binh Viking kiến trúc Bắc Âu Scandinavian, vận động & vượt chướng ngại vật."
+    },
+    {
+      "zone_id": "Z4_CUNG_DIEN_HAI_VUONG",
+      "name": "Cung điện Hải Vương",
+      "open_time": "10:00",
+      "close_time": "18:00",
+      "lat": 10.3359094,
+      "lon": 103.8530132,
+      "coordinate_source": "osm:way/Cung Điện Hải Vương",
+      "theme": "Thủy cung hình rùa 2 tầng lớn hàng đầu thế giới (trong nhà 100%, có điều hoà, lý tưởng khi trời mưa hoặc nắng gắt)."
+    },
+    {
+      "zone_id": "Z5_THE_GIOI_PHIEU_LUU",
+      "name": "Thế giới Phiêu lưu",
+      "open_time": "09:00",
+      "close_time": "18:30",
+      "lat": 10.3374,
+      "lon": 103.8553,
+      "coordinate_source": "osm:centroid_thrill_rides",
+      "theme": "Văn minh Maya, đền thờ Hy Lạp và rừng già Nam Mỹ — tập trung các trò chơi cảm giác mạnh."
+    },
+    {
+      "zone_id": "Z6_THE_GIOI_LOC_XOAY",
+      "name": "Thế giới Lốc xoáy (Công viên nước)",
+      "open_time": "10:00",
+      "close_time": "18:00",
+      "lat": 10.3383,
+      "lon": 103.8522,
+      "coordinate_source": "osm:water_park_cluster",
+      "theme": "Công viên nước 4.5ha phong cách Hawaii lớn nhất Đông Nam Á (yêu cầu đồ bơi không khoá/nút kim loại)."
+    }
+  ],
+  "walking_minutes_between_zones": {
+    "Z1_DAI_LO_CHAU_AU": {
+      "Z1_DAI_LO_CHAU_AU": 3,
+      "Z2_THE_GIOI_DIEU_KY": 6,
+      "Z3_KHU_LANG_BI_MAT": 9,
+      "Z4_CUNG_DIEN_HAI_VUONG": 10,
+      "Z5_THE_GIOI_PHIEU_LUU": 7,
+      "Z6_THE_GIOI_LOC_XOAY": 15
+    },
+    "Z2_THE_GIOI_DIEU_KY": {
+      "Z1_DAI_LO_CHAU_AU": 6,
+      "Z2_THE_GIOI_DIEU_KY": 3,
+      "Z3_KHU_LANG_BI_MAT": 6,
+      "Z4_CUNG_DIEN_HAI_VUONG": 6,
+      "Z5_THE_GIOI_PHIEU_LUU": 6,
+      "Z6_THE_GIOI_LOC_XOAY": 11
+    },
+    "Z3_KHU_LANG_BI_MAT": {
+      "Z1_DAI_LO_CHAU_AU": 9,
+      "Z2_THE_GIOI_DIEU_KY": 6,
+      "Z3_KHU_LANG_BI_MAT": 3,
+      "Z4_CUNG_DIEN_HAI_VUONG": 6,
+      "Z5_THE_GIOI_PHIEU_LUU": 6,
+      "Z6_THE_GIOI_LOC_XOAY": 7
+    },
+    "Z4_CUNG_DIEN_HAI_VUONG": {
+      "Z1_DAI_LO_CHAU_AU": 10,
+      "Z2_THE_GIOI_DIEU_KY": 6,
+      "Z3_KHU_LANG_BI_MAT": 6,
+      "Z4_CUNG_DIEN_HAI_VUONG": 3,
+      "Z5_THE_GIOI_PHIEU_LUU": 8,
+      "Z6_THE_GIOI_LOC_XOAY": 8
+    },
+    "Z5_THE_GIOI_PHIEU_LUU": {
+      "Z1_DAI_LO_CHAU_AU": 7,
+      "Z2_THE_GIOI_DIEU_KY": 6,
+      "Z3_KHU_LANG_BI_MAT": 6,
+      "Z4_CUNG_DIEN_HAI_VUONG": 8,
+      "Z5_THE_GIOI_PHIEU_LUU": 3,
+      "Z6_THE_GIOI_LOC_XOAY": 10
+    },
+    "Z6_THE_GIOI_LOC_XOAY": {
+      "Z1_DAI_LO_CHAU_AU": 15,
+      "Z2_THE_GIOI_DIEU_KY": 11,
+      "Z3_KHU_LANG_BI_MAT": 7,
+      "Z4_CUNG_DIEN_HAI_VUONG": 8,
+      "Z5_THE_GIOI_PHIEU_LUU": 10,
+      "Z6_THE_GIOI_LOC_XOAY": 3
+    }
+  },
+  "tickets_and_addons": {
+    "entry_tickets": [
+      {
+        "ticket_id": "TKT_STD_1D",
+        "name": "Vé vào cửa tiêu chuẩn VinWonders Phú Quốc (1 ngày)",
+        "includes": "Trọn gói 6 phân khu, công viên nước, thủy cung và toàn bộ show biểu diễn định kỳ trong ngày (tặng kèm Bảo tàng Gấu Teddy cùng ngày).",
+        "prices_vnd": {
+          "adult_140cm_up": 1050000,
+          "child_100_to_139cm": 800000,
+          "senior_60_up": 800000,
+          "infant_under_100cm": 0
+        },
+        "includes_buffet": false,
+        "includes_buggy": false,
+        "data_origin": "official_vinwonders_2026"
+      },
+      {
+        "ticket_id": "TKT_BUFFET_COMBO_1D",
+        "name": "Combo Vé vào cửa + Buffet trưa 350k",
+        "includes": "Vé vào cửa trọn gói 1 ngày + 01 bữa Buffet trưa trong công viên.",
+        "prices_vnd": {
+          "adult_140cm_up": 1330000,
+          "child_100_to_139cm": 1010000,
+          "senior_60_up": 1010000,
+          "infant_under_100cm": 0
+        },
+        "includes_buffet": true,
+        "includes_buggy": false,
+        "data_origin": "official_adult_1330k_child_estimated_proportional"
+      },
+      {
+        "ticket_id": "TKT_BUGGY_COMBO_1D",
+        "name": "Buggy Combo (Vé vào cửa + Xe điện nội khu + Kem)",
+        "includes": "Vé vào cửa 1 ngày + Xe điện Buggy di chuyển nội khu đỡ mỏi chân + 01 phần kem.",
+        "prices_vnd": {
+          "adult_140cm_up": 1140000,
+          "child_100_to_139cm": 890000,
+          "senior_60_up": 890000,
+          "infant_under_100cm": 0
+        },
+        "includes_buffet": false,
+        "includes_buggy": true,
+        "data_origin": "official_adult_1140k_child_estimated_proportional"
+      },
+      {
+        "ticket_id": "TKT_VW_SAFARI_1D",
+        "name": "Combo 01 ngày VinWonders + Vinpearl Safari Phú Quốc",
+        "includes": "Tham quan cả Vinpearl Safari (08:30–16:00) và VinWonders (09:00–19:30) trong 1 ngày (giá niêm yết 1.7tr/1.3tr, đặt online ưu đãi 1.5tr/1.1tr).",
+        "prices_vnd": {
+          "adult_140cm_up": 1500000,
+          "child_100_to_139cm": 1100000,
+          "senior_60_up": 1100000,
+          "infant_under_100cm": 0
+        },
+        "includes_buffet": false,
+        "includes_buggy": false,
+        "data_origin": "official_vinwonders_2026"
+      }
+    ],
+    "optional_addons": [
+      {
+        "addon_id": "ADD_FASTPASS_4",
+        "name": "FastPass ưu tiên Games (04 lượt không xếp hàng)",
+        "price_per_person_vnd": 300000,
+        "data_origin": "official_vinwonders_2026"
+      },
+      {
+        "addon_id": "ADD_MERMAID_TEA",
+        "name": "Combo Chỗ ngồi đẹp Show Tiên Cá + Set bánh ngọt",
+        "price_per_person_vnd": 250000,
+        "data_origin": "official_vinwonders_2026"
+      },
+      {
+        "addon_id": "ADD_DEEPSEA_SET_1M",
+        "name": "Set ăn trưa trong lòng thuỷ cung tại nhà hàng Deep Sea (Set 1.000k)",
+        "price_per_set_vnd": 1000000,
+        "data_origin": "official_vinwonders_2026"
+      },
+      {
+        "addon_id": "ADD_VIP_TOUR_3H",
+        "name": "Gói dịch vụ VIP Tour VinWonders Phú Quốc (3 tiếng)",
+        "price_per_person_vnd": 1500000,
+        "data_origin": "official_vinwonders_2026"
+      }
+    ]
+  },
+  "shows": [
+    {
+      "show_id": "SH_FAIRY_MEET",
+      "name": "Gặp gỡ Nhân vật Cổ tích",
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "schedules": [
+        {
+          "days": "daily",
+          "start_time": "10:30",
+          "end_time": "11:00"
+        }
+      ],
+      "duration_min": 30,
+      "indoor": false,
+      "cancelled_in_heavy_rain": true,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "extra_cost_vnd": 0,
+      "family_kid_friendly": true,
+      "tags": [
+        "show",
+        "chup_anh",
+        "co_tich",
+        "tre_nho"
+      ],
+      "data_origin": "official_vinwonders_2026"
+    },
+    {
+      "show_id": "SH_FISH_FEEDING",
+      "name": "Chương trình Cho cá ăn",
+      "zone_id": "Z4_CUNG_DIEN_HAI_VUONG",
+      "schedules": [
+        {
+          "days": "daily",
+          "start_time": "11:00",
+          "end_time": "11:15"
+        }
+      ],
+      "duration_min": 15,
+      "indoor": true,
+      "cancelled_in_heavy_rain": false,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "extra_cost_vnd": 0,
+      "family_kid_friendly": true,
+      "tags": [
+        "show",
+        "thuy_cung",
+        "trong_nha",
+        "tre_nho"
+      ],
+      "data_origin": "official_vinwonders_2026"
+    },
+    {
+      "show_id": "SH_MERMAID_OCEAN",
+      "name": "Show Sắc màu Đại dương (Biểu diễn Nàng tiên cá)",
+      "zone_id": "Z4_CUNG_DIEN_HAI_VUONG",
+      "schedules": [
+        {
+          "days": "daily",
+          "start_time": "14:00",
+          "end_time": "14:20"
+        },
+        {
+          "days": "daily",
+          "start_time": "15:30",
+          "end_time": "15:50"
+        }
+      ],
+      "duration_min": 20,
+      "indoor": true,
+      "cancelled_in_heavy_rain": false,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "extra_cost_vnd": 0,
+      "family_kid_friendly": true,
+      "tags": [
+        "show",
+        "dac_sac",
+        "nang_tien_ca",
+        "thuy_cung",
+        "trong_nha",
+        "tre_nho"
+      ],
+      "data_origin": "official_vinwonders_2026"
+    },
+    {
+      "show_id": "SH_CYCLONE_DANCE",
+      "name": "Vũ điệu Cuồng xoay (Hawaii Dance)",
+      "zone_id": "Z6_THE_GIOI_LOC_XOAY",
+      "schedules": [
+        {
+          "days": "daily",
+          "start_time": "16:30",
+          "end_time": "16:35"
+        }
+      ],
+      "duration_min": 10,
+      "indoor": false,
+      "cancelled_in_heavy_rain": true,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "extra_cost_vnd": 0,
+      "family_kid_friendly": true,
+      "tags": [
+        "show",
+        "hoat_nao",
+        "cong_vien_nuoc"
+      ],
+      "data_origin": "official_vinwonders_2026"
+    },
+    {
+      "show_id": "SH_CARNIVAL_PARADE",
+      "name": "Diễu hành Carnival Châu Âu",
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "schedules": [
+        {
+          "days": "daily",
+          "start_time": "17:00",
+          "end_time": "17:30"
+        }
+      ],
+      "duration_min": 30,
+      "indoor": false,
+      "cancelled_in_heavy_rain": true,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "extra_cost_vnd": 0,
+      "family_kid_friendly": true,
+      "tags": [
+        "show",
+        "dieu_hanh",
+        "chup_anh",
+        "tre_nho"
+      ],
+      "data_origin": "official_vinwonders_2026"
+    },
+    {
+      "show_id": "SH_ONCE_SHOW",
+      "name": "ONCE Show (Thực cảnh đa phương tiện 3D Mapping, lửa & nhạc nước)",
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "venue": "Quảng trường Phượng Hoàng Lửa",
+      "schedules": [
+        {
+          "days": "daily",
+          "start_time": "18:45",
+          "end_time": "19:05"
+        }
+      ],
+      "duration_min": 20,
+      "indoor": false,
+      "cancelled_in_heavy_rain": true,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "extra_cost_vnd": 0,
+      "family_kid_friendly": true,
+      "tags": [
+        "show",
+        "dac_sac",
+        "buoi_toi",
+        "nhac_nuoc",
+        "must_see"
+      ],
+      "data_origin": "official_vinwonders_2026"
+    }
+  ],
+  "attractions": [
+    {
+      "poi_id": "POI_AQUARIUM_MAIN",
+      "name": "Thủy cung Cung điện Hải Vương (5 thế giới đại dương 2 tầng)",
+      "zone_id": "Z4_CUNG_DIEN_HAI_VUONG",
+      "category": "aquarium",
+      "open_time": "10:00",
+      "close_time": "18:00",
+      "duration_min": 60,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "thrill_level": "gentle",
+      "indoor": true,
+      "rain_safe": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3359094,
+      "lon": 103.8530132,
+      "tags": [
+        "thuy_cung",
+        "trong_nha",
+        "tre_nho",
+        "gia_dinh",
+        "mat_me"
+      ],
+      "height_source": "official_CORE_51:Tất cả du khách"
+    },
+    {
+      "poi_id": "POI_ALICE_WONDERLAND",
+      "name": "Alice lạc vào xứ thần tiên & Nhà 7 chú lùn và Bạch Tuyết",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "category": "family_attraction",
+      "open_time": "09:00",
+      "close_time": "18:30",
+      "duration_min": 35,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "thrill_level": "gentle",
+      "indoor": true,
+      "rain_safe": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3358,
+      "lon": 103.8555,
+      "tags": [
+        "co_tich",
+        "trong_nha",
+        "tre_nho",
+        "chup_anh"
+      ],
+      "height_source": "official_CORE_51:Tất cả du khách"
+    },
+    {
+      "poi_id": "POI_MAGIC_VILLAGE",
+      "name": "Ngôi làng phép thuật & Ngôi làng cổ tích Grim",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "category": "family_attraction",
+      "open_time": "09:00",
+      "close_time": "18:30",
+      "duration_min": 30,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "thrill_level": "gentle",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3361,
+      "lon": 103.855,
+      "tags": [
+        "co_tich",
+        "tre_nho",
+        "chup_anh"
+      ],
+      "height_source": "official_CORE_51:Tất cả du khách"
+    },
+    {
+      "poi_id": "POI_SHARP_SHOOTER",
+      "name": "Tay súng cự phách & Khám phá ngôi đền cổ",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "category": "interactive_ride",
+      "open_time": "09:00",
+      "close_time": "18:30",
+      "duration_min": 30,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "thrill_level": "gentle",
+      "indoor": true,
+      "rain_safe": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3363,
+      "lon": 103.8549,
+      "tags": [
+        "tuong_tac",
+        "trong_nha",
+        "tre_nho",
+        "gia_dinh"
+      ],
+      "height_source": "official_CORE_51:Tất cả du khách"
+    },
+    {
+      "poi_id": "POI_EURO_STREET",
+      "name": "Phố cổ Châu Âu Trung Cổ & Chợ phiên Check-in",
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "category": "sightseeing",
+      "open_time": "09:00",
+      "close_time": "19:30",
+      "duration_min": 30,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "thrill_level": "gentle",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3352,
+      "lon": 103.8562,
+      "tags": [
+        "check_in",
+        "chup_anh",
+        "gia_dinh",
+        "mua_sam"
+      ],
+      "height_source": "official_CORE_51:Tất cả du khách"
+    },
+    {
+      "poi_id": "POI_LAZY_RIVER_WAVE",
+      "name": "Sóng thần Oahu & Dòng sông kỳ bí (Bể sóng & sông lười gia đình)",
+      "zone_id": "Z6_THE_GIOI_LOC_XOAY",
+      "category": "water_park",
+      "open_time": "10:00",
+      "close_time": "18:00",
+      "duration_min": 45,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "thrill_level": "gentle",
+      "indoor": false,
+      "rain_safe": false,
+      "light_rain_ok": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3381,
+      "lon": 103.8525,
+      "tags": [
+        "cong_vien_nuoc",
+        "gia_dinh",
+        "tre_nho",
+        "tam_mat"
+      ],
+      "height_source": "official_CORE_51:Tất cả du khách"
+    },
+    {
+      "poi_id": "POI_MAGIC_OASIS_KIDS",
+      "name": "Ốc đảo diệu kỳ & Cây tre ma thuật (Sân chơi nước gia đình)",
+      "zone_id": "Z6_THE_GIOI_LOC_XOAY",
+      "category": "water_park",
+      "open_time": "10:00",
+      "close_time": "18:00",
+      "duration_min": 40,
+      "min_height_cm": 0,
+      "max_height_cm": null,
+      "thrill_level": "gentle",
+      "indoor": false,
+      "rain_safe": false,
+      "light_rain_ok": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3384,
+      "lon": 103.852,
+      "tags": [
+        "cong_vien_nuoc",
+        "tre_nho",
+        "gia_dinh"
+      ],
+      "height_source": "official_CORE_51:Tất cả du khách"
+    },
+    {
+      "poi_id": "POI_COCO_ISLAND_KIDS",
+      "name": "Ốc đảo Coco (Cụm đường trượt nước dành riêng cho trẻ em)",
+      "zone_id": "Z6_THE_GIOI_LOC_XOAY",
+      "category": "water_park",
+      "open_time": "10:00",
+      "close_time": "18:00",
+      "duration_min": 35,
+      "min_height_cm": 80,
+      "max_height_cm": 139,
+      "thrill_level": "gentle",
+      "indoor": false,
+      "rain_safe": false,
+      "light_rain_ok": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3385,
+      "lon": 103.8523,
+      "tags": [
+        "cong_vien_nuoc",
+        "tre_nho",
+        "duoi_140cm"
+      ],
+      "height_source": "official_CORE_51:Chỉ dành cho các bé dưới 140cm"
+    },
+    {
+      "poi_id": "POI_WHEEL_OF_TIME",
+      "name": "Vòng xoay thời gian (Bánh xe khổng lồ ngắm toàn cảnh)",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "category": "amusement_ride",
+      "open_time": "09:00",
+      "close_time": "19:00",
+      "duration_min": 25,
+      "min_height_cm": 80,
+      "max_height_cm": null,
+      "thrill_level": "gentle",
+      "indoor": true,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3359807,
+      "lon": 103.8552293,
+      "tags": [
+        "ngam_canh",
+        "gia_dinh",
+        "tre_nho",
+        "chup_anh"
+      ],
+      "height_source": "official_CORE_51:>80cm"
+    },
+    {
+      "poi_id": "POI_DRAGON_CURSE",
+      "name": "Lời nguyền ác long (Interactive Dark Ride trong nhà)",
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "category": "dark_ride",
+      "open_time": "09:00",
+      "close_time": "18:30",
+      "duration_min": 25,
+      "min_height_cm": 100,
+      "max_height_cm": null,
+      "thrill_level": "moderate",
+      "indoor": true,
+      "rain_safe": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3355,
+      "lon": 103.8559,
+      "tags": [
+        "trong_nha",
+        "ban_sung_3d",
+        "gia_dinh",
+        "tre_em_100cm"
+      ],
+      "height_source": "official_CORE_51:>100cm"
+    },
+    {
+      "poi_id": "POI_THUMBELINA_WEST_TRAIN",
+      "name": "Đu quay Thumbelina & Tàu tốc hành viễn Tây",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "category": "amusement_ride",
+      "open_time": "09:00",
+      "close_time": "18:30",
+      "duration_min": 30,
+      "min_height_cm": 100,
+      "max_height_cm": null,
+      "thrill_level": "moderate",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3362,
+      "lon": 103.8554,
+      "tags": [
+        "tau_lua",
+        "du_quay",
+        "gia_dinh",
+        "tre_em_100cm"
+      ],
+      "height_source": "official_CORE_51:>100cm"
+    },
+    {
+      "poi_id": "POI_WARRIOR_VILLAGE",
+      "name": "Ngôi làng chiến binh Viking (Thử thách vận động liên hoàn)",
+      "zone_id": "Z3_KHU_LANG_BI_MAT",
+      "category": "adventure_play",
+      "open_time": "09:00",
+      "close_time": "18:00",
+      "duration_min": 40,
+      "min_height_cm": 100,
+      "max_height_cm": null,
+      "thrill_level": "moderate",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3368,
+      "lon": 103.8539,
+      "tags": [
+        "viking",
+        "van_dong",
+        "gia_dinh",
+        "tre_em_100cm"
+      ],
+      "height_source": "official_CORE_51:>100cm"
+    },
+    {
+      "poi_id": "POI_ALADDIN_PALACE",
+      "name": "Aladdin’s Grand Palace Tour (Rạp phim 4D/5D Ba Tư trong nhà)",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "category": "indoor_cinema_ride",
+      "open_time": "09:30",
+      "close_time": "18:30",
+      "duration_min": 25,
+      "min_height_cm": 110,
+      "max_height_cm": null,
+      "thrill_level": "moderate",
+      "indoor": true,
+      "rain_safe": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3361,
+      "lon": 103.8556,
+      "tags": [
+        "trong_nha",
+        "rap_phim",
+        "ba_tu",
+        "gia_dinh"
+      ],
+      "height_source": "official_CORE_51:>110cm"
+    },
+    {
+      "poi_id": "POI_VOLCANO_TERROR",
+      "name": "Núi lửa kinh hoàng (Vượt thác thuyền nước Nam Mỹ)",
+      "zone_id": "Z5_THE_GIOI_PHIEU_LUU",
+      "category": "water_coaster",
+      "open_time": "09:30",
+      "close_time": "18:00",
+      "duration_min": 30,
+      "min_height_cm": 120,
+      "max_height_cm": null,
+      "thrill_level": "high",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3364429,
+      "lon": 103.8545238,
+      "tags": [
+        "vuot_thac",
+        "cam_giac_manh_vua",
+        "nuoc"
+      ],
+      "height_source": "official_CORE_51:>120cm"
+    },
+    {
+      "poi_id": "POI_XIBALBA_MAGIC",
+      "name": "Ma thuật của Xibalba (Tháp rơi & xoay Maya)",
+      "zone_id": "Z5_THE_GIOI_PHIEU_LUU",
+      "category": "drop_tower",
+      "open_time": "09:30",
+      "close_time": "18:00",
+      "duration_min": 20,
+      "min_height_cm": 120,
+      "max_height_cm": null,
+      "thrill_level": "high",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3373218,
+      "lon": 103.8554599,
+      "tags": [
+        "cam_giac_manh",
+        "maya"
+      ],
+      "height_source": "official_CORE_51:>120cm"
+    },
+    {
+      "poi_id": "POI_OGRE_SLIDE",
+      "name": "Đường trượt chằn tinh & Sải cánh đại bàng",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "category": "coaster",
+      "open_time": "09:00",
+      "close_time": "18:00",
+      "duration_min": 25,
+      "min_height_cm": 120,
+      "max_height_cm": null,
+      "thrill_level": "moderate_high",
+      "indoor": true,
+      "rain_safe": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3364,
+      "lon": 103.8551,
+      "tags": [
+        "tau_luon_trong_nha",
+        "trong_nha",
+        "cam_giac_manh_vua"
+      ],
+      "height_source": "official_CORE_51:>120cm"
+    },
+    {
+      "poi_id": "POI_KING_COBRA_WATER",
+      "name": "Nọc độc mãng xà & Cuồng phong thịnh nộ (Đường trượt nước lớn)",
+      "zone_id": "Z6_THE_GIOI_LOC_XOAY",
+      "category": "water_slide",
+      "open_time": "10:00",
+      "close_time": "18:00",
+      "duration_min": 35,
+      "min_height_cm": 120,
+      "max_height_cm": null,
+      "thrill_level": "high",
+      "indoor": false,
+      "rain_safe": false,
+      "light_rain_ok": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3386,
+      "lon": 103.8519,
+      "tags": [
+        "cong_vien_nuoc",
+        "duong_truot",
+        "cam_giac_manh"
+      ],
+      "height_source": "official_CORE_51:>120cm"
+    },
+    {
+      "poi_id": "POI_EAGLE_WARRIOR",
+      "name": "Chiến binh đại bàng (Tàu lượn trong nhà tối Maya)",
+      "zone_id": "Z5_THE_GIOI_PHIEU_LUU",
+      "category": "indoor_roller_coaster",
+      "open_time": "09:30",
+      "close_time": "18:30",
+      "duration_min": 25,
+      "min_height_cm": 130,
+      "max_height_cm": null,
+      "thrill_level": "high",
+      "indoor": true,
+      "rain_safe": true,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3370374,
+      "lon": 103.855629,
+      "tags": [
+        "tau_luon",
+        "trong_nha",
+        "cam_giac_manh",
+        "maya"
+      ],
+      "height_source": "official_CORE_51:>130cm"
+    },
+    {
+      "poi_id": "POI_ICARUS_JAGUAR",
+      "name": "Đôi cánh Icarus & Vũ điệu báo đốm",
+      "zone_id": "Z5_THE_GIOI_PHIEU_LUU",
+      "category": "thrill_ride",
+      "open_time": "09:30",
+      "close_time": "18:00",
+      "duration_min": 25,
+      "min_height_cm": 130,
+      "max_height_cm": null,
+      "thrill_level": "high",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3375949,
+      "lon": 103.8553779,
+      "tags": [
+        "cam_giac_manh",
+        "ngoai_troi"
+      ],
+      "height_source": "official_CORE_51:>130cm"
+    },
+    {
+      "poi_id": "POI_OBELISK_TOWER",
+      "name": "Chinh phục đỉnh Obelisk (Tháp rơi tự do)",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "category": "drop_tower",
+      "open_time": "09:30",
+      "close_time": "18:00",
+      "duration_min": 20,
+      "min_height_cm": 130,
+      "max_height_cm": null,
+      "thrill_level": "extreme",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "maintenance",
+      "maintenance_note": "(Giả lập có seed=42 để kiểm thử Lớp 1/4: tạm đóng bảo trì định kỳ trong ngày)",
+      "extra_cost_vnd": 0,
+      "lat": 10.3365,
+      "lon": 103.8557,
+      "tags": [
+        "cam_giac_manh",
+        "thap_roi",
+        "bao_tri_test"
+      ],
+      "height_source": "official_CORE_51:>130cm"
+    },
+    {
+      "poi_id": "POI_WRATH_OF_ZEUS",
+      "name": "Cơn thịnh nộ của Zeus (Tàu lượn siêu tốc hàng đầu thế giới)",
+      "zone_id": "Z5_THE_GIOI_PHIEU_LUU",
+      "category": "roller_coaster",
+      "open_time": "09:30",
+      "close_time": "18:00",
+      "duration_min": 30,
+      "min_height_cm": 140,
+      "max_height_cm": null,
+      "max_weight_kg": 100,
+      "thrill_level": "extreme",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3378801,
+      "lon": 103.8561979,
+      "tags": [
+        "tau_luon_sieu_toc",
+        "cam_giac_manh",
+        "nguoi_lon"
+      ],
+      "height_source": "official_CORE_51:>140cm"
+    },
+    {
+      "poi_id": "POI_NEMESIS_SKATE",
+      "name": "Nemesis báo thù & Ván trượt siêu tốc",
+      "zone_id": "Z5_THE_GIOI_PHIEU_LUU",
+      "category": "thrill_ride",
+      "open_time": "09:30",
+      "close_time": "18:00",
+      "duration_min": 25,
+      "min_height_cm": 140,
+      "max_height_cm": null,
+      "max_weight_kg": 100,
+      "thrill_level": "extreme",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3371102,
+      "lon": 103.855027,
+      "tags": [
+        "cam_giac_manh",
+        "nguoi_lon"
+      ],
+      "height_source": "official_CORE_51:>140cm"
+    },
+    {
+      "poi_id": "POI_THUNDER_GOD_CHALLENGE",
+      "name": "Thử thách thần sấm (Zipline & Leo trèo trên cao Viking)",
+      "zone_id": "Z3_KHU_LANG_BI_MAT",
+      "category": "high_rope_zipline",
+      "open_time": "09:30",
+      "close_time": "17:30",
+      "duration_min": 35,
+      "min_height_cm": 145,
+      "max_height_cm": null,
+      "max_weight_kg": 100,
+      "thrill_level": "extreme",
+      "indoor": false,
+      "rain_safe": false,
+      "status": "open",
+      "extra_cost_vnd": 0,
+      "lat": 10.3369,
+      "lon": 103.8536,
+      "tags": [
+        "cam_giac_manh",
+        "viking",
+        "nguoi_lon"
+      ],
+      "height_source": "official_CORE_51:>145cm"
+    }
+  ],
+  "restaurants": [
+    {
+      "restaurant_id": "RES_GATEWAY_BUFFET",
+      "name": "Nhà hàng Gateway (Buffet Á – Âu)",
+      "zone_id": "Z6_THE_GIOI_LOC_XOAY",
+      "service_type": "buffet",
+      "open_windows": [
+        {
+          "start_time": "11:30",
+          "end_time": "14:30"
+        },
+        {
+          "start_time": "17:15",
+          "end_time": "18:30"
+        }
+      ],
+      "duration_min": 50,
+      "indoor": true,
+      "avg_price_adult_vnd": 350000,
+      "avg_price_child_vnd": 210000,
+      "covered_by_buffet_combo": true,
+      "hours_source": "official_vw_phu_quoc:11:30-14:30 & 17:15-18:30",
+      "price_source": "official_CORE_46:Buffet 350k (child estimated 60%)"
+    },
+    {
+      "restaurant_id": "RES_DEEP_SEA",
+      "name": "Nhà hàng Deep Sea (Ngắm cá trong lòng Thủy cung)",
+      "zone_id": "Z4_CUNG_DIEN_HAI_VUONG",
+      "service_type": "alacarte_set",
+      "open_windows": [
+        {
+          "start_time": "10:00",
+          "end_time": "17:30"
+        }
+      ],
+      "duration_min": 50,
+      "indoor": true,
+      "avg_price_adult_vnd": 500000,
+      "avg_price_child_vnd": 300000,
+      "covered_by_buffet_combo": false,
+      "hours_source": "official_vw_phu_quoc:10:00-17:30",
+      "price_source": "official_CORE_46:Set 1.000k-1.500k / 2 người"
+    },
+    {
+      "restaurant_id": "RES_CA_NGUA",
+      "name": "Nhà hàng Cá Ngựa",
+      "zone_id": "Z4_CUNG_DIEN_HAI_VUONG",
+      "service_type": "alacarte",
+      "open_windows": [
+        {
+          "start_time": "10:00",
+          "end_time": "17:30"
+        }
+      ],
+      "duration_min": 45,
+      "indoor": true,
+      "avg_price_adult_vnd": 250000,
+      "avg_price_child_vnd": 150000,
+      "covered_by_buffet_combo": false,
+      "hours_source": "official_vw_phu_quoc:10:00-17:30",
+      "price_source": "estimated_synthetic_seed42"
+    },
+    {
+      "restaurant_id": "RES_COM_GA_BUN_CHA",
+      "name": "Nhà hàng Cơm gà Hội An & Bún Chả Hà Nội",
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "service_type": "alacarte_vietnamese",
+      "open_windows": [
+        {
+          "start_time": "09:00",
+          "end_time": "19:00"
+        }
+      ],
+      "duration_min": 40,
+      "indoor": true,
+      "avg_price_adult_vnd": 150000,
+      "avg_price_child_vnd": 100000,
+      "covered_by_buffet_combo": false,
+      "hours_source": "official_vw_phu_quoc:09:00-19:00",
+      "price_source": "estimated_synthetic_seed42"
+    },
+    {
+      "restaurant_id": "RES_PHO_LY_QUOC_SU",
+      "name": "Phở Lý Quốc Sư (FastFood món Việt)",
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "service_type": "fastfood",
+      "open_windows": [
+        {
+          "start_time": "09:00",
+          "end_time": "19:00"
+        }
+      ],
+      "duration_min": 30,
+      "indoor": true,
+      "avg_price_adult_vnd": 120000,
+      "avg_price_child_vnd": 85000,
+      "covered_by_buffet_combo": false,
+      "hours_source": "official_vw_phu_quoc:09:00-19:00",
+      "price_source": "estimated_synthetic_seed42"
+    },
+    {
+      "restaurant_id": "RES_PIZZA_STEAK",
+      "name": "Nhà hàng Pizza & Steak",
+      "zone_id": "Z1_DAI_LO_CHAU_AU",
+      "service_type": "alacarte_western",
+      "open_windows": [
+        {
+          "start_time": "09:00",
+          "end_time": "19:00"
+        }
+      ],
+      "duration_min": 45,
+      "indoor": true,
+      "avg_price_adult_vnd": 220000,
+      "avg_price_child_vnd": 140000,
+      "covered_by_buffet_combo": false,
+      "hours_source": "official_vw_phu_quoc:09:00-19:00",
+      "price_source": "estimated_synthetic_seed42"
+    },
+    {
+      "restaurant_id": "RES_MON_NGON_VIET_NAM",
+      "name": "Nhà hàng Món ngon Việt Nam",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "service_type": "alacarte_vietnamese",
+      "open_windows": [
+        {
+          "start_time": "09:00",
+          "end_time": "19:00"
+        }
+      ],
+      "duration_min": 40,
+      "indoor": true,
+      "avg_price_adult_vnd": 160000,
+      "avg_price_child_vnd": 100000,
+      "covered_by_buffet_combo": false,
+      "hours_source": "official_vw_phu_quoc:09:00-19:00",
+      "price_source": "estimated_synthetic_seed42"
+    },
+    {
+      "restaurant_id": "RES_MAHARAJA",
+      "name": "Nhà hàng Maharaja",
+      "zone_id": "Z2_THE_GIOI_DIEU_KY",
+      "service_type": "alacarte",
+      "open_windows": [
+        {
+          "start_time": "09:00",
+          "end_time": "18:00"
+        }
+      ],
+      "duration_min": 40,
+      "indoor": true,
+      "avg_price_adult_vnd": 180000,
+      "avg_price_child_vnd": 120000,
+      "covered_by_buffet_combo": false,
+      "hours_source": "official_vw_phu_quoc:09:00-18:00",
+      "price_source": "estimated_synthetic_seed42"
+    }
+  ]
+}
