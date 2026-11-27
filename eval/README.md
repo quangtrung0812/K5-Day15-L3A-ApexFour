@@ -60,7 +60,7 @@
 
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
-| 1 | | | | __/__ | | |
+| 1 | `run-1@20261127-232511` | `gpt-4o-mini` | Bản CP3 đầu tiên: workflow `MAX_STEPS=3` + 5 công cụ `tools.py` + Chốt 1/2 (`agent.py`) | 9/25 (`thuong` 0/8 · `kho` 5/13 · `tu_choi` 4/4) | 36.0% | Chưa (đạt 100% `tu_choi` & 0 vi phạm code, nhưng chưa đạt ≥80% tổng) |
 | 2 | | | | __/__ | | |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.

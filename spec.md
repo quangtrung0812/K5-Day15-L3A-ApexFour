@@ -130,7 +130,7 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 - Bộ câu thử CP3 có **25 câu** (8 `thuong`, 13 `kho`, 4 `tu_choi`; giữ nguyên `B01`–`B15` từ CP2 và mở rộng thêm `B16`–`B25`, nguồn dữ liệu thật `10/25 = 40%`) và **4 metric**. [Data card](data/DATA_CARD.md) · [Bộ câu thử](eval/benchmark.csv) · [Định nghĩa metric](eval/metric_spec.yaml)
 - **Chuẩn "đạt"** (chốt trước 19:30 Thứ Sáu 27/11, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu qua, đồng thời 100% câu `tu_choi` qua và 0 vi phạm ràng buộc cứng kiểm bằng code (`kiem_lich_trinh`) ở mọi câu xuất lịch trình."**
-- Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 **9/25 (36.0%)** (`thuong` 0/8 · `kho` 5/13 · `tu_choi` 4/4 · 0 vi phạm ràng buộc cứng ở các lịch đã xuất · 0 lỗi kỹ thuật) · lượt 2 __/__ (__%) — run ID: `run-1@20261127-232511` (`gpt-4o-mini`) / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
