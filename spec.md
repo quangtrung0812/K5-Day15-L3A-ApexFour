@@ -1,18 +1,18 @@
 # AI SPEC — Lịch trình 1 ngày ở khu vui chơi · Nhóm ApexFour · Lớp L3A
 
 > Mốc nộp: §7 chốt chuẩn "đạt" tại **CP2 19:30 Thứ Sáu 27/11** · §0–§7 nộp **CP3 10:00 Thứ Bảy 28/11** · đủ §0–§10 **CP4 14:30 Thứ Bảy 28/11** · §10 changelog ghi tiếp đến **23:59 Thứ Bảy 28/11**.
-> Đầu mỗi mục ghi bước guide (`02-guide.md` trong repo đề) chỉ cách điền. Mỗi mục ngắn, có số và nguồn; chi tiết để ở file được trỏ tới. Xoá dòng hướng dẫn trong ngoặc vuông khi điền xong.
+> Đầu mỗi mục ghi bước guide (`02-guide.md` trong repo đề). Mỗi mục ngắn, có số và nguồn; chi tiết để ở file được trỏ tới.
 
 Track: [ ] A · [ ] B · [x] C · [ ] D · [ ] E — bài toán: C1 · Lịch trình một ngày ở khu vui chơi thoả ràng buộc (giờ mở cửa, lịch show, độ tuổi trẻ nhỏ, thời tiết, ngân sách)
 Data BTC cấp đã dùng (nếu có — không commit nguyên file): Không dùng (Track C nhóm tự thu review công khai cho `evidence/` và tự dựng dữ liệu khu vui chơi có seed cho `data/`)
 
 ## §0. Hiện tại việc này diễn ra thế nào *(guide 1.1)*
 - Luồng hiện tại của việc này trên thực tế (3–5 bước):
-  1. Trước ngày đi, phụ huynh/trưởng nhóm mở website hoặc app khu vui chơi (vd VinWonders, Sun World), tải ảnh bản đồ phân khu dạng tĩnh và xem bảng lịch biểu diễn trong ngày.
-  2. Mở từng trang thông tin trò chơi để đọc quy định chiều cao/độ tuổi cho trẻ nhỏ và bảng giá vé cổng, vé combo ăn trưa, vé trò chơi/dịch vụ tính phí riêng.
+  1. Trước ngày đi, phụ huynh/trưởng nhóm mở website chính thức của khu vui chơi như VinWonders (https://vinwonders.com/) hoặc Sun World Bà Nà Hills (https://sunworld.vn/ba-na-hills, kiểm ngày 27/11/2026) để xem bản đồ phân khu tĩnh và bảng lịch biểu diễn trong ngày.
+  2. Mở từng trang thông tin trò chơi / giá vé để đọc quy định chiều cao, độ tuổi cho trẻ nhỏ và bảng giá vé cổng, combo ăn trưa, dịch vụ phụ thu riêng.
   3. Tự ghi ra giấy/ghi chú điện thoại các điểm muốn đi, tự ước lượng thời gian đi bộ giữa các phân khu và tự cộng nhẩm tổng chi phí cho người lớn + trẻ em.
-  4. Khi vào khu vui chơi gặp trời mưa, trò đóng bảo trì hoặc show đổi giờ thì phải đứng giữa đường mở lại bản đồ/lịch show để tìm điểm thay thế tại chỗ.
-- Công cụ / AI đang được dùng cho việc này (nếu có) + nguồn: Website/app chính thức của khu vui chơi chủ yếu cung cấp bản đồ phân khu, danh sách điểm chơi và bảng giờ show cố định (chưa kiểm tính năng tự lập lịch cá nhân hoá theo ngân sách + ràng buộc gia đình có kiểm chứng giờ/giá tự động); người dùng tự hỏi ChatGPT/Gemini phổ thông thì hay gặp lỗi bịa giờ show, tính nhầm tổng tiền vé theo độ tuổi hoặc xếp lịch chồng giờ.
+  4. Khi vào khu vui chơi gặp trời mưa, trò đóng bảo trì hoặc show đổi giờ thì phải đứng tại chỗ mở lại bản đồ/lịch show để tìm điểm thay thế.
+- Công cụ / AI đang được dùng cho việc này (nếu có) + nguồn: Trên trang web công khai của VinWonders và Sun World (kiểm ngày 27/11/2026) mới cung cấp bản đồ phân khu, danh sách trò chơi, bảng giá và lịch biểu diễn cố định (tính năng bên trong tài khoản đăng nhập của từng app hãng: *chưa kiểm*); khi người dùng tự hỏi ChatGPT/Gemini phổ thông thì hay gặp lỗi bịa giờ show, tính nhầm tổng tiền vé theo độ tuổi hoặc xếp lịch chồng giờ.
 
 ## §1. Người dùng & bằng chứng *(guide 1.1, 1.2)*
 - Người dùng chính (một vai cụ thể): Phụ huynh trong gia đình có trẻ nhỏ (4–10 tuổi) lập kế hoạch đi khu vui chơi giải trí lớn trong 1 ngày.

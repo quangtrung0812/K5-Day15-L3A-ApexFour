@@ -41,5 +41,5 @@ Khung chỉ dùng thư viện chuẩn của Python. Thêm thư viện thì ghi v
 ## Quy ước của nhóm
 
 - Ngôn ngữ trả lời người dùng: Tiếng Việt
-- Phong cách code / đặt tên: Python chuẩn PEP8, tên hàm công cụ tiếng Anh rõ nghĩa khớp `spec.md` §4
+- Phong cách code / đặt tên: Python chuẩn PEP8, tên 5 hàm công cụ snake_case tiếng Việt không dấu khớp `spec.md` §4 và `docs/interface-contract.md` (`tra_diem_choi`, `tra_lich_show`, `tra_thoi_tiet`, `uoc_thoi_gian_di`, `kiem_lich_trinh`)
 - Ai duyệt thay đổi do agent tạo trước khi commit: Nguyễn Quang Trung (Đội trưởng) và các thành viên phụ trách mục tương ứng
