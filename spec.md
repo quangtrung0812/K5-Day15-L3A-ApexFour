@@ -158,7 +158,9 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
-| 27/11/2026 | Ghép nhánh CP2, đồng bộ mã điểm, ngày và kết quả kiểm lịch giữa agent và công cụ. | Agent dùng hợp đồng mẫu cũ khi đọc dữ liệu SunWonder Mẫu. |
+| 27/11/2026 19:00 | Ghép nhánh CP2, đồng bộ mã điểm, ngày và kết quả kiểm lịch giữa agent và công cụ. | Agent dùng hợp đồng mẫu cũ khi đọc dữ liệu SunWonder Mẫu. |
+| 27/11/2026 23:10 | Cài đặt kết nối API model thật (`gemini`, `openai`, `groq`, `deepseek`, `openrouter`, `anthropic`, `ollama`) trong `codebase/ai.py` lấy token trực tiếp từ phản hồi `usage`. | Chuẩn bị chuyển từ chế độ `fake` (CP2) sang AI thật cho CP3 (guide bước 3.3). |
+| 27/11/2026 23:10 | Nâng cấp `codebase/agent.py`: bỏ chuỗi hardcode trong Chốt 1 (đọc trực tiếp từ công cụ cho ca `B14`/`B15`), truyền bảng thời gian đi bộ giữa các khu + tiền vé cổng vào prompt, hỗ trợ khung giờ mặc định và tóm tắt tuyến đi gọn (`B01`, `B10`, `B12`). | Khắc phục lỗi lộ ra ở bảng đối chiếu CP2 (`eval/cp2-cham-cheo.csv`) và giảm số vòng tự sửa khi chạy AI thật. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
