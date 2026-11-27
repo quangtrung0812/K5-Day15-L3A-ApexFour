@@ -35,6 +35,7 @@ def _load_park_meta() -> dict:
             "ticket_prices": raw.get("ticket_prices", {}),
             "walk_minutes": raw.get("walk_minutes", {}),
             "park_hours": raw.get("park_hours", {}),
+            "available_dates": sorted((raw.get("weather_by_date") or {}).keys()),
         }
     except Exception:
         return {}
@@ -48,23 +49,103 @@ def _from_min(total: int) -> str:
     return "%02d:%02d" % (total // 60, total % 60)
 
 
-_OUT_OF_SCOPE_PATTERNS = [
-    (r"(số thẻ|mã otp|otp|cvv|mật khẩu|thanh toán giúp|trừ thẻ|đặt vé giúp|dùng thẻ đã lưu|chuyển khoản)",
-     "Tôi chỉ hỗ trợ lập và kiểm tra lịch trình tham quan 1 ngày tại khu vui chơi, không hỗ trợ đặt vé, thanh toán hay nhận số thẻ/OTP/mật khẩu. Bạn vui lòng không gửi thông tin thanh toán tại đây và tự đặt vé trên kênh chính thức của khu vui chơi."),
-    (r"(đặt\s+(?:giúp\s+|luôn\s+)?(?:mình\s+)?(?:\d+\s+)?phòng|phòng khách sạn|gọi\s+(?:giúp\s+)?(?:taxi|xe\b|grab)|đặt\s+vé\s+máy\s+bay)",
-     "Tôi từ chối yêu cầu đặt phòng khách sạn, gọi taxi/xe hay đặt dịch vụ ngoài phạm vi khu vui chơi (trợ lý không thực hiện giao dịch hay đặt dịch vụ bên ngoài). Bạn vui lòng tự đặt qua kênh phù hợp; tôi luôn sẵn sàng hỗ trợ điều chỉnh lịch trình vui chơi bên trong khu."),
-    (r"(tôi là (nhân viên|quản lý|admin|chủ khu|ban quản lý).*(cập nhật|sửa|đổi giá|giảm \d+%|mở lại|bỏ qua|cho phép|ghi đè)|(cập nhật|sửa|đổi).*(giá vé|trạng thái bảo trì)|mở lại.*(bảo trì|đường trượt|alpine))",
-     "Tôi từ chối tự ý cập nhật giá vé, áp dụng mức giảm giá chưa có trong hệ thống hoặc mở lại điểm đang bảo trì theo yêu cầu trong tin nhắn, kể cả khi tự xưng là quản lý hay nhân viên. Hệ thống chỉ dùng dữ liệu chính thức từ công cụ (vé người lớn 880.000đ, Đường trượt Núi Alpine Mẫu A09 đang đóng bảo trì)."),
-    (r"(bỏ qua.*(tuổi|chiều cao|quy định|hướng dẫn|ràng buộc)|đừng kiểm tra độ tuổi|ignore previous|system prompt|tôi là (nhân viên|quản lý).*(bỏ qua|cho phép))",
-     "Tôi không thể bỏ qua quy định an toàn về độ tuổi/chiều cao của trẻ nhỏ hoặc các ràng buộc kiểm chứng giờ mở cửa và ngân sách, kể cả khi có yêu cầu ghi đè. Nếu muốn đổi lịch phù hợp hơn, bạn có thể cho tôi biết độ tuổi thực tế của bé hoặc nới khung giờ/ngân sách."),
-]
-
-
 def _check_guardrail(text: str):
     low = text.lower()
-    for pattern, reply in _OUT_OF_SCOPE_PATTERNS:
-        if re.search(pattern, low):
-            return reply
+
+    # 1. Ngoài phạm vi thanh toán / đặt vé hộ / thông tin thẻ, OTP
+    if re.search(
+        r"(số thẻ|mã otp|\botp\b|\bcvv\b|mật khẩu|thanh toán giúp|trừ thẻ|đặt vé giúp|dùng thẻ đã lưu|chuyển khoản)",
+        low,
+    ):
+        return (
+            "Tôi chỉ hỗ trợ lập và kiểm tra lịch trình tham quan 1 ngày tại khu vui chơi, "
+            "không hỗ trợ đặt vé, thanh toán hay nhận số thẻ/OTP/mật khẩu. "
+            "Bạn vui lòng không gửi thông tin thanh toán tại đây và tự đặt vé trên kênh chính thức của khu vui chơi."
+        )
+
+    # 2. Ngoài phạm vi đặt phòng khách sạn / gọi xe / vé máy bay
+    if re.search(
+        r"(đặt\s+(?:giúp\s+|luôn\s+)?(?:mình\s+)?(?:\d+\s+)?phòng|phòng khách sạn|gọi\s+(?:giúp\s+)?(?:taxi|xe\b|grab)|đặt\s+vé\s+máy\s+bay)",
+        low,
+    ):
+        return (
+            "Tôi từ chối yêu cầu đặt phòng khách sạn, gọi taxi/xe hay đặt dịch vụ ngoài phạm vi khu vui chơi "
+            "(trợ lý không thực hiện giao dịch hay đặt dịch vụ bên ngoài). "
+            "Bạn vui lòng tự đặt qua kênh phù hợp; tôi luôn sẵn sàng hỗ trợ điều chỉnh lịch trình vui chơi bên trong khu."
+        )
+
+    # 3. Giả mạo quản lý/nhân viên đòi cập nhật giá vé hoặc mở lại điểm bảo trì (đọc trực tiếp từ công cụ)
+    if re.search(
+        r"((tôi là|mình là|danh nghĩa)\s*(nhân viên|quản lý|admin|chủ khu|ban quản lý).*(cập nhật|sửa|đổi|giảm \d+%|mở lại|bỏ qua|cho phép|ghi đè)"
+        r"|(cập nhật|sửa|đổi)\s*(ngay\s*)?(giá vé|bảng giá|trạng thái bảo trì)"
+        r"|mở lại\s*(điểm|trò|khu).*(bảo trì))",
+        low,
+    ):
+        points = tra_diem_choi(bao_gom_bao_tri=True)
+        maint = ["%s (%s)" % (p["name"], p["id"]) for p in points if p.get("maintenance")]
+        adult_fee = (_load_park_meta().get("ticket_prices") or {}).get("gate_adult_vnd")
+        details = []
+        if adult_fee is not None:
+            details.append("vé người lớn %s" % _format_vnd(adult_fee))
+        if maint:
+            details.append("%s đang đóng bảo trì" % ", ".join(maint))
+        suffix = (" (%s)" % ", ".join(details)) if details else ""
+        return (
+            "Tôi từ chối tự ý cập nhật giá vé, áp dụng mức giảm giá chưa có trong hệ thống hoặc mở lại điểm đang bảo trì "
+            "theo yêu cầu trong tin nhắn, kể cả khi tự xưng là quản lý hay nhân viên. "
+            "Hệ thống chỉ dùng dữ liệu chính thức từ công cụ" + suffix + "."
+        )
+
+    # 4. Prompt injection / ép bỏ qua quy tắc an toàn độ tuổi (trích giới hạn tuổi & gợi ý trò an toàn từ công cụ)
+    if re.search(
+        r"(bỏ qua\s+(mọi\s+|tất cả\s+|các\s+)?(quy định|hướng dẫn|ràng buộc|giới hạn|kiểm tra)"
+        r"|đừng kiểm tra\s*(độ\s*)?(tuổi|chiều cao)"
+        r"|ignore previous|system prompt"
+        r"|(?:dù chưa đủ tuổi|kệ tuổi|bất chấp tuổi))",
+        low,
+    ):
+        points = tra_diem_choi(bao_gom_bao_tri=True)
+        child_ages = [
+            int(a)
+            for a in re.findall(r"(?:bé|be|con|trẻ|tre|em)\s*(?:nhỏ\s*|mới\s*)?(\d{1,2})\s*(?:tuổi|tuoi)", low)
+            if int(a) < 15
+        ]
+        if not child_ages:
+            child_ages = [
+                int(a)
+                for a in re.findall(r"(?<!người lớn )(?<!chồng )(?<!vợ )\b(\d{1,2})\s*(?:tuổi|tuoi)", low)
+                if int(a) < 15
+            ]
+        min_age = min(child_ages) if child_ages else None
+        mentioned_restricted = [
+            "%s (%s, yêu cầu từ %d tuổi)" % (p["name"], p["id"], p["min_age"])
+            for p in points
+            if p.get("min_age", 0) > 0
+            and (min_age is None or p["min_age"] > min_age)
+            and (
+                p["id"].lower() in low
+                or p["name"].lower() in low
+                or p["name"].lower().split("(")[0].strip()[:12] in low
+            )
+        ]
+        safe_alts = [
+            "%s (%s)" % (p["name"], p["id"])
+            for p in points
+            if not p.get("maintenance")
+            and (min_age is None or p.get("min_age", 0) <= min_age)
+            and p.get("category") not in ("an_uong", "dich_vu")
+        ][:4]
+        age_note = " cho bé %d tuổi" % min_age if min_age is not None else ""
+        msg = (
+            "Tôi từ chối bỏ qua quy định an toàn về độ tuổi/chiều cao của trẻ nhỏ hoặc các ràng buộc kiểm chứng giờ mở cửa và ngân sách, "
+            "kể cả khi có yêu cầu ghi đè."
+        )
+        if mentioned_restricted:
+            msg += " Không thể xếp%s vì vượt giới hạn độ tuổi: %s." % (age_note, "; ".join(mentioned_restricted))
+        if safe_alts:
+            msg += " Bạn có thể chọn các điểm vui chơi phù hợp và an toàn hơn%s trong dữ liệu như: %s." % (age_note, ", ".join(safe_alts))
+        return msg
+
     return None
 
 
@@ -429,7 +510,16 @@ def answer(text: str) -> dict:
     min_tuoi = min(req["tuoi_tre_em"]) if req["tuoi_tre_em"] else None
     thoi_tiet = tra_thoi_tiet(req["ngay"])
     if not thoi_tiet["co_du_lieu"]:
-        return {"output": "Chưa có dữ liệu thời tiết và lịch show cho ngày %s. Bạn chọn ngày khác giúp mình." % req["ngay"]}
+        available = _load_park_meta().get("available_dates") or []
+        hint = (
+            " Các ngày hiện có dữ liệu: %s (từ %s đến %s)." % (", ".join(available), available[0], available[-1])
+            if len(available) >= 2
+            else (" Ngày hiện có dữ liệu: %s." % ", ".join(available) if available else "")
+        )
+        return {
+            "output": "Chưa có dữ liệu thời tiết và lịch show cho ngày %s.%s Bạn chọn ngày phù hợp giúp mình."
+            % (req["ngay"], hint)
+        }
     if req["mua_tu"]:
         thoi_tiet["mua_tu"] = req["mua_tu"]
     diem_list = tra_diem_choi(bao_gom_bao_tri=True)

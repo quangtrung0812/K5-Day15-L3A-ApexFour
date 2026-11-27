@@ -22,4 +22,5 @@ README của nhóm có mục "Dùng AI vào việc gì" (2–3 dòng, bắt bu�
 
 ## CP4
 
-Codex hỗ trợ thay đổi bước chuẩn bị bản nháp lịch, chạy lượt 2, đối chiếu từng output với tiêu chí, mô phỏng chi phí và dựng slide/video. Các điểm lượt 2 là đề xuất chấm, chờ người phụ trách duyệt.
+- Codex hỗ trợ thay đổi bước chuẩn bị bản nháp lịch, chạy lượt 2–4, sơ chấm đối chiếu từng output với tiêu chí, mô phỏng chi phí và dựng slide/video (`Nguyễn Quốc Hưng`, `Dương Thanh Bình`). Kết quả chấm `run-2`–`run-4` đã được `Nguyễn Quang Trung` rà soát lại cùng `eval/grade_helper.py` và chốt chính thức.
+- Antigravity / Gemini hỗ trợ `Nguyễn Quang Trung` kiểm toán chéo toàn bộ repo theo rubric CP3/CP4, nâng cấp nhánh Chốt 1 đọc dữ liệu công cụ (`B14`/`B15`), nhánh gợi ý ngày có dữ liệu (`B22`) trong `codebase/agent.py`, đồng bộ `spec.md` §4/§7/§8/§10 và rà soát reflection cá nhân.

@@ -61,7 +61,9 @@
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
 | 1 | `run-1@20261127-232511` | `gpt-4o-mini` | Bản CP3 đầu tiên: workflow `MAX_STEPS=3` + 5 công cụ `tools.py` + Chốt 1/2 (`agent.py`) | 9/25 (`thuong` 0/8 · `kho` 5/13 · `tu_choi` 4/4) | 36.0% | Chưa (đạt 100% `tu_choi` & 0 vi phạm code, nhưng chưa đạt ≥80% tổng) |
-| 2 | `run-2@20261127-234939` | `gpt-4o-mini` | Cho model biết tiền sau vé cổng và tuyến gợi ý | 10/25 (thường 1/8 · khó 5/13 · từ chối 4/4) | 40% | Chưa. Điểm nháp chờ nhóm duyệt |
+| 2 | `run-2@20261127-234939` | `gpt-4o-mini` | Cải tiến 1: tính trước tiền còn lại sau vé cổng và cấp tuyến gợi ý ban đầu cho model | 10/25 (`thuong` 1/8 · `kho` 5/13 · `tu_choi` 4/4) | 40.0% | Chưa (đạt 100% `tu_choi` & 0 vi phạm code, chưa đạt ≥80% tổng; đã rà soát xác nhận) |
+| 3 | `run-3@20261128-000708` | `gpt-4o-mini` | Cải tiến 2 (`codebase/route.py`): model chọn mã điểm ưu tiên, Python xếp khung giờ & kiểm ngân sách | 20/25 (`thuong` 6/8 · `kho` 10/13 · `tu_choi` 4/4) | 80.0% | **Đạt** (≥80% tổng, 100% `tu_choi`, 25/25 qua kiểm code 0 vi phạm) |
+| 4 | `run-4@20261128-000944` | `gpt-4o-mini` | Cải tiến 3: bổ sung giải thích vé trẻ <4 tuổi, tránh mưa, xung đột show, điểm ngoài danh mục và bữa tối | 22/25 (`thuong` 7/8 · `kho` 12/13 · `tu_choi` 3/4) | 88.0% | Chưa trọn điều kiện cứng (`tu_choi` 3/4 do `B14` thiếu gợi ý thay thế — đã khắc phục tiếp trong `agent.py`) |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 
