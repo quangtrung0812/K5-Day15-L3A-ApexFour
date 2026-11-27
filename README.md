@@ -81,14 +81,13 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Thật** (bắt buộc từ CP3) | Model: ____ |
-|  |  |  |
+| Lời gọi AI ở quyết định trung tâm | **Giả ở CP2** (`MODEL_PROVIDER=fake`) · **Thật từ CP3** | Đang chờ nối model thật trong `codebase/ai.py` trước CP3 |
+| 5 công cụ tra dữ liệu & kiểm ràng buộc (`codebase/tools.py`) | **Code kiểm chứng thật** trên dữ liệu `synthetic` | Dữ liệu khu vui chơi dựng `"SunWonder Mẫu"` (`data/park_data.json`, có seed, ghi rõ ở `data/DATA_CARD.md`) |
+| Đặt vé / thanh toán / dữ liệu thời gian thực | **Không làm** | Hệ thống chỉ xuất bản nháp lịch trình cho phụ huynh tự duyệt |
 
 ## Dùng AI vào việc gì
 
-2–3 dòng (bắt buộc): nhóm dùng công cụ AI nào để làm gì, người kiểm lại phần nào. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
-
-____
+Nhóm sử dụng coding agent (Antigravity / Gemini) hỗ trợ dựng khung workflow Python (`codebase/agent.py`, `tools.py`), cấu trúc tài liệu `spec.md`, `canvas.md` và kiểm tra quy chuẩn rubric. Toàn bộ bằng chứng review/phỏng vấn thật, thiết kế kiến trúc, kiểm chứng ràng buộc bằng code và chấm đánh giá đều do thành viên phụ trách trực tiếp rà soát và chịu trách nhiệm. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
 
 ## File mẫu — điền ở bước nào
 
