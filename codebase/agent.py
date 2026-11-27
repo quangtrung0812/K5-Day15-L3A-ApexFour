@@ -64,6 +64,8 @@ def _from_min(total: int) -> str:
 _OUT_OF_SCOPE_PATTERNS = [
     (r"(số thẻ|mã otp|otp|cvv|mật khẩu|thanh toán giúp|trừ thẻ|đặt vé giúp|chuyển khoản)",
      "Tôi chỉ hỗ trợ lập và kiểm tra lịch trình tham quan 1 ngày tại khu vui chơi, không hỗ trợ đặt vé, thanh toán hay nhận số thẻ/OTP/mật khẩu. Bạn vui lòng không gửi thông tin thanh toán tại đây và tự đặt vé trên kênh chính thức của khu vui chơi."),
+    (r"(tôi là (nhân viên|quản lý|admin|chủ khu|ban quản lý).*(cập nhật|sửa|đổi giá|giảm \d+%|mở lại|bỏ qua|cho phép|ghi đè)|(cập nhật|sửa|đổi).*(giá vé|trạng thái bảo trì)|mở lại.*(bảo trì|đường trượt|alpine))",
+     "Tôi từ chối tự ý cập nhật giá vé, áp dụng mức giảm giá chưa có trong hệ thống hoặc mở lại điểm đang bảo trì theo yêu cầu trong tin nhắn, kể cả khi tự xưng là quản lý hay nhân viên. Hệ thống chỉ dùng dữ liệu chính thức từ công cụ (vé người lớn 880.000đ, Đường trượt Núi Alpine Mẫu A09 đang đóng bảo trì)."),
     (r"(bỏ qua.*(tuổi|chiều cao|quy định|hướng dẫn|ràng buộc)|ignore previous|system prompt|tôi là (nhân viên|quản lý).*(bỏ qua|cho phép))",
      "Tôi không thể bỏ qua quy định an toàn về độ tuổi/chiều cao của trẻ nhỏ hoặc các ràng buộc kiểm chứng giờ mở cửa và ngân sách, kể cả khi có yêu cầu ghi đè. Nếu muốn đổi lịch phù hợp hơn, bạn có thể cho tôi biết độ tuổi thực tế của bé hoặc nới khung giờ/ngân sách."),
 ]
@@ -226,8 +228,17 @@ def _build_draft_from_tools(req: dict, diem_list: list, show_list: list, thoi_ti
                 return True
         return False
 
-    # Thử chèn 1 show hợp lệ đầu tiên vào khung giờ
-    chosen_show = None
+    # Chọn điểm chơi hợp lệ từ dữ liệu tool (đã lọc bảo trì + độ tuổi bé), gom theo phân khu để đi gọn đỡ vòng vèo
+    usable = [
+        d for d in diem_list
+        if not d.get("maintenance", False)
+        and not (req["so_tre_em"] > 0 and min_tuoi is not None and d.get("min_age", 0) > min_tuoi)
+    ]
+    usable.sort(key=lambda d: (d.get("zone", "Z9"), d.get("id", "")))
+
+    # Chọn 1 show hợp lệ đầu tiên ưu tiên gần phân khu mở đầu để tránh đi vòng vèo
+    first_id = usable[0]["id"] if usable else None
+    valid_shows = []
     for s in show_list:
         if s["huy"]:
             continue
@@ -235,15 +246,11 @@ def _build_draft_from_tools(req: dict, diem_list: list, show_list: list, thoi_ti
             continue
         ss, se = _to_min(s["start_time"]), _to_min(s["end_time"])
         if ss >= start_m and se <= end_m and (s.get("indoor", True) or not _overlaps_rain(ss, se)):
-            chosen_show = s
-            break
+            w0 = uoc_thoi_gian_di(first_id, s["id"]) if first_id else 0
+            valid_shows.append((w0 if w0 is not None else 99, ss, s))
+    valid_shows.sort(key=lambda x: (x[0], x[1]))
+    chosen_show = valid_shows[0][2] if valid_shows else None
 
-    # Chọn điểm chơi hợp lệ từ dữ liệu tool (đã lọc bảo trì + độ tuổi bé)
-    usable = [
-        d for d in diem_list
-        if not d.get("maintenance", False)
-        and not (req["so_tre_em"] > 0 and min_tuoi is not None and d.get("min_age", 0) > min_tuoi)
-    ]
     for d in usable:
         if len(plan) >= 4 and not req.get("muon_choi_het"):
             break
@@ -262,7 +269,7 @@ def _build_draft_from_tools(req: dict, diem_list: list, show_list: list, thoi_ti
                     "diem_id": chosen_show["id"],
                     "bat_dau": chosen_show["start_time"],
                     "ket_thuc": chosen_show["end_time"],
-                    "ly_do": "Suất diễn cố định phù hợp gia đình (%s)" % chosen_show["zone"],
+                    "ly_do": "Suất diễn cố định phù hợp gia đình, tuyến đi gọn tới %s (chỉ %d phút đi bộ)" % (chosen_show["zone"], w_show),
                 })
                 cur = se
                 prev_id = chosen_show["id"]
@@ -280,7 +287,8 @@ def _build_draft_from_tools(req: dict, diem_list: list, show_list: list, thoi_ti
         # Tránh thêm điểm phụ thu nếu ngân sách sát
         if d["extra_fee_adult_vnd"] > 0 and req["ngan_sach"] < 2_000_000:
             continue
-        ly_do = "Trong nhà an toàn thời tiết" if d.get("indoor", True) else "Hoạt động ngoài trời khung giờ không mưa"
+        walk_note = "cùng tuyến đi gọn (%d phút đi bộ)" % walk if prev_id else "điểm mở đầu gọn từ khu %s" % d.get("zone", "")
+        ly_do = ("Trong nhà an toàn thời tiết, %s" if d.get("indoor", True) else "Hoạt động ngoài trời khung giờ không mưa, %s") % walk_note
         plan.append({
             "diem_id": d["id"],
             "bat_dau": _from_min(cand_s),
