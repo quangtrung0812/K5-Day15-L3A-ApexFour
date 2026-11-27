@@ -6,12 +6,14 @@
 
 ## 1. Đầu vào
 
-- **Persona** trong `cost/personas.yaml` là gia đình lập lịch trước chuyến đi, gia đình đổi lịch trong ngày và gia đình đi thường xuyên. Tỉ lệ và tần suất dùng là giả định cần đối chiếu với khảo sát của nhóm.
+- **Ba kiểu sử dụng** (tự ước tính) gồm lập lịch một lần (65%, 1 lượt hỏi/phiên), sửa lịch nhiều lần trước chuyến đi (25%, 3 lượt/phiên) và xếp lại trong ngày mưa (10%, 4 lượt/phiên). Mỗi kiểu dùng 1 phiên/tháng. Khung lấy ngẫu nhiên các câu có đủ thông tin chuyến đi và gọi agent riêng cho từng lượt.
 - **Quy mô thử nghiệm tại một khu vui chơi** là 50, 200 hoặc 500 gia đình hoạt động mỗi tháng (tự ước tính).
-- **Giá chuẩn theo bảng BTC ngày 25/11/2026**, đơn vị USD/1 triệu token. Gemini 3.1 Flash-Lite có giá vào 0,25 và ra 1,50. Gemini 4 Hydrogen có giá vào 1,50 và ra 7,50. [Giá Flash-Lite](https://aistudio.google.com/docs/pricing#gemini-3.1-flash-lite) · [Giá Hydrogen](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen)
-- **Đo token và tỉ lệ đạt** sau khi ghép luồng chính, nối model thật và chấm bộ benchmark. Dùng lượt eval đã chấm của cùng model để tính chi phí mỗi tác vụ thành công.
+- **Giá Standard trả phí** đối chiếu Google AI Studio ngày 27/11/2026 và bảng BTC ngày 25/11/2026, tính bằng USD/1 triệu token văn bản. Gemini 3.1 Flash-Lite có giá vào 0,25 và ra 1,50. Gemini 4 Hydrogen có giá vào 1,50 và ra 7,50. [Giá Flash-Lite](https://aistudio.google.com/docs/pricing#gemini-3.1-flash-lite) · [Giá Hydrogen](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen)
+- **Đo chi phí** theo số token của lượt mô phỏng bằng model thật. Khi tính chi phí mỗi tác vụ thành công, dùng tỉ lệ đạt từ lượt eval đã chấm của cùng model.
 
 ## 2. Kết quả mô phỏng
+
+CP3 đã kiểm cấu hình với 10 phiên ở chế độ giả, seed 42, cả 10 phiên chạy hết và 0 lỗi thực thi. Khung lưu lượt này vào `cost/simulate-mock.csv`, số token bằng 0. Bảng chi phí lấy từ lượt chạy model thật.
 
 Lượt mô phỏng: `cost/simulate-__.csv` · run ID __ · __ phiên · seed __
 

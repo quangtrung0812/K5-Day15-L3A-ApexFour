@@ -1,4 +1,4 @@
-"""Kiểm ràng buộc CP2 trên dữ liệu SunWonder Mẫu được bàn giao."""
+"""Kiểm ràng buộc lịch trình trên dữ liệu SunWonder Mẫu."""
 
 from pathlib import Path
 import sys
@@ -74,7 +74,8 @@ class ParkToolsTest(unittest.TestCase):
         rainy_shows = {slot["id"]: slot for slot in tools.tra_lich_show(RAINY)}
         self.assertTrue(rainy_shows["S04"]["huy"])
         self.assertFalse(rainy_shows["S03"]["huy"])
-        self.assert_errors(self.check([show], weather={"ngay": RAINY}), "MUA_NGOAI_TROI")
+        self.assert_errors(self.check([show], weather={"ngay": RAINY}),
+                           "SUAT_SHOW_KHONG_CO_HOAC_DA_HUY", "MUA_NGOAI_TROI")
         self.assert_errors(self.check([show], show_da_huy=["S04"]), "SUAT_SHOW_KHONG_CO_HOAC_DA_HUY")
         self.assert_errors(
             self.check([show], show_da_huy=[{"diem_id": "S04", "bat_dau": "16:15"}]),
@@ -82,6 +83,45 @@ class ParkToolsTest(unittest.TestCase):
         )
         self.assert_errors(self.check([activity("S04", "16:16", "16:46")]),
                            "SUAT_SHOW_KHONG_CO_HOAC_DA_HUY")
+
+    def test_midday_rain_and_manual_cancellation_agree_with_lookup(self):
+        cancellations = [{"diem_id": "S03", "bat_dau": "15:00"}]
+        shows = {
+            slot["id"]: slot for slot in tools.tra_lich_show(
+                SUNNY, mua_tu="11:00", show_da_huy=cancellations,
+            )
+        }
+        self.assertEqual({show_id for show_id, slot in shows.items() if slot["huy"]},
+                         {"S03", "S04", "S05"})
+        weather = {"ngay": SUNNY, "mua_tu": "11:00"}
+        self.assert_errors(
+            self.check([activity("S03", "15:00", "15:20")], weather=weather,
+                       show_da_huy=cancellations),
+            "SUAT_SHOW_KHONG_CO_HOAC_DA_HUY",
+        )
+        replacement = self.check(
+            [activity("S02", "11:00", "11:20")], weather=weather,
+            show_da_huy=cancellations,
+        )
+        self.assertTrue(replacement["hop_le"])
+        self.assertFalse(any(slot["huy"] for slot in tools.tra_lich_show(SUNNY)))
+
+    def test_draft_cannot_override_price_or_maintenance(self):
+        closed_ride = {
+            **activity("A09", "09:00", "09:45"),
+            "maintenance": False,
+            "gate_adult_vnd": 440_000,
+        }
+        lunch = {
+            **activity("A07", "12:00", "12:40"),
+            "extra_fee_adult_vnd": 0,
+            "extra_fee_child_vnd": 0,
+        }
+        result = self.check([closed_ride, lunch], budget=2_420_000)
+        self.assert_errors(result, "BAO_TRI", "VUOT_NGAN_SACH")
+        self.assertEqual(result["tien_ve_cong"], 2_420_000)
+        self.assertEqual(result["tong_tien"], 2_770_000)
+        self.assertEqual(result["chi_tiet"][1]["tien"], 350_000)
 
     def test_rain_age_and_unknown_weather(self):
         self.assert_errors(self.check([activity("A08", "13:20", "14:05")], ages=[5],
