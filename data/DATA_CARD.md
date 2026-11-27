@@ -15,6 +15,8 @@
 | Nhãn | **thật** |
 | Giới hạn | Review trên kho ứng dụng nghiêng về người dùng gặp trục trặc kỹ thuật app (lỗi đăng nhập/lag chiếm phần lớn `L0_KHAC`) và ít nhắc trực tiếp yếu tố thời tiết mưa (`L4_THOI_TIET_MUA = 0/39`). Cần bổ sung review địa điểm Google Maps/Tripadvisor và kiểm lại bằng phỏng vấn ≥3 người dùng thật ngoài nhóm ở `evidence/interviews/` (Hoàng chủ trì). |
 
+**Dùng trong bộ câu thử (CP3, 25 câu):** 10/25 câu có `source: data_that:` — 8 câu lấy tình huống từ dataset này (`B01`, `B02`, `B04`, `B05`, `B09`, `B10`, `B16`, `B19`) và 2 câu lấy từ mẫu 10 review Tripadvisor Sun World Hạ Long do Nguyễn Quốc Hưng thu (`evidence/hung-ha-long.md`: `HL01` → `B17`, `HL04` → `B18`). Review chỉ cung cấp *tình huống*; mọi giờ, giá, mã điểm trong câu thử lấy từ Dataset 2.
+
 ---
 
 ## Dataset 2 · Dữ liệu khu vui chơi mẫu (`data/park_data.json`)
