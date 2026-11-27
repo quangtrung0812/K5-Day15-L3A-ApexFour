@@ -137,7 +137,9 @@ def call_openai_compat(system: str, user: str, default_url: str) -> dict:
     url = API_BASE_URL or default_url
     messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
     headers = {"Authorization": "Bearer " + API_KEY}
-    data = post_json(url, headers, {"model": MODEL_NAME, "messages": messages, "temperature": 0.2})
+    # Không truyền temperature mặc định để tương thích các model reasoning/nano mới của OpenAI (vd gpt-5.4-nano)
+    body = {"model": MODEL_NAME, "messages": messages}
+    data = post_json(url, headers, body)
     usage = data.get("usage") or {}
     if "prompt_tokens" not in usage or "completion_tokens" not in usage:
         raise RuntimeError("Phản hồi API thiếu trường usage.prompt_tokens / completion_tokens")
