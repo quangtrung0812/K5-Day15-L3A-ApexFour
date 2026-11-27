@@ -22,7 +22,6 @@ import urllib.request
 from tracing import model_call
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SHOW_RAW = False
 
 
 def load_env(path=os.path.join(ROOT, ".env")):
@@ -43,6 +42,7 @@ MODEL_PROVIDER = (os.environ.get("MODEL_PROVIDER") or "fake").strip().lower()
 MODEL_NAME = (os.environ.get("MODEL_NAME") or "").strip()
 API_KEY = (os.environ.get("API_KEY") or "").strip()
 API_BASE_URL = (os.environ.get("API_BASE_URL") or "").strip()
+SHOW_RAW = (os.environ.get("SHOW_RAW") or "").strip().lower() in ("1", "true", "yes")
 
 OPENAI_COMPAT_URLS = {
     "openai": "https://api.openai.com/v1/chat/completions",
@@ -81,14 +81,13 @@ def _require_credentials(need_key: bool = True) -> None:
 
 
 def call_gemini(system: str, user: str) -> dict:
-    """Google AI Studio (Gemini generateContent REST API)."""
+    """Google AI Studio (Gemini generateContent REST API, truyền key qua header x-goog-api-key)."""
     _require_credentials(need_key=True)
     model_id = MODEL_NAME[7:] if MODEL_NAME.startswith("models/") else MODEL_NAME
     base = API_BASE_URL or "https://generativelanguage.googleapis.com/v1beta"
-    url = "%s/models/%s:generateContent?key=%s" % (
+    url = "%s/models/%s:generateContent" % (
         base.rstrip("/"),
         urllib.parse.quote(model_id, safe="-._"),
-        urllib.parse.quote(API_KEY, safe=""),
     )
     body = {
         "contents": [{"role": "user", "parts": [{"text": user}]}],
@@ -96,7 +95,7 @@ def call_gemini(system: str, user: str) -> dict:
     }
     if system:
         body["systemInstruction"] = {"parts": [{"text": system}]}
-    data = post_json(url, {}, body)
+    data = post_json(url, {"x-goog-api-key": API_KEY}, body)
     candidates = data.get("candidates") or []
     parts = (candidates[0].get("content") or {}).get("parts") or [] if candidates else []
     text = "".join(p.get("text", "") for p in parts if not p.get("thought"))
