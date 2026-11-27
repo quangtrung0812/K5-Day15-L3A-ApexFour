@@ -114,7 +114,7 @@ def call_openai_compat(system: str, user: str, default_url: str) -> dict:
     data = post_json(
         url,
         {"Authorization": "Bearer " + API_KEY},
-        {"model": MODEL_NAME, "messages": messages, "temperature": 0.2},
+        {"model": MODEL_NAME, "messages": messages},
     )
     usage = data.get("usage") or {}
     msg = ((data.get("choices") or [{}])[0].get("message") or {})
