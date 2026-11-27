@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SunWonder · Lịch tham quan gia đình</title>
+<style>
+:root{color-scheme:light;--ink:#193d36;--pine:#145441;--paper:#f5f4ec;--line:#c9d3c8;--muted:#4e665b}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.52 "Segoe UI",Arial,sans-serif}header{background:#163f35;color:white}header>div,main{max-width:1230px;margin:auto;padding:18px clamp(16px,4vw,58px)}header>div{display:flex;align-items:center;gap:12px}.mark{width:29px;height:29px;background:repeating-linear-gradient(135deg,#b4e4a4 0 5px,transparent 5px 9px);border-radius:50%}header strong{font-size:21px;letter-spacing:-.05em}header span:last-child{margin-left:auto;color:#c6e2cb;font-size:14px}h1{font:600 clamp(35px,5vw,62px)/1.08 Georgia,serif;letter-spacing:-.047em;margin:28px 0 22px}h2{font:600 28px/1.16 Georgia,serif;margin:0 0 16px}h3{font-size:14px;margin:20px 0 6px;color:var(--muted)}nav{display:flex;gap:8px;margin:15px 0 22px;border-bottom:1px solid var(--line)}nav button{border:0;border-radius:0;border-bottom:3px solid transparent;background:none;color:var(--muted)}nav button[aria-pressed=true]{color:var(--pine);border-color:var(--pine)}button,select,textarea,input{font:inherit;color:inherit}button,select,input{border:1px solid var(--line);padding:9px 13px;border-radius:8px;background:white}button{cursor:pointer;font-weight:600}button:disabled{cursor:wait;opacity:.6}button:hover{background:#e5ede1}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #cf870a;outline-offset:2px}.primary{background:var(--pine);color:white;border-color:var(--pine)}.primary:hover{background:#0d4334}.grid{display:grid;grid-template-columns:minmax(280px,.75fr) minmax(360px,1.25fr);gap:18px}.card{border:1px solid var(--line);background:#fffefa;border-radius:16px;padding:clamp(16px,2.4vw,29px);min-width:0;align-self:start}.hint,small{color:var(--muted)}small{display:block}.field{display:block;font-weight:600;margin:14px 0 6px}textarea{width:100%;resize:vertical;min-height:156px;border:1px solid #a4b7a8;border-radius:9px;padding:13px;background:#fafbf6}.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}.metric{background:#e6efdc;padding:15px 20px;border-radius:10px;font-weight:600}.metric b{font-size:27px}.scroller{max-height:440px;overflow:auto;border-top:1px solid var(--line)}.case{display:flex;gap:9px;align-items:center;text-align:left;width:100%;border:0;border-bottom:1px solid #dde3d9;border-radius:0;font-weight:500}.case.current{background:#e2efda}.case span:last-child{margin-left:auto}.pass{color:#12653e}.fail{color:#95401f}.result{white-space:pre-wrap;overflow-wrap:anywhere}.stop{border-left:3px solid #77a885;padding:4px 0 13px 14px;margin-left:4px}.stop time{display:block;color:var(--pine);font-weight:700;font-variant-numeric:tabular-nums}.stop small{margin-top:4px}.facts{background:#f2f5ea;padding:11px 14px;border-radius:7px;margin:12px 0}details{margin:12px 0}summary{cursor:pointer;font-weight:600}p{margin:8px 0 16px}[hidden]{display:none!important}@media(max-width:780px){.grid{grid-template-columns:1fr}.scroller{max-height:235px}header span:last-child{font-size:12px}} 
+</style></head><body><header><div><i class="mark" aria-hidden="true"></i><strong>SunWonder</strong><span>ApexFour · Công viên mô phỏng</span></div></header>
+<main><h1>Lịch tham quan gia đình</h1><nav aria-label="Chế độ"><button id="plannerTab" aria-pressed="true">Lập lịch</button><button id="evalTab" aria-pressed="false">Đánh giá</button></nav>
+<section id="planner" class="grid"><div class="card"><h2>Chuyến đi của bạn</h2><label for="question" class="field">Yêu cầu của gia đình</label><textarea maxlength="3000" id="question"></textarea><div class="row"><button id="normal">Lịch cả ngày</button><button id="rain">Mưa buổi chiều</button></div><button class="primary" id="create">Xếp lịch</button><p id="mode" class="hint"></p></div>
+<div class="card" aria-live="polite"><h2 id="resultTitle">Lịch mẫu đã chạy</h2><small id="stats"></small><div id="result"></div></div></section>
+<section id="evaluation" hidden><div class="row"><label for="run">Lượt đánh giá</label><select id="run"></select><span id="score" class="metric"></span></div><div class="grid"><div class="card"><h2>Bộ câu thử</h2><div class="row"><input aria-label="Tìm câu thử" placeholder="Tìm mã hoặc nội dung…" id="search"><select aria-label="Lọc kết quả" id="filter"><option value="">Tất cả</option><option value="0">Trượt</option><option value="1">Đạt</option><option value="pending">Chưa chấm</option></select></div><div class="scroller" id="cases"></div></div><article class="card"><h2 id="caseTitle"></h2><div id="detail"></div></article></div></section></main>
+<script>/* SAVED_RUNS */</script><script>
+const el=id=>document.getElementById(id), make=(tag,txt='',cls='')=>{const n=document.createElement(tag);n.textContent=txt;n.className=cls;return n};
+const local=location.protocol==='http:'&&['127.0.0.1','localhost'].includes(location.hostname);
+let runs=window.savedRuns||[], selected='', busy=false;
+const samples=['Ngày 2026-11-28, 2 người lớn và 1 bé 6 tuổi đi từ 09:00 đến 17:00, ngân sách 3 triệu đồng. Muốn đi thủy cung và xem show.','Ngày 2026-11-28, 2 người lớn và 1 bé 6 tuổi còn từ 14:00 đến 17:00, ngân sách 3 triệu đồng. Mưa từ 14:00, muốn xếp lại buổi chiều trong nhà.'];
+const clean=t=>t.replace(/[*\x60]/g,'');
+function renderOutput(node,output){node.replaceChildren();for(const line of clean(output).split('\n').filter(Boolean)){
+const match=line.match(/^\d+\.\s+(\d\d:\d\d[–-]\d\d:\d\d)\s*\|\s*(.*?)\s*—\s*Lý do:\s*(.*)/);
+if(match){const stop=make('div','','stop');stop.append(make('time',match[1]),make('strong',match[2]),make('small',match[3]));node.append(stop)}
+else node.append(make('p',line,line.includes('Tổng chi phí')?'facts':''));}}
+function tab(e){el('planner').hidden=e;el('evaluation').hidden=!e;el('plannerTab').setAttribute('aria-pressed',!e);el('evalTab').setAttribute('aria-pressed',e)}
+el('plannerTab').onclick=()=>tab(false);el('evalTab').onclick=()=>tab(true);
+function sample(i){el('question').value=samples[i];const id=i?'B21':'B01',r=runs.at(-1),c=r?.cases.find(v=>v.id===id);el('resultTitle').textContent='Kết quả tham khảo · '+id;
+if(c){el('question').value=c.input;el('stats').textContent=r.id;renderOutput(el('result'),c.output)}}
+el('normal').onclick=()=>sample(0);el('rain').onclick=()=>sample(1);
+el('create').onclick=async()=>{if(busy)return;if(!local){el('mode').textContent='Để xếp lịch mới, chạy python demo/server.py rồi mở http://127.0.0.1:8765/';return}
+const text=el('question').value.trim();if(!text){el('question').focus();return}
+busy=true;for(const id of ['create','normal','rain'])el(id).disabled=true;el('question').readOnly=true;
+el('resultTitle').textContent='Đang xếp lịch…';el('stats').textContent='';el('result').replaceChildren();
+try{const resp=await fetch('/api/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});const d=await resp.json();if(!resp.ok)throw Error(d.error||'Không kết nối được');
+el('resultTitle').textContent='Kết quả chuyến đi';el('stats').textContent=d.stats.model_calls+' lần gọi model · '+d.stats.tool_calls+' lần gọi công cụ';renderOutput(el('result'),d.output)}
+catch(e){el('resultTitle').textContent='Chưa tạo được lịch';el('result').textContent=e.message}
+finally{busy=false;for(const id of ['create','normal','rain'])el(id).disabled=false;el('question').readOnly=false}};
+const types={thuong:'Thường',kho:'Khó',tu_choi:'Từ chối'},status=c=>c.pass==='1'?'Đạt':c.pass==='0'?'Trượt':'Chưa chấm';
+function showCases(){const run=runs[+el('run').value];if(!run)return;const passed=run.cases.filter(x=>x.pass==='1').length,graded=run.cases.filter(x=>['0','1'].includes(x.pass)).length;
+const auto=run.cases.filter(c=>c.auto).length;
+el('score').textContent='Kiểm tự động '+auto+'/'+run.cases.length+' · '+(graded?('Chấm '+(run.name==='run-1'?'':'nháp ')+passed+'/'+graded+' đạt'):'Chờ duyệt nội dung')+(graded&&graded<run.cases.length?' · còn '+(run.cases.length-graded)+' câu':'');
+const rows=run.cases.filter(c=>(c.id+' '+c.input).toLowerCase().includes(el('search').value.toLowerCase())&&(!el('filter').value||(c.pass||'pending')===el('filter').value));
+if(!rows.some(c=>c.id===selected))selected=rows[0]?.id;
+el('cases').replaceChildren();for(const c of rows){const b=make('button','','case'+(c.id===selected?' current':''));b.append(make('b',c.id),make('small',types[c.type]),make('span',status(c),c.pass==='1'?'pass':'fail'));b.onclick=()=>{selected=c.id;showCases()};el('cases').append(b)}
+const c=rows.find(v=>v.id===selected),panel=el('detail');panel.replaceChildren();el('caseTitle').textContent=c?c.id+' · '+types[c.type]:'Không có câu phù hợp';if(!c)return;
+for(const [label,value] of [['Yêu cầu',c.input],['Tiêu chí đã chốt',c.pass_criterion],['Kiểm tự động',c.auto?'Qua bộ kiểm sơ bộ':'Cần xem lại'],['Nhận xét chấm',c.ghi_chu||'Đang chờ người phụ trách đối chiếu toàn bộ tiêu chí văn bản.']])panel.append(make('h3',label),make('p',value));
+const prev=runs[+el('run').value-1]?.cases.find(v=>v.id===c.id);
+if(prev){const d=make('details');d.append(make('summary','Lượt trước · '+status(prev)),make('p',prev.ghi_chu),make('div',clean(prev.output),'result'));panel.append(d)}
+panel.append(make('h3','Phản hồi đã lưu'));const out=make('div');renderOutput(out,c.output);panel.append(out);
+const use=make('button','Thử lại yêu cầu này');use.disabled=busy;use.onclick=()=>{el('question').value=c.input;el('resultTitle').textContent='Kết quả đã lưu · '+c.id;el('stats').textContent=run.id;renderOutput(el('result'),c.output);tab(false)};panel.append(use);}
+function init(){el('run').replaceChildren();runs.forEach((r,i)=>{const o=make('option',r.id);o.value=i;el('run').append(o)});el('run').value=runs.length-1;showCases();sample(0)}
+el('run').onchange=showCases;el('filter').onchange=showCases;el('search').oninput=showCases;
+el('mode').textContent=local?'Model chạy qua máy demo.':'Đang xem kết quả đã lưu. Chạy python demo/server.py để nhập yêu cầu mới.';
+init();if(local)fetch('/api/runs').then(r=>r.json()).then(data=>{runs=data;init()}).catch(()=>{});
+</script></body></html>

@@ -6,6 +6,20 @@
 
 ---
 
+## Demo HTML
+
+Mở [demo.html](demo.html) để duyệt bốn lượt đã lưu trên máy. Trong mục **Đánh giá**, chọn lượt, lọc câu trượt và mở “Lượt trước” để đối chiếu cùng một yêu cầu. Nhận xét chấm và kết quả kiểm tự động nằm ở hai dòng riêng.
+
+Để xếp lịch mới bằng model thật đã cấu hình trong `.env`, chạy `python demo/server.py` rồi mở [giao diện cục bộ](http://127.0.0.1:8765/). Nút **Thử lại yêu cầu này** chép câu đang xem sang phần lập lịch. Mỗi lần bấm **Xếp lịch** có thể phát sinh chi phí API. Sau khi có lượt đánh giá mới, dùng `python demo/server.py --snapshot` để cập nhật bản HTML ngoại tuyến.
+
+Lượt 3 đạt 20/25 theo chấm nháp. Lượt 4 qua kiểm tự động 25/25 và chờ nhóm duyệt phần văn bản. Các lượt này phục vụ cải tiến sản phẩm. Chi phí mô phỏng và điểm CP4 bên dưới ứng với bản lượt 2.
+
+## Bản demo CP4
+
+[Slide trình bày](demo-slides.pdf) · [Video dự phòng](demo-backup.mp4) · [Báo cáo đánh giá](eval/report.md) · [Bảng chi phí](cost/cost-estimate.md)
+
+Lượt 1 đạt 9/25. Lượt 2 đạt 10/25 theo bản chấm nháp chờ nhóm duyệt. Chi phí model là $0.0068 mỗi tác vụ thành công ở kịch bản cơ sở với gpt-4o-mini. Quyết định tiếp tục thử nghiệm. Nhóm chưa có phòng demo, link form hoặc link video công khai. Chưa có kết quả thử với phụ huynh cho phần bonus.
+
 ## Nhóm làm gì, khung làm gì
 
 | Nhóm quyết định và viết | Khung làm sẵn (không cần sửa) |
@@ -37,7 +51,7 @@ Gõ `dir` (Windows) hoặc `ls` (macOS / Linux): thấy `run.py` và `README.md`
 | Kiểm Python | `python --version` (không được thì `py --version`) | `python3 --version` |
 | Chạy bản chạy thử (chế độ giả, chưa gọi model) | `python run.py` | `python3 run.py` |
 | Kiểm bộ câu thử | `python run.py check` | `python3 run.py check` |
-| Tạo file `.env` để nối model | `copy .env.example .env` | `cp .env.example .env` |
+| Tạo file `.env` để nối model | `if (!(Test-Path .env)) { Copy-Item .env.example .env }` | `cp -n .env.example .env` |
 
 - Windows: gõ `python` mà mở Microsoft Store hoặc báo không có lệnh → dùng `py`. Chưa có Python: cài từ python.org, **tick "Add python.exe to PATH"**, mở lại PowerShell.
 - macOS: báo `command not found: python` là bình thường → dùng `python3`.
@@ -81,13 +95,13 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Đã nối API thật trong `codebase/ai.py`** (mặc định `fake` khi chưa điền `.env`) | Hỗ trợ `gemini`, `openai`, `groq`, `deepseek`, `openrouter`, `anthropic`, `ollama` qua `.env` (token đọc trực tiếp từ `usage`, không ước lượng). Chưa chạy `eval` lượt 1 bằng AI thật cho tới khi điền API key vào `.env`. |
+| Lời gọi AI ở quyết định trung tâm | **Thật từ CP3** (qua `.env`: `gemini` / `openai` / `groq` / `anthropic` / `ollama`; mặc định `fake` nếu chưa cấu hình `.env`) | Nối tại `codebase/ai.py`, đo token thật từ trường `usage` của API |
 | 5 công cụ tra dữ liệu & kiểm ràng buộc (`codebase/tools.py`) | **Code kiểm chứng thật** trên dữ liệu `synthetic` | Dữ liệu khu vui chơi dựng `"SunWonder Mẫu"` (`data/park_data.json`, có seed, ghi rõ ở `data/DATA_CARD.md`) |
 | Đặt vé / thanh toán / dữ liệu thời gian thực | **Không làm** | Hệ thống chỉ xuất bản nháp lịch trình cho phụ huynh tự duyệt |
 
 ## Dùng AI vào việc gì
 
-Nhóm sử dụng coding agent (Antigravity / Gemini) hỗ trợ dựng khung workflow Python (`codebase/agent.py`, `tools.py`), cấu trúc tài liệu `spec.md`, `canvas.md` và kiểm tra quy chuẩn rubric. Toàn bộ bằng chứng review/phỏng vấn thật, thiết kế kiến trúc, kiểm chứng ràng buộc bằng code và chấm đánh giá đều do thành viên phụ trách trực tiếp rà soát và chịu trách nhiệm.
+Nhóm sử dụng coding agent (Antigravity / Gemini) hỗ trợ dựng khung workflow Python (`codebase/agent.py`, `tools.py`), cấu trúc tài liệu `spec.md`, `canvas.md` và kiểm tra quy chuẩn rubric. Toàn bộ bằng chứng review/phỏng vấn thật, thiết kế kiến trúc, kiểm chứng ràng buộc bằng code và chấm đánh giá thuộc trách nhiệm thành viên phụ trách. Điểm nháp CP4 do Codex đề xuất đang chờ nhóm rà soát.
 Nguyễn Quốc Hưng dùng Codex để viết và ghép công cụ kiểm tra lịch, soạn ca thử và chuẩn bị demo. Xem [khai báo dùng AI](docs/ai-usage.md) và [quy ước của nhóm](AGENTS.md).
 
 ## File mẫu — điền ở bước nào
@@ -120,5 +134,5 @@ Nguyễn Quốc Hưng dùng Codex để viết và ghép công cụ kiểm tra l
 | 4 | Bản chạy thử làm trọn lát cắt | `codebase/` · lệnh ở mục "Lệnh" |
 | 5 | Định nghĩa "tốt" + bộ câu thử | `data/DATA_CARD.md` · `eval/` |
 | 6 | Mô phỏng chi phí khi dùng thật | `cost/` |
-| 7 | Slide + demo + video dự phòng | slide trong repo (PDF, PPTX, HTML…) hoặc link slide ở form CP4 · link video: ____ |
+| 7 | Slide + demo + video dự phòng | [Slide PDF](demo-slides.pdf) · [Video dự phòng](demo-backup.mp4) |
 | + | *Bonus:* người dùng thử | `validation/log.md` |

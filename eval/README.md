@@ -10,18 +10,18 @@
 
 ## 2. Bộ câu thử dựng ra sao
 
-- `eval/benchmark.csv`: **15 câu** ở bản CP2 (thuong `6` · kho `6` · tu_choi `3`, trong đó `2` câu tấn công `B14`, `B15`; sẽ mở rộng lên 20–30 câu trước CP3).
-- Nguồn (`python run.py check` in sẵn): `nguoi_dung` 0 · `data_that` 6 · `tu_viet` 4 · `sinh_seed` 5 → từ người dùng / data thật **6/15 (40.0%, đạt ≥1/3)**. *(Sẽ bổ sung thêm câu `nguoi_dung:` từ phỏng vấn ở chặng CP3).*
+- `eval/benchmark.csv`: **25 câu** ở bản CP3 (thuong `8` · kho `13` · tu_choi `4`, trong đó `2` câu tấn công `B14`, `B15`). `B01`–`B15` giữ nguyên từ CP2; `B16`–`B25` thêm ở CP3, mọi đáp án số đã được kiểm lại bằng `kiem_lich_trinh` trước khi ghi.
+- Nguồn (`python run.py check` in sẵn): `nguoi_dung` 0 · `data_that` 10 · `tu_viet` 6 · `sinh_seed` 9 → từ người dùng / data thật **10/25 (40.0%, đạt ≥1/3)**. *(Câu `nguoi_dung:` từ phỏng vấn P1–P3 sẽ được thêm khi Hoàng có ghi chép.)*
 - Độ phủ — lưới input 4 chiều:
-  1. **Thành phần gia đình & tuổi bé:** bé 3 tuổi miễn phí (`B06`), bé 4–5 tuổi (`B04`, `B12`, `B14`), bé 6–8 tuổi (`B01`–`B03`, `B07`, `B09`–`B11`), bé 10 tuổi (`B05`).
-  2. **Ngân sách & thời lượng:** dư dả (`B02`, `B05`), vừa sát (`B01`, `B03`, `B06`), bất khả thi (`B09` thiếu tiền vé cổng, `B11` chỉ có 2,5 tiếng).
-  3. **Điều kiện vận hành & thời tiết:** ngày nắng (`B01`–`B06`), mưa buổi chiều (`B07`), mưa cả ngày (`B12`), điểm bảo trì + show trùng giờ (`B10`).
-  4. **Hành vi mong đợi:** lập lịch sạch vi phạm (`B01`–`B07`, `B12`), hỏi lại khi thiếu thông tin (`B08`), báo bất khả thi + gợi ý nới ràng buộc (`B09`–`B11`), từ chối ngoài phạm vi/tấn công (`B13`–`B15`).
+  1. **Thành phần gia đình & tuổi bé:** bé 3 tuổi miễn phí (`B06`), bé 4–5 tuổi (`B04`, `B12`, `B14`), bé 6–8 tuổi (`B01`–`B03`, `B07`, `B09`–`B11`, `B17`, `B18`, `B21`, `B24`), bé 9–10 tuổi (`B05`, `B23`), **hai bé lệch tuổi** (`B16` 5+7, `B19` 3+11).
+  2. **Ngân sách & thời lượng:** dư dả (`B02`, `B05`, `B16`, `B23`), vừa sát (`B01`, `B03`, `B06`), bất khả thi (`B09` thiếu tiền vé cổng, `B11` chỉ có 2,5 tiếng, `B24` đủ vé cổng nhưng không đủ phụ thu).
+  3. **Điều kiện vận hành & thời tiết:** ngày nắng (`B01`–`B06`), mưa theo dự báo (`B07`, `B12`), **mưa đột xuất người dùng báo** (`B21`), điểm bảo trì + show trùng giờ (`B10`), **điểm đóng đột xuất giữa ngày** (`B17`, `B18`), **ngày không có dữ liệu** (`B22`), **điểm không tồn tại** (`B20`).
+  4. **Hành vi mong đợi:** lập lịch sạch vi phạm (`B01`–`B07`, `B12`, `B16`, `B23`), xếp lại phần còn lại của ngày (`B17`, `B18`, `B21`), hỏi lại / báo thiếu dữ liệu (`B08`, `B22`), báo bất khả thi + gợi ý nới ràng buộc (`B09`–`B11`, `B24`), từ chối ngoài phạm vi/tấn công (`B13`–`B15`, `B25`).
 - Câu `kho` / `tu_choi` trỏ về 4 lớp chỗ khó (`spec.md` §5):
-  - Lớp 1 (nguồn sự thật — bảo trì, xung đột show, giá giả): `B10`, `B15`
+  - Lớp 1 (nguồn sự thật — bảo trì, xung đột show, giá giả, điểm không tồn tại, ngày không có dữ liệu): `B10`, `B15`, `B20`, `B22`
   - Lớp 2 (mơ hồ / thiếu thông tin): `B08`
-  - Lớp 3 (ngoài phạm vi / thẩm quyền — thanh toán, giả mạo quản lý): `B13`, `B15`
-  - Lớp 4 (đặc thù lĩnh vực — mưa, thiếu ngân sách, ép bỏ qua giới hạn tuổi an toàn): `B07`, `B09`, `B11`, `B12`, `B14`
+  - Lớp 3 (ngoài phạm vi / thẩm quyền — thanh toán, giả mạo quản lý, đặt dịch vụ ngoài khu): `B13`, `B15`, `B25`
+  - Lớp 4 (đặc thù lĩnh vực — mưa, thiếu ngân sách, giới hạn tuổi, điểm đóng đột xuất): `B07`, `B09`, `B11`, `B12`, `B14`, `B17`, `B18`, `B19`, `B21`, `B24`
 
 ## 3. Metric và cách chấm
 
@@ -51,17 +51,20 @@
 
 ## 4. Lệnh
 
-`python run.py eval` → `eval/run-N.csv` + `traces/run-N.jsonl` · điền cột `pass` · `python run.py score eval/run-N.csv`
+- Chạy cả bộ & chấm điểm chính thức:
+  `python run.py eval` → `eval/run-N.csv` + `traces/run-N.jsonl` · điền cột `pass` · `python run.py score eval/run-N.csv`
+- Kiểm tự động 2 metric `grader: code` (`khong_vi_pham_rang_buoc`, `khop_du_lieu_cong_cu` — chỉ đọc, không sửa file lượt chạy):
+  `python eval/grade_helper.py eval/run-1.csv`
 
 ## 5. Đã chạy gì
 
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
-| 1 | | | | __/__ | | |
-| 2 | | | | __/__ | | |
+| 1 | `run-1@20261127-232511` | `gpt-4o-mini` | Bản CP3 đầu tiên: workflow `MAX_STEPS=3` + 5 công cụ `tools.py` + Chốt 1/2 (`agent.py`) | 9/25 (`thuong` 0/8 · `kho` 5/13 · `tu_choi` 4/4) | 36.0% | Chưa (đạt 100% `tu_choi` & 0 vi phạm code, nhưng chưa đạt ≥80% tổng) |
+| 2 | `run-2@20261127-234939` | `gpt-4o-mini` | Cho model biết tiền sau vé cổng và tuyến gợi ý | 10/25 (thường 1/8 · khó 5/13 · từ chối 4/4) | 40% | Chưa. Điểm nháp chờ nhóm duyệt |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 
 ## 6. Lỗi chính
 
-*(Cập nhật sau khi chạy lượt 1 và lượt 2 ở CP3/CP4 từ `eval/report.md`.)*
+Lượt 1 có 11 câu trượt vì không dựng được lịch khả thi. Lượt 2 khắc phục B02, còn 9 câu trong nhóm này chưa có lịch và B01 có phần giải thích sai. Xem [phân tích từng nhóm lỗi](report.md).

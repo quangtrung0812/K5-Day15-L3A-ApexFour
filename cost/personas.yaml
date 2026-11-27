@@ -18,35 +18,41 @@ personas:           # ≥3 kiểu người dùng; share cộng lại = 1
     share: 0.65
     uses_per_month: 1
     turns_per_session: 1
-    source: "(tự ước tính) Gia đình lập một lịch trước khi đi."
+    source: "(tự ước tính) Gia đình lập một lịch cho một chuyến đi trong tháng."
     types: [thuong]
-  - name: doi_lich_trong_ngay
+  - name: sua_lich_truoc_khi_di
     share: 0.25
     uses_per_month: 1
-    turns_per_session: 2
-    source: "(tự ước tính) Gia đình lập lịch rồi hỏi lại khi mưa hoặc show hủy."
-    types: [thuong, kho]
-  - name: gia_dinh_di_thuong_xuyen
+    turns_per_session: 3
+    source: "(tự ước tính) Một chuyến đi trong tháng, gồm lượt lập lịch và hai lượt thay đổi giờ, ngân sách hoặc hoạt động."
+    inputs:
+      - "Ngày 2026-11-28, 2 người lớn và 1 bé 6 tuổi, 09:00–17:00, ngân sách 3 triệu. Lập lịch có thủy cung, bữa trưa và một show nhẹ nhàng."
+      - "Ngày 2026-11-28, 2 người lớn và 1 bé 6 tuổi, đổi giờ đến thành 11:00, về lúc 17:00, ngân sách 3 triệu. Xếp lại lịch ưu tiên thủy cung và bữa trưa."
+      - "Ngày 2026-11-28, 2 người lớn và 1 bé 6 tuổi, 11:00–17:00, giảm ngân sách còn 2,8 triệu. Xếp lại lịch có chỗ ăn trưa và điểm chơi phù hợp với bé."
+  - name: xep_lai_trong_ngay_mua
     share: 0.10
-    uses_per_month: 2
-    turns_per_session: 2
-    source: "(tự ước tính) Gia đình ở gần, chuẩn bị và điều chỉnh cho hai lần đi trong tháng."
-    types: [thuong, kho]
-# Mỗi lượt hỏi lấy ngẫu nhiên một đầu vào trong eval/benchmark.csv (type thuong và kho).
-# Persona hỏi kiểu riêng: thêm vào persona đó
-#     types: [thuong, kho, tu_choi]
-# hoặc
-#     inputs: ["câu hỏi kiểu 1", "câu hỏi kiểu 2"]
+    uses_per_month: 1
+    turns_per_session: 4
+    source: "(tự ước tính) Một chuyến đi trong tháng, gồm lượt lập lịch và ba lượt đổi lịch khi trời mưa hoặc cần đổi hoạt động."
+    inputs:
+      - "Ngày 2026-11-28, 2 người lớn và 1 bé 7 tuổi, 09:00–18:00, ngân sách 3 triệu. Lập lịch có vườn thú buổi sáng và diễu hành buổi chiều."
+      - "Ngày 2026-11-28, 2 người lớn và 1 bé 7 tuổi, còn 14:00–18:00, ngân sách cả chuyến 3 triệu. Mưa từ 14:00. Xếp lại buổi chiều ở trong nhà."
+      - "Ngày 2026-11-28, 2 người lớn và 1 bé 7 tuổi, còn 15:00–18:00, ngân sách cả chuyến 3 triệu. Mưa từ 14:00 và diễu hành ngoài trời đã hủy. Chọn show hoặc trò trong nhà phù hợp."
+      - "Ngày 2026-11-29, 2 người lớn và 1 bé 7 tuổi, còn 14:00–18:00, ngân sách cả chuyến 3 triệu. Ưu tiên chơi trong nhà, chỉ đề xuất điểm ngoài trời nếu hết mưa và còn mở cửa."
 
-prices:             # USD / 1 triệu token — chép từ further-reading/model-prices.md của repo đề. ≥2 mức model
+prices:             # USD / 1 triệu token văn bản, gói trả phí Standard
+  - model: gpt-4o-mini
+    input: 0.15
+    output: 0.60
+    source: "OpenAI · https://developers.openai.com/api/docs/models/gpt-4o-mini · 27/11/2026"
   - model: gemini-3.1-flash-lite
     input: 0.25
     output: 1.50
-    source: "Bảng giá BTC ngày 25/11/2026 · https://aistudio.google.com/docs/pricing#gemini-3.1-flash-lite"
+    source: "Google AI Studio, đối chiếu bảng giá BTC, xem ngày 27/11/2026 · https://aistudio.google.com/docs/pricing#gemini-3.1-flash-lite"
   - model: gemini-4-hydrogen
     input: 1.50
     output: 7.50
-    source: "Bảng giá BTC ngày 25/11/2026 · https://aistudio.google.com/docs/pricing#gemini-4-hydrogen"
+    source: "Google AI Studio, đối chiếu bảng giá BTC, xem ngày 27/11/2026 · https://aistudio.google.com/docs/pricing#gemini-4-hydrogen"
 
 usd_to_vnd:         # tuỳ chọn: điền thì bản tóm tắt in thêm tiền Việt
   rate:
