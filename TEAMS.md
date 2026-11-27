@@ -7,12 +7,12 @@
 - Tên nhóm: ApexFour
 - Lớp: L3A
 - Track: C
-- Link repo: https://github.com/quangtrung0812/K5-L3A-Day15-ApexFour-AI-Product-Hackathon
+- Link repo: https://github.com/quangtrung0812/K5-Day15-L3A-ApexFour
 
 | STT | Họ và tên | Mã học viên | Vai trò | Phần việc chính |
 |---|---|---|---|---|
 | 1 | Nguyễn Quang Trung | 2A202603389 | Đội trưởng | Điều phối sản phẩm, thiết kế kiến trúc workflow và xây dựng codebase agent |
-| 2 | Lê Văn Hoàng | 2A202603357 | Thành viên | Phỏng vấn và khảo sát người dùng, tổng hợp bằng chứng pain và bảng impact |
+| 2 | Lê Văn Hoàng | 2A202603357 | Thành viên | Đào review công khai và phỏng vấn người dùng, tổng hợp bằng chứng pain và bảng impact |
 | 3 | Dương Thanh Bình | 2A202603531 | Thành viên | Xây dựng data card, bộ câu thử benchmark và tiêu chí đánh giá metric |
 | 4 | Nguyễn Quốc Hưng | 2A202603553 | Thành viên | Mô phỏng chi phí thực tế, kiểm thử an toàn chặn rủi ro và chuẩn bị slide demo |
 
