@@ -6,7 +6,7 @@
 
 - Tên nhóm: ApexFour
 - Lớp: L3A
-- Track: A
+- Track: C
 - Link repo: https://github.com/quangtrung0812/K5-L3A-Day15-ApexFour-AI-Product-Hackathon
 
 | STT | Họ và tên | Mã học viên | Vai trò | Phần việc chính |

@@ -1,8 +1,8 @@
-# ApexFour — Trợ lý đối chiếu phòng học & soạn thông báo Lab cho Key Coach
+# ApexFour — Trợ lý xếp lịch trình 1 ngày ở khu vui chơi thoả ràng buộc (Track C)
 
 **Thành viên, lớp, track:** xem [TEAMS.md](TEAMS.md). **Điền TEAMS.md đúng format**: khi chấm và đánh giá, BTC quét file này để ghép điểm cho từng người.
 
-*Lát cắt = một Key Coach của lớp L3 · nhập thông tin phòng học vừa chốt/đổi trước buổi lab · AI đối chiếu lịch phân công với danh sách nhóm để cảnh báo xung đột và soạn bản nháp thông báo phòng cho từng nhóm · Key Coach duyệt nhanh trong 1 phút rồi gửi đúng phòng.*
+*Lát cắt = một phụ huynh đi khu vui chơi 1 ngày cùng gia đình có trẻ nhỏ · nhập ngân sách, khung giờ, số người lớn/trẻ em và sở thích (hoặc báo mưa/huỷ show giữa ngày) · AI chọn điểm chơi – show theo thứ tự và phối hợp công cụ kiểm tra ràng buộc bằng code để tự sửa đến khi sạch vi phạm (hoặc báo không xếp được kèm gợi ý nới ràng buộc) · gia đình nhận lịch trình từng giờ kèm tổng tiền chính xác và lý do chọn.*
 
 ---
 

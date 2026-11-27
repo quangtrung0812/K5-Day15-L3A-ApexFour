@@ -1,21 +1,25 @@
-# AI SPEC — [Tên lát cắt] · Nhóm [tên nhóm] · Phòng [XXX] · Zone [X]
+# AI SPEC — Lịch trình 1 ngày ở khu vui chơi · Nhóm ApexFour · Lớp L3A
 
 > Mốc nộp: §7 chốt chuẩn "đạt" tại **CP2 19:30 Thứ Sáu 27/11** · §0–§7 nộp **CP3 10:00 Thứ Bảy 28/11** · đủ §0–§10 **CP4 14:30 Thứ Bảy 28/11** · §10 changelog ghi tiếp đến **23:59 Thứ Bảy 28/11**.
 > Đầu mỗi mục ghi bước guide (`02-guide.md` trong repo đề) chỉ cách điền. Mỗi mục ngắn, có số và nguồn; chi tiết để ở file được trỏ tới. Xoá dòng hướng dẫn trong ngoặc vuông khi điền xong.
 
-Track: [ ] A · [ ] B · [ ] C · [ ] D · [ ] E — bài toán: [đề gợi ý trong file track, hoặc bài toán nhóm tự mở rộng] __
-Data BTC cấp đã dùng (nếu có — không commit nguyên file): __
+Track: [ ] A · [ ] B · [x] C · [ ] D · [ ] E — bài toán: C1 · Lịch trình một ngày ở khu vui chơi thoả ràng buộc (giờ mở cửa, lịch show, độ tuổi trẻ nhỏ, thời tiết, ngân sách)
+Data BTC cấp đã dùng (nếu có — không commit nguyên file): Không dùng (Track C nhóm tự thu review công khai cho `evidence/` và tự dựng dữ liệu khu vui chơi có seed cho `data/`)
 
 ## §0. Hiện tại việc này diễn ra thế nào *(guide 1.1)*
-- Luồng hiện tại của việc này, trong khoá hoặc trên app thật (3–5 bước; ảnh chụp từ tài khoản của mình, đã che thông tin):
-- Công cụ / AI đang được dùng cho việc này (nếu có) + nguồn. Không kiểm được thì ghi "chưa kiểm":
+- Luồng hiện tại của việc này trên thực tế (3–5 bước):
+  1. Trước ngày đi, phụ huynh/trưởng nhóm mở website hoặc app khu vui chơi (vd VinWonders, Sun World), tải ảnh bản đồ phân khu dạng tĩnh và xem bảng lịch biểu diễn trong ngày.
+  2. Mở từng trang thông tin trò chơi để đọc quy định chiều cao/độ tuổi cho trẻ nhỏ và bảng giá vé cổng, vé combo ăn trưa, vé trò chơi/dịch vụ tính phí riêng.
+  3. Tự ghi ra giấy/ghi chú điện thoại các điểm muốn đi, tự ước lượng thời gian đi bộ giữa các phân khu và tự cộng nhẩm tổng chi phí cho người lớn + trẻ em.
+  4. Khi vào khu vui chơi gặp trời mưa, trò đóng bảo trì hoặc show đổi giờ thì phải đứng giữa đường mở lại bản đồ/lịch show để tìm điểm thay thế tại chỗ.
+- Công cụ / AI đang được dùng cho việc này (nếu có) + nguồn: Website/app chính thức của khu vui chơi chủ yếu cung cấp bản đồ phân khu, danh sách điểm chơi và bảng giờ show cố định (chưa kiểm tính năng tự lập lịch cá nhân hoá theo ngân sách + ràng buộc gia đình có kiểm chứng giờ/giá tự động); người dùng tự hỏi ChatGPT/Gemini phổ thông thì hay gặp lỗi bịa giờ show, tính nhầm tổng tiền vé theo độ tuổi hoặc xếp lịch chồng giờ.
 
 ## §1. Người dùng & bằng chứng *(guide 1.1, 1.2)*
-- Người dùng chính (một vai cụ thể):
-- Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI):
-- Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ:
-- Pain (KHÔNG chữ AI): ai — đang làm gì — vướng đâu — hậu quả gì:
-- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): __
+- Người dùng chính (một vai cụ thể): Phụ huynh trong gia đình có trẻ nhỏ (4–10 tuổi) lập kế hoạch đi khu vui chơi giải trí lớn trong 1 ngày.
+- Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI): Sắp xếp lịch trình tham quan, xem biểu diễn và ăn nghỉ khả thi cho cả gia đình có trẻ nhỏ trong một ngày tại khu vui chơi rộng lớn mà không vượt ngân sách hay trễ giờ mở cửa/giờ show.
+- Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ: Đang tự đối chiếu bản đồ ảnh, bảng lịch show trên web/fanpage và ghi chú tay (hoặc hỏi kinh nghiệm trên hội nhóm review); cách này hỏng ở chỗ tốn nhiều thời gian tra chéo, dễ tính sót phí phụ thu/ăn uống, không kịp xoay xở khi mưa hoặc trễ 1 mắt xích làm vỡ cả dây chuyền buổi chiều — nhưng họ chưa bỏ vì chưa có công cụ nào kiểm sẵn ràng buộc giờ mở cửa, độ tuổi bé và ngân sách trên đúng dữ liệu khu vui chơi.
+- Pain (KHÔNG chữ AI): Phụ huynh đưa gia đình có trẻ nhỏ đi khu vui chơi một ngày — đang tự tra bản đồ, lịch biểu diễn, giới hạn độ tuổi và giá dịch vụ ở nhiều nơi rời rạc để ghép lịch — vướng ở chỗ hàng chục điểm có giờ đóng/mở, giờ show cố định và thời gian di chuyển chồng chéo (hoặc mưa đột xuất) — hậu quả là mất hàng giờ chuẩn bị mà vẫn dễ lỡ show chính, đưa con tới trò không đủ điều kiện chơi, đi bộ vòng vèo mệt mỏi hoặc lố ngân sách.
+- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): *(Đang thu thập ở bước 1.2 từ review công khai Google Maps/Tripadvisor và phỏng vấn người dùng ngoài nhóm — cập nhật số thật ở CP2/CP3)*
 
 ## §2. Impact & quyết định chọn *(guide 1.3)*
 
