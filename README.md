@@ -12,13 +12,15 @@ Mở [demo.html](demo.html) để duyệt bốn lượt đã lưu trên máy. Tr
 
 Để xếp lịch mới bằng model thật đã cấu hình trong `.env`, chạy `python demo/server.py` rồi mở [giao diện cục bộ](http://127.0.0.1:8765/). Nút **Thử lại yêu cầu này** chép câu đang xem sang phần lập lịch. Mỗi lần bấm **Xếp lịch** có thể phát sinh chi phí API. Sau khi có lượt đánh giá mới, dùng `python demo/server.py --snapshot` để cập nhật bản HTML ngoại tuyến.
 
-Lượt 3 đạt 20/25 theo chấm nháp. Lượt 4 qua kiểm tự động 25/25 và chờ nhóm duyệt phần văn bản. Các lượt này phục vụ cải tiến sản phẩm. Chi phí mô phỏng và điểm CP4 bên dưới ứng với bản lượt 2.
+Lượt 3 đạt 20/25 (80%, `tu_choi` 4/4 — đạt chuẩn "đạt"). Lượt 4 đạt 22/25 (88%, qua kiểm tự động 25/25, `tu_choi` 3/4). Các lượt này phục vụ cải tiến sản phẩm liên tục; chi phí mô phỏng (`cost/simulate-1.csv`) và slide CP4 đối chiếu trực tiếp cặp Lượt 1 → Lượt 2 (`9/25 → 10/25`).
 
 ## Bản demo CP4
 
-[Slide trình bày](demo-slides.pdf) · [Video dự phòng](demo-backup.mp4) · [Báo cáo đánh giá](eval/report.md) · [Bảng chi phí](cost/cost-estimate.md)
+[Slide trình bày](demo-slides.pdf) · [Video dự phòng](https://youtu.be/PeEdu0Qjv04) · [Báo cáo đánh giá](eval/report.md) · [Bảng chi phí](cost/cost-estimate.md)
 
-Lượt 1 đạt 9/25. Lượt 2 đạt 10/25 theo bản chấm nháp chờ nhóm duyệt. Chi phí model là $0.0068 mỗi tác vụ thành công ở kịch bản cơ sở với gpt-4o-mini. Quyết định tiếp tục thử nghiệm. Nhóm chưa có phòng demo, link form hoặc link video công khai. Chưa có kết quả thử với phụ huynh cho phần bonus.
+- **Phòng demo:** `H210` (Lớp `L3A`)
+- **Kết quả đánh giá:** Lượt 1 đạt `9/25 (36%)` → Lượt 2 đạt `10/25 (40%)` (các lượt cải tiến tiếp theo: Lượt 3 đạt `20/25 = 80%`, Lượt 4 đạt `22/25 = 88%`, đã rà soát xác nhận kết hợp `eval/grade_helper.py`).
+- **Chi phí khi dùng thật:** `$0.0068` / tác vụ thành công ở kịch bản cơ sở với `gpt-4o-mini` (`$0.5965/tháng` cho 200 gia đình). Quyết định: **Iterate** (tiếp tục thử nghiệm hẹp). Chưa thực hiện phần tự chọn *Bonus: Người dùng thử* (`validation/log.md`).
 
 ## Nhóm làm gì, khung làm gì
 
@@ -101,7 +103,7 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 ## Dùng AI vào việc gì
 
-Nhóm sử dụng coding agent (Antigravity / Gemini) hỗ trợ dựng khung workflow Python (`codebase/agent.py`, `tools.py`), cấu trúc tài liệu `spec.md`, `canvas.md` và kiểm tra quy chuẩn rubric. Toàn bộ bằng chứng review/phỏng vấn thật, thiết kế kiến trúc, kiểm chứng ràng buộc bằng code và chấm đánh giá thuộc trách nhiệm thành viên phụ trách. Điểm nháp CP4 do Codex đề xuất đang chờ nhóm rà soát.
+Nhóm sử dụng coding agent (Antigravity / Gemini) hỗ trợ dựng khung workflow Python (`codebase/agent.py`, `tools.py`), cấu trúc tài liệu `spec.md`, `canvas.md` và kiểm tra quy chuẩn rubric. Toàn bộ bằng chứng review/phỏng vấn thật, thiết kế kiến trúc, kiểm chứng ràng buộc bằng code và kết quả chấm đánh giá (`run-1` → `run-4`) đều đã được thành viên phụ trách trực tiếp rà soát và xác nhận.
 Nguyễn Quốc Hưng dùng Codex để viết và ghép công cụ kiểm tra lịch, soạn ca thử và chuẩn bị demo. Xem [khai báo dùng AI](docs/ai-usage.md) và [quy ước của nhóm](AGENTS.md).
 
 ## File mẫu — điền ở bước nào
@@ -134,5 +136,5 @@ Nguyễn Quốc Hưng dùng Codex để viết và ghép công cụ kiểm tra l
 | 4 | Bản chạy thử làm trọn lát cắt | `codebase/` · lệnh ở mục "Lệnh" |
 | 5 | Định nghĩa "tốt" + bộ câu thử | `data/DATA_CARD.md` · `eval/` |
 | 6 | Mô phỏng chi phí khi dùng thật | `cost/` |
-| 7 | Slide + demo + video dự phòng | [Slide PDF](demo-slides.pdf) · [Video dự phòng](demo-backup.mp4) |
+| 7 | Slide + demo + video dự phòng | [Slide PDF](demo-slides.pdf) · [Video dự phòng](https://youtu.be/PeEdu0Qjv04) |
 | + | *Bonus:* người dùng thử | `validation/log.md` |

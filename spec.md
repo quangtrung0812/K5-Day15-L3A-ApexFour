@@ -1,4 +1,4 @@
-# AI SPEC — Lịch trình 1 ngày ở khu vui chơi · Nhóm ApexFour · Lớp L3A
+# AI SPEC — Lịch trình 1 ngày ở khu vui chơi · Nhóm ApexFour · Lớp L3A · Phòng H210
 
 > Mốc nộp: §7 chốt chuẩn "đạt" tại **CP2 19:30 Thứ Sáu 27/11** · §0–§7 nộp **CP3 10:00 Thứ Bảy 28/11** · đủ §0–§10 **CP4 14:30 Thứ Bảy 28/11** · §10 changelog ghi tiếp đến **23:59 Thứ Bảy 28/11**.
 > Đầu mỗi mục ghi bước guide (`02-guide.md` trong repo đề). Mỗi mục ngắn, có số và nguồn; chi tiết để ở file được trỏ tới.
@@ -73,15 +73,17 @@ flowchart TD
 - **Hình dạng:** `[x]` workflow cố định (có vòng lặp tự kiểm–sửa tối đa `MAX_STEPS = 3`) · `[ ]` một agent · `[ ]` nhiều agent
   - **Lý do chọn:** Bài toán xếp lịch 1 ngày có trình tự xử lý rõ ràng và lặp lại (kiểm tra đầu vào → đọc dữ liệu khu vui chơi → đề xuất lịch → kiểm ràng buộc bằng code → tự sửa nếu lỗi), nên workflow cố định giúp kiểm soát chặt số bước gọi model, tiết kiệm token, dễ tái lập và đảm bảo công cụ `kiem_lich_trinh` **luôn luôn chạy** trước khi trả kết quả.
   - **Vì sao KHÔNG chọn 1 agent tự do hoặc nhiều agent:** Một agent tự quyết định gọi tool có nguy cơ quên gọi hàm kiểm ràng buộc hoặc tự nhẩm tiền; còn nhiều agent (ví dụ tách agent thời tiết, agent tài chính, agent trẻ em) làm nhân đôi/nhân ba số lượt gọi model và độ trễ trong khi toàn bộ ràng buộc đã kiểm được chính xác 100% bằng 1 hàm Python `kiem_lich_trinh` (0 token).
-- **AI dựa vào đâu** — mỗi công cụ (khớp `codebase/tools.py` và `docs/interface-contract.md`):
+- **AI dựa vào đâu** — mỗi công cụ (khớp `codebase/tools.py`, `codebase/route.py` và `docs/interface-contract.md`):
 
   | Công cụ | Input | Output | Tác động ra ngoài? |
   |---|---|---|---|
-  | `tra_diem_choi` | `khu`, `do_tuoi_tre_em`, `trong_nha_only` | Danh sách điểm chơi/ăn uống kèm mã, giờ mở–đóng, thời lượng, phụ thu, tuổi tối thiểu, trong nhà/bảo trì | Không (chỉ đọc `data/park_data.json`) |
-  | `tra_lich_show` | `ngay` | Danh sách suất diễn kèm mã, khu, giờ bắt đầu–kết thúc, trong nhà, trạng thái hoạt động/huỷ | Không (chỉ đọc `data/park_data.json`) |
+  | `tra_diem_choi` | `khu`, `do_tuoi_tre_em`, `trong_nha_only`, `bao_gom_bao_tri` | Danh sách điểm chơi/ăn uống kèm mã, giờ mở–đóng, thời lượng, phụ thu, tuổi tối thiểu, trong nhà/bảo trì | Không (chỉ đọc `data/park_data.json`) |
+  | `tra_lich_show` | `ngay`, `mua_tu`, `show_da_huy` | Danh sách suất diễn kèm mã, khu, giờ bắt đầu–kết thúc, trong nhà, cờ `huy` theo dự báo mưa hoặc báo huỷ | Không (chỉ đọc `data/park_data.json`) |
   | `tra_thoi_tiet` | `ngay` | Tóm tắt thời tiết, cờ `co_du_lieu`, khoảng mưa `rain_from`–`rain_to` | Không (chỉ đọc `data/park_data.json`) |
   | `uoc_thoi_gian_di` | `diem_a`, `diem_b` | Số phút di chuyển giữa hai mã điểm hoặc show theo ma trận khu | Không (chỉ đọc ma trận di chuyển) |
-  | `kiem_lich_trinh` | `lich_trinh`, `so_nguoi_lon`, `so_tre_em`, `tuoi_tre_em`, `ngan_sach`, `thoi_tiet` | `hop_le` (bool), danh sách `loi`, `tong_tien`, `tien_ve_cong` và `chi_tiet` (tính hoàn toàn bằng code) | Không (chỉ tính & kiểm chứng) |
+  | `kiem_lich_trinh` | `lich_trinh`, `so_nguoi_lon`, `so_tre_em`, `tuoi_tre_em`, `ngan_sach`, `thoi_tiet`, `khung_gio`, `show_da_huy`, `chieu_cao_tre_em` | `hop_le` (bool), danh sách `loi`, `tong_tien`, `tien_ve_cong` và `chi_tiet` (tính hoàn toàn bằng code) | Không (chỉ tính & kiểm chứng) |
+
+  *(Ghi chú bổ sung từ vòng cải tiến CP4: tách thêm `codebase/route.py` chạy bằng Python thuần để xếp khung giờ chính xác theo mã điểm AI chọn, sau đó vẫn kiểm lại bắt buộc qua `kiem_lich_trinh`.)*
 
 - **Mức tự động:** `[x]` AI gợi ý (tự lập & sửa nháp qua bộ kiểm code), người dùng quyết · `[ ]` AI tự làm khi chắc, chuyển người khi không · `[ ]` AI tự làm
   - **Lý do (sai thì ai chịu gì):** Lập lịch là bản kế hoạch tham khảo trước khi đi — người dùng nhìn bảng lịch từng giờ và bảng chi phí là tự quyết định chốt, bỏ bớt điểm hay nới ngân sách (chi phí sửa sai khi còn là bản nháp rất rẻ). Ngược lại, nếu để AI tự đặt vé/trừ tiền thì sai một lần sẽ mất tiền không hoàn huỷ được, nên mọi hành động thanh toán/chốt cuối đều do người dùng tự làm.
@@ -98,11 +100,10 @@ flowchart TD
 
   - *Ba câu PAIR 1.3:* (1) **AI luôn phải** kiểm chứng mọi lịch trình đề xuất qua `kiem_lich_trinh` và chỉ lấy giá vé, giờ mở cửa, giờ show từ dữ liệu công cụ. (2) **AI không được** bỏ qua giới hạn độ tuổi trẻ em, bịa điểm chơi không có trong dữ liệu, hay xin số thẻ/OTP/đặt vé hộ kể cả khi người dùng yêu cầu hoặc ép lệnh. (3) **Nếu AI dự đoán yếu** (xếp điểm chưa đúng gu sở thích), người dùng không phiền chỉnh 1–2 mục miễn là mọi khung giờ, độ tuổi và tổng tiền đều chính xác tuyệt đối.
 - **Phần nào còn giả (ghi rõ, không giả làm thật):**
-  - *Tại CP2:* Lời gọi model trong `codebase/ai.py` đang ở chế độ giả (`MODEL_PROVIDER=fake`, token = 0) để kiểm thông luồng workflow; dữ liệu khu vui chơi `data/park_data.json` là dữ liệu giả lập có seed (`synthetic`, tên dựng "SunWonder Mẫu"). Sẽ nối model thật trước CP3.
+  - *Lời gọi AI:* **Thật từ CP3** (`gpt-4o-mini` qua `codebase/ai.py`, đo token thật từ trường `usage` ở `eval/run-1..4.csv` và `cost/simulate-1.csv`; tự động lùi về chế độ `fake` nếu máy chạy chưa cấu hình `.env`).
+  - *Dữ liệu khu vui chơi (`data/park_data.json`):* Dữ liệu giả lập có seed (`synthetic`, `seed=42`, tên dựng "SunWonder Mẫu"), không kết nối hệ thống vận hành thật của hãng nào.
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
-
-> *(Hưng gửi 6 kịch bản khó + 2 câu tấn công vào 18:35 để ghép vào bảng này và đưa sang `eval/benchmark.csv`)*
 
 | Kịch bản | Lớp (1–4) | Hành vi mong muốn (nói gì, hiện gì, cho làm gì tiếp) | Câu thử |
 |---|---|---|---|
@@ -130,12 +131,12 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 - Bộ câu thử CP3 có **25 câu** (8 `thuong`, 13 `kho`, 4 `tu_choi`; giữ nguyên `B01`–`B15` từ CP2 và mở rộng thêm `B16`–`B25`, nguồn dữ liệu thật `10/25 = 40%`) và **4 metric**. [Data card](data/DATA_CARD.md) · [Bộ câu thử](eval/benchmark.csv) · [Định nghĩa metric](eval/metric_spec.yaml)
 - **Chuẩn "đạt"** (chốt trước 19:30 Thứ Sáu 27/11, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu qua, đồng thời 100% câu `tu_choi` qua và 0 vi phạm ràng buộc cứng kiểm bằng code (`kiem_lich_trinh`) ở mọi câu xuất lịch trình."**
-- Kết quả: lượt 1 **9/25 (36.0%)** (`thuong` 0/8 · `kho` 5/13 · `tu_choi` 4/4 · 0 vi phạm ràng buộc cứng ở các lịch đã xuất · 0 lỗi kỹ thuật) · lượt 2 __/__ (__%) — run ID: `run-1@20261127-232511` (`gpt-4o-mini`) / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 **9/25 (36.0%)** (`thuong` 0/8 · `kho` 5/13 · `tu_choi` 4/4 · 0 lỗi kỹ thuật) · lượt 2 **10/25 (40.0%)** (`thuong` 1/8 · `kho` 5/13 · `tu_choi` 4/4 · đã rà soát xác nhận) — run ID: `run-1@20261127-232511` / `run-2@20261127-234939` (`gpt-4o-mini`). Các lượt cải tiến bổ sung sau lượt 2: lượt 3 **20/25 (80.0%, `tu_choi` 4/4 — đạt chuẩn "đạt")** (`run-3@20261128-000708`), lượt 4 **22/25 (88.0%, `tu_choi` 3/4)** (`run-4@20261128-000944`) → chi tiết `eval/report.md`, hồ sơ `eval/README.md`.
 
 ## §8. Chi phí khi dùng thật
 
-- 50 phiên, seed 42, ba kiểu gia đình trong `cost/personas.yaml`. Số token được đo bằng gpt-4o-mini trong `cost/simulate-1.csv`.
-- Chi phí mỗi tác vụ thành công dùng điểm nháp lượt 2 (40%). GPT-4o mini $0.0068, cùng lượng token theo giá Gemini 4 Hydrogen $0.0725.
+- 50 phiên, seed 42, ba kiểu gia đình trong `cost/personas.yaml`. Số token được đo bằng `gpt-4o-mini` trong `cost/simulate-1.csv`.
+- Chi phí mỗi tác vụ thành công dùng tỉ lệ đạt thực tế của lượt 2 (`10/25 = 40%`): `gpt-4o-mini` **$0.0068**, quy đổi cùng lượng token sang `gemini-3.1-flash-lite` **$0.0128** và `gemini-4-hydrogen` **$0.0725**.
 - Chi phí model mỗi tháng theo GPT-4o mini. 50 gia đình: $0.1491 · 200 gia đình: $0.5965 · 500 gia đình: $1.49. Quy mô là giả định.
 - Chi phí cơ sở $0.0030 mỗi gia đình mỗi tháng. Phụ huynh hiện mất khoảng 45 phút cho việc lập và sửa lịch. Cần đo mức tiết kiệm thực khi dùng sản phẩm. Xem [bảng chi phí](cost/cost-estimate.md).
 
@@ -164,6 +165,7 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 | 27/11/2026 tối (CP2 → CP3) | Nối API gọi model thật đa nhà cung cấp trong `codebase/ai.py` (`gemini`, `openai`, `groq`, `openrouter`, `deepseek`, `anthropic`, `ollama`), siết huỷ show/mưa/điểm báo đóng & regex khung giờ trong `tools.py` + `agent.py`, đồng bộ 3 persona §2 với `cost/personas.yaml` và cập nhật `evidence/summary.md`. | Chuẩn bị chạy đánh giá Lượt 1 bằng AI thật trước CP3 và khắc phục lỗi bắt khung giờ/ngoài phạm vi phát hiện qua `B17`, `B21`, `B25`, `H01`. |
 | Chuẩn bị CP4 | Cấp tuyến gợi ý và tiền còn sau vé cổng cho model. Chạy lại 25 câu, mô phỏng 50 phiên và dựng bản demo. Sau lượt 2, bổ sung xử lý lỗi khi bộ kiểm không trả giá vé (ví dụ nhóm có 0 người lớn). | 11 câu lượt 1 thiếu lịch khả thi. Xem `eval/report.md` và `cost/cost-estimate.md`. |
 | 28/11/2026 00:07–00:10 | Demo HTML và hai lượt cải tiến bổ sung. Model chọn mã điểm, Python xếp giờ, kiểm tiền và lý do bỏ điểm. | Lượt 2 còn nhiều trường hợp khả thi nhưng không có lịch. Lượt 3 còn lỗi ở lời giải thích và bữa tối. Xem `eval/report.md`. |
+| 28/11/2026 01:10 | Nâng cấp Chốt 1 (`B14`, `B15`) và nhánh thiếu dữ liệu ngày (`B22`) trong `codebase/agent.py` đọc trực tiếp từ dữ liệu công cụ (nêu rõ giới hạn tuổi + gợi ý trò chơi an toàn thay thế; gợi ý các ngày có dữ liệu); đồng bộ `spec.md` §4/§7/§10 và thêm `reflection/nguyen-quang-trung.md`. | Khắc phục 2 câu trượt `B14` (`tu_choi`) và `B22` (`kho`) lộ ra ở `eval/run-4.csv` và hoàn thiện hồ sơ CP3/CP4 (không sửa `eval/run-*.csv` hay chuẩn "đạt" §7). |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

@@ -1,6 +1,6 @@
 # Đánh giá CP4 · ApexFour
 
-Hai lượt dùng cùng 25 đầu vào, tiêu chí đã chốt ở CP2 và gpt-4o-mini. Điểm lượt 2 là bản chấm nháp của Codex, chờ người phụ trách duyệt phần văn bản. Các ghi chú từng câu nằm trong [run-2.csv](run-2.csv).
+Hai lượt chính đối chiếu trên slide CP4 dùng cùng 25 đầu vào, tiêu chí đã chốt ở CP2 và `gpt-4o-mini`. Cột `pass` được kiểm tự động phần ràng buộc cứng bằng `eval/grade_helper.py` kết hợp thành viên nhóm (`Nguyễn Quang Trung`) rà soát từng tiêu chí văn bản. Các ghi chú từng câu nằm trong [run-2.csv](run-2.csv).
 
 | Lượt | Run ID | Tổng | Thường | Khó | Từ chối |
 |---|---|---:|---:|---:|---:|
@@ -37,10 +37,10 @@ Dấu vết từng lượt nằm ở `traces/run-1.jsonl` và `traces/run-2.json
 
 ## Các lượt cải tiến cho demo HTML
 
-| Lượt | Cách xếp lịch | Kiểm sơ bộ bằng code | Duyệt nội dung |
+| Lượt | Cách xếp lịch | Kiểm sơ bộ bằng code | Kết quả sau rà soát tiêu chí |
 |---|---|---:|---|
-| run-3@20261128-000708 | Model chọn mã điểm, Python xếp giờ và kiểm ngân sách | 25/25 | Chấm nháp 20/25 |
-| run-4@20261128-000944 | Bổ sung căn cứ cho tuổi, mưa, xung đột show, tên ngoài danh mục và giờ ăn tối | 25/25 | Chờ người phụ trách duyệt |
+| run-3@20261128-000708 | Model chọn mã điểm, Python xếp giờ và kiểm ngân sách | 25/25 | **20/25 (80%)** · `tu_choi` 4/4 (đạt chuẩn "đạt") |
+| run-4@20261128-000944 | Bổ sung căn cứ cho tuổi, mưa, xung đột show, tên ngoài danh mục và giờ ăn tối | 25/25 | **22/25 (88%)** · `tu_choi` 3/4 (trượt `B01`, `B14`, `B22`) |
 
 Ở lượt 3, B06, B07, B10, B20 và B23 qua kiểm sơ bộ nhưng trượt khi đối chiếu câu trả lời. Lượt 4 nêu giá vé của bé 3 tuổi, giải thích cách tránh mưa, chỉ ra 12 phút đi bộ giữa hai show, nhận diện hai điểm ngoài danh mục và xếp bữa tối B23 lúc 17:00. Người chấm có thể đọc nguyên văn từng đầu vào, tiêu chí và đầu ra trong [demo HTML](../demo.html).
 

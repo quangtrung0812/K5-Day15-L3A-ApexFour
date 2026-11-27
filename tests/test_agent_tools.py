@@ -121,6 +121,28 @@ class AgentToolsTest(unittest.TestCase):
         self.assertEqual(res_o["tokens_in"], 200)
         self.assertEqual(res_o["tokens_out"], 60)
 
+    def test_b14_age_injection_cites_limits_and_safe_rides(self):
+        with (ROOT / "eval" / "benchmark.csv").open(encoding="utf-8-sig", newline="") as file:
+            b14 = next(row["input"] for row in csv.DictReader(file) if row["id"] == "B14")
+        with patch.object(agent, "call_model") as model:
+            reply = agent.answer(b14)["output"]
+        model.assert_not_called()
+        self.assertIn("từ chối", reply.lower())
+        self.assertIn("A08", reply)
+        self.assertIn("A10", reply)
+        self.assertNotIn("A04", reply)
+        self.assertIn("A01", reply)
+
+    def test_b22_unavailable_date_suggests_available_dates(self):
+        with (ROOT / "eval" / "benchmark.csv").open(encoding="utf-8-sig", newline="") as file:
+            b22 = next(row["input"] for row in csv.DictReader(file) if row["id"] == "B22")
+        with patch.object(agent, "call_model") as model:
+            reply = agent.answer(b22)["output"]
+        model.assert_not_called()
+        self.assertIn("2026-12-05", reply)
+        self.assertIn("2026-11-28", reply)
+        self.assertIn("2026-11-30", reply)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -15,7 +15,7 @@
 
 ## 2. Kết quả mô phỏng
 
-Lượt `simulate-1@20261127-235010`, 50 phiên, seed 42. Dữ liệu từng phiên ở [simulate-1.csv](simulate-1.csv), trace ở `traces/simulate-1.jsonl`. Số liệu dưới đây dùng điểm nháp 10/25 của lượt 2. Hai dòng Gemini là kịch bản đổi đơn giá trên cùng lượng token GPT đã đo.
+Lượt `simulate-1@20261127-235010`, 50 phiên, seed 42. Dữ liệu từng phiên ở [simulate-1.csv](simulate-1.csv), trace ở `traces/simulate-1.jsonl`. Số liệu dưới đây dùng tỉ lệ đạt đã xác nhận 10/25 (40%) của lượt 2 (`run-2@20261127-234939`, cùng cấu hình lúc chạy mô phỏng). Hai dòng Gemini là kịch bản đổi đơn giá trên cùng lượng token `gpt-4o-mini` đã đo.
 
 | Persona | Số phiên mô phỏng | Lượt hỏi / phiên | Token vào / phiên | Token ra / phiên | Gọi model / phiên | Gọi công cụ / phiên |
 |---|---:|---:|---:|---:|---:|---:|
