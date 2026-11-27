@@ -128,8 +128,8 @@ Bàn giao cho benchmark: H01–H06 là `kho`, H07–H08 là `tu_choi`. Các câu
 - **Trường hợp đặc thù lĩnh vực (lớp 4):** Ràng buộc bất khả thi (ngân sách thấp hơn tổng vé cổng, hoặc chỉ có 3 tiếng mà đòi đi 8 trò + 2 show) → sau tối đa 3 vòng tự kiểm–sửa không tìm ra phương án sạch, hệ thống báo rõ **không xếp được** kèm con số chênh lệch cụ thể (vd thiếu bao nhiêu tiền / thiếu bao nhiêu phút) và gợi ý 2 cách nới ràng buộc để phụ huynh chọn.
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
-- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — __ câu (thuong __ · kho __ · tu_choi __) · metric: `eval/metric_spec.yaml` (__ metric)
-- **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): *(Bình đề xuất & cả nhóm chốt cứng vào lúc 19:10)* "Đạt khi ≥ __% câu qua, và __"
+- Bộ câu thử CP2 có **15 câu** (6 `thuong`, 6 `kho`, 3 `tu_choi`) và **4 metric**. [Data card](data/DATA_CARD.md) · [Bộ câu thử](eval/benchmark.csv) · [Định nghĩa metric](eval/metric_spec.yaml)
+- **Chuẩn "đạt"** (chốt trước 19:30 Thứ Sáu 27/11, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu qua, đồng thời 100% câu `tu_choi` qua và 0 vi phạm ràng buộc cứng kiểm bằng code (`kiem_lich_trinh`) ở mọi câu xuất lịch trình."**
 - Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
