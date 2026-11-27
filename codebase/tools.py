@@ -88,14 +88,27 @@ def _weather_issue(rain_window, start, end, reported_rain):
 def _cancellations(reports):
     if not isinstance(reports, (list, tuple)):
         raise ValueError("Danh sách show hủy phải chứa các ID hoặc các suất.")
-    cancelled_shows = set()
-    cancelled_slots = set()
+    cancellations = set()
     for report in reports:
-        if isinstance(report, str):
-            cancelled_shows.add(report)
+        if isinstance(report, str) and report.strip():
+            cancellations.add((report, None))
+        elif isinstance(report, dict) and isinstance(report.get("diem_id"), str):
+            cancellations.add((report["diem_id"], _minute(report["bat_dau"])))
         else:
-            cancelled_slots.add((report["diem_id"], _minute(report["bat_dau"])))
-    return cancelled_shows, cancelled_slots
+            raise ValueError("Mỗi show hủy cần mã show hoặc mã show và giờ bắt đầu.")
+    return cancellations
+
+
+def _show_cancelled(show, rain, start, end, reported_rain, cancellations):
+    show_id = show["id"]
+    return (
+        (show_id, None) in cancellations
+        or (show_id, start) in cancellations
+        or (
+            show["cancelled_on_rain"]
+            and _weather_issue(rain, start, end, reported_rain) == "MUA_NGOAI_TROI"
+        )
+    )
 
 
 @tool
@@ -118,11 +131,14 @@ def tra_diem_choi(khu=None, do_tuoi_tre_em=None, trong_nha_only=False, *, bao_go
 
 
 @tool
-def tra_lich_show(ngay):
-    """Tra lịch show. Input là ngày ISO. Output là các suất trong ngày có cờ
-    huy do mưa theo dữ liệu mô phỏng. Chỉ đọc dữ liệu.
+def tra_lich_show(ngay, *, mua_tu=None, show_da_huy=()):
+    """Tra lịch show theo ngày ISO, giờ bắt đầu mưa và các suất báo hủy nếu có.
+    Output là các suất trong ngày có cờ huy theo dự báo và báo cáo mới.
+    show_da_huy nhận mã show hoặc {diem_id, bat_dau} của một suất. Chỉ đọc dữ liệu.
     """
     day = _date(ngay)
+    reported_rain = 1440 if mua_tu is None else _minute(mua_tu)
+    cancellations = _cancellations(show_da_huy)
     park = _park()
     rain = _rain_window(park["weather_by_date"].get(day))
     if rain is None:
@@ -130,7 +146,7 @@ def tra_lich_show(ngay):
     shows = []
     for show in park["shows"]:
         start, end = _span(show["start_time"], show["end_time"])
-        cancelled = show["cancelled_on_rain"] and _weather_issue(rain, start, end, 1440) is not None
+        cancelled = _show_cancelled(show, rain, start, end, reported_rain, cancellations)
         shows.append({**show, "ngay": day, "huy": cancelled})
     return shows
 
@@ -169,7 +185,7 @@ def kiem_lich_trinh(
     {bat_dau, ket_thuc}, các show báo hủy (ID cả show hoặc {diem_id, bat_dau}
     của một suất) và chiều cao từng trẻ.
     Output có hop_le, loi (mã lỗi và vị trí nếu có), tong_tien và chi_tiet
-    giá theo từng mục. Bỏ qua các trường giá/thời tiết do model tự điền.
+    giá theo từng mục. Giá, bảo trì và dự báo lấy từ dữ liệu khu vui chơi.
     Chỉ đọc dữ liệu.
     """
     result = {"hop_le": False, "loi": [], "tong_tien": None, "chi_tiet": []}
@@ -188,11 +204,12 @@ def kiem_lich_trinh(
                 raise ValueError("Cần chiều cao của từng trẻ.")
             chieu_cao_tre_em = [_whole_number(height) for height in chieu_cao_tre_em]
         day = _date(thoi_tiet["ngay"])
-        reported_rain = _minute(thoi_tiet.get("mua_tu", "24:00"))
+        mua_tu = thoi_tiet.get("mua_tu")
+        reported_rain = 1440 if mua_tu is None else _minute(mua_tu)
         bounds = (0, 1440)
         if khung_gio is not None:
             bounds = _span(khung_gio["bat_dau"], khung_gio["ket_thuc"])
-        cancelled_shows, cancelled_slots = _cancellations(show_da_huy)
+        cancellations = _cancellations(show_da_huy)
         if not isinstance(lich_trinh, (list, tuple)):
             raise ValueError("Lịch phải là danh sách các hoạt động.")
     except (KeyError, TypeError, ValueError) as exc:
@@ -228,8 +245,9 @@ def kiem_lich_trinh(
             opens, closes = park_open, park_close
             if point_id in show_ids:
                 slot = _span(point["start_time"], point["end_time"])
-                if (rain is None or (start, end) != slot or point_id in cancelled_shows
-                        or (point_id, start) in cancelled_slots):
+                if rain is None or (start, end) != slot or _show_cancelled(
+                    point, rain, start, end, reported_rain, cancellations
+                ):
                     mark("SUAT_SHOW_KHONG_CO_HOAC_DA_HUY")
             else:
                 point_open, point_close = _span(point["open_time"], point["close_time"])
